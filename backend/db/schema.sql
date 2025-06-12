@@ -20,6 +20,7 @@ CREATE TABLE users(
 
 CREATE TABLE properties(
     property_id SERIAL NOT NULL,
+    property_name VARCHAR (255)
 );
 
 CREATE TABLE units(

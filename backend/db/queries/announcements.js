@@ -13,3 +13,16 @@ export async function createAnnouncements(
   } = await pool.query(sql, [date, announcement, owner, announcement_type]);
   return announcements;
 }
+
+export async function getAnnouncements() {
+  const sql = `SELECT * FROM announcements`;
+  const { rows: announcements } = await pool.query(sql);
+  return announcements;
+}
+
+export async function getAnnouncementById(id) {
+  const sql = `SELECT * FROM announcements
+    WHERE id = $1`;
+  const { rows: announcement } = await pool.query(sql, [id]);
+  return announcement;
+}
