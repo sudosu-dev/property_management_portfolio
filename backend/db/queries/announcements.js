@@ -9,9 +9,9 @@ export async function createAnnouncements(
   const sql = `INSERT INTO announcements(date, announcement, user_id, announcement_type)
     VALUES ($1, $2, $3, $4) RETURNING *`;
   const {
-    rows: [announcements],
+    rows: [newAnnouncements],
   } = await pool.query(sql, [date, announcement, userId, announcement_type]);
-  return announcements;
+  return newAnnouncements;
 }
 
 export async function getAnnouncements() {
@@ -23,7 +23,9 @@ export async function getAnnouncements() {
 export async function getAnnouncementById(id) {
   const sql = `SELECT * FROM announcements
     WHERE id = $1`;
-  const { rows: announcement } = await pool.query(sql, [id]);
+  const {
+    rows: [announcement],
+  } = await pool.query(sql, [id]);
   return announcement;
 }
 
@@ -34,21 +36,24 @@ export async function updateAnnouncementById(
   userId,
   announcement_type
 ) {
-  const sql = `UPDATE announcments
+  const sql = `UPDATE announcements
     SET
         date = $2,
         announcement = $3,
-        userId = $4,
+        user_id = $4,
         announcement_type = $5
     WHERE id = $1 RETURNING *    
     `;
-  const { rows: announcement } = await pool.query(sql, [
+  const {
+    rows: [updateAnnouncement],
+  } = await pool.query(sql, [
     id,
     date,
     announcement,
     userId,
     announcement_type,
   ]);
+  return updateAnnouncement;
 }
 
 export async function deleteAnnouncementById(id) {
