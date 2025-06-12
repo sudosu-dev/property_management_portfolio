@@ -1,0 +1,82 @@
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS property CASCADE;
+DROP TABLE IF EXISTS units CASCADE;
+DROP TABLE IF EXISTS annoucements CASCADE;
+DROP TABLE IF EXISTS rent_payments CASCADE;
+DROP TABLE IF EXISTS utility_information CASCADE;
+DROP TABLE IF EXISTS maintenance_requests CASCADE;
+DROP TABLE IF EXISTS maintenance_photos CASCADE;
+
+CREATE TABLE users(
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(255) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    unit INTEGER REFERENCES units(id) NOT NULL,
+    is_manager BOOLEAN NOT NULL,
+    is_current_user BOOLEAN NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE property(
+    property_id SERIAL NOT NULL,
+);
+
+CREATE TABLE units(
+    id SERIAL PRIMARY KEY, 
+    property_id INTEGER REFERENCES property(id) NOT NULL, 
+    unit_number INTEGER UNIQUE NOT NULL,
+    rent_amount DECIMAL(10, 2),
+    notes TEXT,
+    tenants VARCHAR(255)
+);
+
+CREATE TABLE announcements(
+    id SERIAL PRIMARY KEY,
+    date DATE NOT NULL,
+    announcment TEXT NOT NULL,
+    owner VARCHAR(255) NOT NULL,
+    announcment_type VARCHAR(255) NOT NULL 
+);
+
+CREATE TABLE rent_payments(
+    id SERIAL PRIMARY KEY,
+    created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    due_date DATE NOT NULL,
+    paid_date TIMESTAMP,
+    reicept_number VARCHAR(50),
+    payment_amount DECIMAL(10, 2) NOT NULL,
+    user_id INTEGER REFERENCES users(id) NOT NULL,
+    unit INTEGER REFERENCES units(id) NOT NULL
+);
+
+CREATE TABLE utility_information(
+    user_id INTEGER REFERENCES users(id) NOT NULL PRIMARY KEY,
+    water_cost DECIMAL(10, 2),
+    water_usage DECIMAL,
+    electric_usage DECIMAL,
+    electric_cost DECIMAL(10, 2),
+    gas_cost DECIMAL(10, 2),
+    gas_usage DECIMAL,
+    due_date DATE,
+    paid_date TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE maintenance_requests(
+    id SERIAL PRIMARY KEY,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    img_url TEXT,
+    information TEXT NOT NULL,
+    user_id INTEGER REFERENCES users(id) NOT NULL,
+    completed BOOLEAN NOT NULL DEFAULT false,
+    unit_number INTEGER REFERENCES units(id) NOT NULL, 
+    completed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE maintenance_photos (
+    id SERIAL PRIMARY KEY,
+    maintenance_request_id INTEGER REFERENCES maintenance_requests(id) ON DELETE CASCADE, 
+    photo_url VARCHAR(500) NOT NULL,
+    uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
