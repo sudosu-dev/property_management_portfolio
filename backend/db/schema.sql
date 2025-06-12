@@ -18,13 +18,13 @@ CREATE TABLE users(
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE property(
+CREATE TABLE properties(
     property_id SERIAL NOT NULL,
 );
 
 CREATE TABLE units(
     id SERIAL PRIMARY KEY, 
-    property_id INTEGER REFERENCES property(id) NOT NULL, 
+    property_id INTEGER REFERENCES properties(id) NOT NULL, 
     unit_number INTEGER UNIQUE NOT NULL,
     rent_amount DECIMAL(10, 2),
     notes TEXT,
