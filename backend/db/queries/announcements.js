@@ -3,14 +3,14 @@ import pool from "#db/client";
 export async function createAnnouncements(
   date,
   announcement,
-  owner,
+  userId,
   announcement_type
 ) {
-  const sql = `INSERT INTO announcements(date, announcement, owner, announcement_type)
+  const sql = `INSERT INTO announcements(date, announcement, user_id, announcement_type)
     VALUES ($1, $2, $3, $4) RETURNING *`;
   const {
     rows: [announcements],
-  } = await pool.query(sql, [date, announcement, owner, announcement_type]);
+  } = await pool.query(sql, [date, announcement, userId, announcement_type]);
   return announcements;
 }
 
@@ -25,4 +25,33 @@ export async function getAnnouncementById(id) {
     WHERE id = $1`;
   const { rows: announcement } = await pool.query(sql, [id]);
   return announcement;
+}
+
+export async function updateAnnouncementById(
+  id,
+  date,
+  announcement,
+  userId,
+  announcement_type
+) {
+  const sql = `UPDATE announcments
+    SET
+        date = $2,
+        announcement = $3,
+        userId = $4,
+        announcement_type = $5
+    WHERE id = $1 RETURNING *    
+    `;
+  const { rows: announcement } = await pool.query(sql, [
+    id,
+    date,
+    announcement,
+    userId,
+    announcement_type,
+  ]);
+}
+
+export async function deleteAnnouncementById(id) {
+  const sql = `DELETE FROM announcements WHERE id = $1`;
+  await pool.query(sql, [id]);
 }
