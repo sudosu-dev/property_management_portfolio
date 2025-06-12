@@ -8,6 +8,8 @@ export async function createAnnouncements(
 ) {
   const sql = `INSERT INTO announcements(date, announcement, owner, announcement_type)
     VALUES ($1, $2, $3, $4) RETURNING *`;
-    const {rows: [announcements]} = await = pool.query(sql, [date, announcement, owner, announcement_type]);
-return announcements;
+  const {
+    rows: [announcements],
+  } = await pool.query(sql, [date, announcement, owner, announcement_type]);
+  return announcements;
 }
