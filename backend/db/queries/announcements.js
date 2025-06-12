@@ -3,19 +3,19 @@ import pool from "#db/client";
 export async function createAnnouncements(
   date,
   announcement,
-  userId,
+  user_id,
   announcement_type
 ) {
   const sql = `INSERT INTO announcements(date, announcement, user_id, announcement_type)
     VALUES ($1, $2, $3, $4) RETURNING *`;
   const {
-    rows: [newAnnouncements],
-  } = await pool.query(sql, [date, announcement, userId, announcement_type]);
-  return newAnnouncements;
+    rows: [newAnnouncement],
+  } = await pool.query(sql, [date, announcement, user_id, announcement_type]);
+  return newAnnouncement;
 }
 
 export async function getAnnouncements() {
-  const sql = `SELECT * FROM announcements`;
+  const sql = `SELECT * FROM announcements ORDER BY date DESC`;
   const { rows: announcements } = await pool.query(sql);
   return announcements;
 }
@@ -33,7 +33,7 @@ export async function updateAnnouncementById(
   id,
   date,
   announcement,
-  userId,
+  user_id,
   announcement_type
 ) {
   const sql = `UPDATE announcements
@@ -50,7 +50,7 @@ export async function updateAnnouncementById(
     id,
     date,
     announcement,
-    userId,
+    user_id,
     announcement_type,
   ]);
   return updateAnnouncement;
