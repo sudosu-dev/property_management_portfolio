@@ -48,9 +48,9 @@ export async function getUtility_informationByUserId(user_id) {
   return utility_information;
 }
 
-export async function getAllUtility_information(user_id) {
+export async function getAllUtility_information() {
   const sql = `SELECT * FROM utility_information`;
-  const { rows: utility_information } = await pool.query(sql, [user_id]);
+  const { rows: utility_information } = await pool.query(sql);
   return utility_information;
 }
 
