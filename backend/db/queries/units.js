@@ -1,4 +1,4 @@
-import db from "#db/client";
+import pool from "#db/client";
 
 export async function createUnit({
   propertyId,
@@ -14,13 +14,19 @@ export async function createUnit({
   `;
   const {
     rows: [unit],
-  } = await db.query(sql, [propertyId, unitNumber, rentAmount, notes, tenants]);
+  } = await pool.query(sql, [
+    propertyId,
+    unitNumber,
+    rentAmount,
+    notes,
+    tenants,
+  ]);
   return unit;
 }
 
 export async function getUnits() {
   const sql = `SELECT * FROM units`;
-  const { rows } = await db.query(sql);
+  const { rows } = await pool.query(sql);
   return rows;
 }
 
@@ -31,7 +37,7 @@ export async function getUnitsByPropertyId(propertyId) {
     FROM units
     JOIN properties ON units.property_id = properties.property_id;
     `;
-  const { rows } = await db.query(sql, [propertyId]);
+  const { rows } = await pool.query(sql, [propertyId]);
   return rows;
 }
 
@@ -48,7 +54,7 @@ export async function getUnitsByPropertyIdAndUnitNumber(
     `;
   const {
     rows: [unit],
-  } = await db.query(sql, [propertyId, unitNumber]);
+  } = await pool.query(sql, [propertyId, unitNumber]);
   return unit;
 }
 
@@ -65,7 +71,7 @@ export async function getUnitByPropertyIdAndTenantName(
     `;
   const {
     rows: [unit],
-  } = await db.query(sql, [propertyId, residentName]);
+  } = await pool.query(sql, [propertyId, residentName]);
   return unit;
 }
 
@@ -75,6 +81,6 @@ export async function deleteUnit(id) {
   const sql = `DELETE FROM units WHERE id = $1 RETURNING *`;
   const {
     rows: [unit],
-  } = await db.query(sql, [id]);
+  } = await pool.query(sql, [id]);
   return unit;
 }

@@ -1,4 +1,4 @@
-import db from "#db/client";
+import pool from "#db/client";
 
 export async function createProperty({ propertyName }) {
   const sql = `
@@ -8,13 +8,13 @@ export async function createProperty({ propertyName }) {
   `;
   const {
     rows: [property],
-  } = await db.query(sql, [propertyName]);
+  } = await pool.query(sql, [propertyName]);
   return property;
 }
 
 export async function getProperties() {
   const sql = `SELECT * FROM properties`;
-  const { rows } = await db.query(sql);
+  const { rows } = await pool.query(sql);
   return rows;
 }
 
@@ -22,7 +22,7 @@ export async function getPropertyById(propertyId) {
   const sql = `SELECT * FROM properties WHERE property_id = $1`;
   const {
     rows: [property],
-  } = await db.query(sql, [propertyId]);
+  } = await pool.query(sql, [propertyId]);
   return property;
 }
 
@@ -30,7 +30,7 @@ export async function getPropertyByName(propertyName) {
   const sql = `SELECT * FROM properties WHERE property_name = $1`;
   const {
     rows: [property],
-  } = await db.query(sql, [propertyName]);
+  } = await pool.query(sql, [propertyName]);
   return property;
 }
 
@@ -42,6 +42,6 @@ export async function deleteProperty(propertyId) {
   `;
   const {
     rows: [deletedProperty],
-  } = await db.query(sql, [propertyId]);
+  } = await pool.query(sql, [propertyId]);
   return deletedProperty;
 }
