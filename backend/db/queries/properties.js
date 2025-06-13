@@ -19,7 +19,7 @@ export async function getProperties() {
 }
 
 export async function getPropertyById(propertyId) {
-  const sql = `SELECT * FROM properties WHERE property_id = $1`;
+  const sql = `SELECT * FROM properties WHERE id = $1`;
   const {
     rows: [property],
   } = await pool.query(sql, [propertyId]);
@@ -37,7 +37,7 @@ export async function getPropertyByName(propertyName) {
 export async function deleteProperty(propertyId) {
   const sql = `
     DELETE FROM properties
-    WHERE property_id = $1
+    WHERE id = $1
     RETURNING *;
   `;
   const {

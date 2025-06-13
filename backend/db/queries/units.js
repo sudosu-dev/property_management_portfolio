@@ -35,7 +35,7 @@ export async function getUnitsByPropertyId(propertyId) {
     SELECT units.*, 
     properties.property_name
     FROM units
-    JOIN properties ON units.property_id = properties.property_id;
+    JOIN properties ON units.property_id = properties.id;
     `;
   const { rows } = await pool.query(sql, [propertyId]);
   return rows;
@@ -49,7 +49,7 @@ export async function getUnitsByPropertyIdAndUnitNumber(
     SELECT units.*, 
     properties.property_name
     FROM units
-    JOIN properties ON units.property_id = properties.property_id
+    JOIN properties ON units.property_id = properties.id
     WHERE units.property_id = $1 AND units.unit_number = $2;
     `;
   const {
@@ -66,7 +66,7 @@ export async function getUnitByPropertyIdAndTenantName(
     SELECT units.*, 
     properties.property_name
     FROM units
-    JOIN properties ON units.property_id = properties.property_id
+    JOIN properties ON units.property_id = properties.id
     WHERE units.property_id = $1 AND units.tenants ILIKE $2;
     `;
   const {
