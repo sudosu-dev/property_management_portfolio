@@ -7,9 +7,8 @@ DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS units CASCADE;
 DROP TABLE IF EXISTS properties CASCADE;
 
--- Create tables in dependency order
 CREATE TABLE properties(
-    id SERIAL PRIMARY KEY,  -- Fixed: was property_id, but referenced as id
+    id SERIAL PRIMARY KEY,
     property_name VARCHAR(255)
 );
 
@@ -39,8 +38,8 @@ CREATE TABLE announcements(
     id SERIAL PRIMARY KEY,
     date DATE NOT NULL,
     announcement TEXT NOT NULL,
-    owner VARCHAR(255) NOT NULL,
-    announcement_type VARCHAR(255) NOT NULL 
+    user_id INTEGER REFERENCES users(id) NOT NULL,
+    announcement_type VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE rent_payments(

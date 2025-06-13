@@ -1,29 +1,35 @@
 import express from "express";
-import userRouter from "#api/users";
-import getUserFromToken from "#middleware/getUserFromToken";
-console.log("userRouter imported:", userRouter); // Add this line
-
 const app = express();
-const PORT = process.env.PORT || 3000;
+
+import userRouter from "#api/users";
+import announcementsRouter from "#api/announcements";
+import getUserFromToken from "#middleware/getUserFromToken";
 
 app.use(express.json());
 app.use(getUserFromToken);
 
-// Add this test route
-app.get("/test", (req, res) => {
-  res.json({ message: "Server is working!" });
+app.use("/", (req, res) => {
+  res.status(200).send("Property Management Capstone!");
 });
 
 app.use("/users", userRouter);
+app.use("/announcements", announcementsRouter);
+
+app.use((err, req, res, next) => {
+  switch (err.code) {
+    case "22P02":
+      return res.status(400).send(err.message);
+    case "23505":
+    case "23503":
+      return res.status(400).send(err.detail);
+    default:
+      next(err);
+  }
+});
+
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).send("Sorry! Something went wrong.");
+});
 
 export default app;
-
-// import express from "express";
-
-// const app = express();
-
-// app.get("/test", (req, res) => {
-//   res.json({ message: "Basic Express is working!" });
-// });
-
-// export default app;
