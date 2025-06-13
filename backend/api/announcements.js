@@ -24,6 +24,11 @@ router
   .post(
     requireBody(["date", "announcement", "announcement_type"]),
     async (req, res) => {
+      if (!req.user.is_manager) {
+        return res
+          .status(403)
+          .send("Sorry, only managers can make announcements.");
+      }
       const { date, announcement, announcement_type } = req.body;
       const user_id = req.user.id;
       const newAnnouncement = await createAnnouncements(
@@ -51,6 +56,9 @@ router
   .put(
     requireBody(["date", "announcement", "announcement_type"]),
     async (req, res) => {
+      if (!req.user.is_manager) {
+        return res.status(403).send("Only managers can update announcements!");
+      }
       if (req.announcement.user_id !== req.user.id) {
         return res
           .status(403)
@@ -69,6 +77,9 @@ router
     }
   )
   .delete(async (req, res) => {
+    if (!req.user.is_manager) {
+      return res.status(403).send("Only managers can delete announcements!");
+    }
     if (req.announcement.user_id !== req.user.id) {
       return res.status(403).send("Unauthorized to delete this announcement!");
     }

@@ -15,13 +15,13 @@ export async function createAnnouncements(
 }
 
 export async function getAnnouncements() {
-  const sql = `SELECT * FROM announcements ORDER BY date DESC`;
+  const sql = `SELECT id, date, announcement, announcement_type FROM announcements ORDER BY date DESC`;
   const { rows: announcements } = await pool.query(sql);
   return announcements;
 }
 
 export async function getAnnouncementById(id) {
-  const sql = `SELECT * FROM announcements
+  const sql = `SELECT id, date, announcement, announcement_type FROM announcements
     WHERE id = $1`;
   const {
     rows: [announcement],
@@ -33,15 +33,13 @@ export async function updateAnnouncementById(
   id,
   date,
   announcement,
-  user_id,
   announcement_type
 ) {
   const sql = `UPDATE announcements
     SET
         date = $2,
         announcement = $3,
-        user_id = $4,
-        announcement_type = $5
+        announcement_type = $4
     WHERE id = $1 RETURNING *    
     `;
   const {
