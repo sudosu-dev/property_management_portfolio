@@ -6,6 +6,13 @@ export const getUserByIdForAuth = async (id) => {
   return result.rows[0] || null;
 };
 
+export async function getUserById(id) {
+  const sql = `SELECT * FROM users WHERE id = $1`;
+  const {
+    rows: [user],
+  } = await pool.query(sql, [id]);
+  return user;
+}
 // POST /users and /users/register
 // create user
 export async function createUser({
@@ -63,7 +70,7 @@ export async function getUserByUsernameAndPassword(username, password) {
 // - you have to be logged in (we can handle that here or in the route or in both places).
 // - a user can only view their own profile
 // - conditional sql statements based on role
-export async function getUserById(userId, requestingUser) {
+export async function getUserByIdSecure(userId, requestingUser) {
   let sql;
 
   if (!requestingUser) {

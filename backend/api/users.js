@@ -7,7 +7,7 @@ import { createToken } from "#utilities/jwt";
 import {
   createUser,
   getUserByUsernameAndPassword,
-  getUserById,
+  getUserByIdSecure,
   updateUserById,
   deleteUser,
   getAllUsers,
@@ -75,7 +75,7 @@ router
   .route("/:id")
   .get(requireUser, async (req, res) => {
     try {
-      const user = await getUserById(req.params.id, req.user);
+      const user = await getUserByIdSecure(req.params.id, req.user);
       if (!user) {
         return res.status(404).json({ error: "User not found." });
       }
