@@ -1,12 +1,10 @@
 import app from "#app";
-import db from "#db/client";
+import pool from "#db/client";
 
 const PORT = process.env.PORT ?? 3000;
 
-await db.connect();
+await pool.connect();
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}...`);
 });
-
-// === TO DO === update to use pool

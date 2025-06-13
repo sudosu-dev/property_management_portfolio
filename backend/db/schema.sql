@@ -1,11 +1,25 @@
 DROP TABLE IF EXISTS users CASCADE;
-DROP TABLE IF EXISTS property CASCADE;
+DROP TABLE IF EXISTS properties CASCADE;
 DROP TABLE IF EXISTS units CASCADE;
 DROP TABLE IF EXISTS announcements CASCADE;
 DROP TABLE IF EXISTS rent_payments CASCADE;
 DROP TABLE IF EXISTS utility_information CASCADE;
 DROP TABLE IF EXISTS maintenance_requests CASCADE;
 DROP TABLE IF EXISTS maintenance_photos CASCADE;
+
+CREATE TABLE properties(
+    id SERIAL NOT NULL PRIMARY KEY,
+    property_name VARCHAR (255)
+);
+
+CREATE TABLE units(
+    id SERIAL PRIMARY KEY, 
+    property_id INTEGER REFERENCES properties(id) NOT NULL, 
+    unit_number INTEGER UNIQUE NOT NULL,
+    rent_amount DECIMAL(10, 2),
+    notes TEXT,
+    tenants VARCHAR(255)
+);
 
 CREATE TABLE users(
     id SERIAL PRIMARY KEY,
@@ -18,26 +32,12 @@ CREATE TABLE users(
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE properties(
-    property_id SERIAL NOT NULL,
-    property_name VARCHAR(255)
-);
-
-CREATE TABLE units(
-    id SERIAL PRIMARY KEY, 
-    property_id INTEGER REFERENCES properties(id) NOT NULL, 
-    unit_number INTEGER UNIQUE NOT NULL,
-    rent_amount DECIMAL(10, 2),
-    notes TEXT,
-    tenants VARCHAR(255)
-);
-
 CREATE TABLE announcements(
     id SERIAL PRIMARY KEY,
     date DATE NOT NULL,
     announcement TEXT NOT NULL,
-    owner VARCHAR(255) NOT NULL,
-    announcement_type VARCHAR(255) NOT NULL 
+    user_id INTEGER REFERENCES users(id) NOT NULL,
+    announcement_type VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE rent_payments(
