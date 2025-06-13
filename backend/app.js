@@ -1,7 +1,7 @@
 import express from "express";
 const app = express();
-export default app;
 
+import userRouter from "#api/users";
 import announcementsRouter from "#api/announcements";
 import getUserFromToken from "#middleware/getUserFromToken";
 
@@ -12,16 +12,14 @@ app.use("/", (req, res) => {
   res.status(200).send("Property Management Capstone!");
 });
 
+app.use("/users", userRouter);
 app.use("/announcements", announcementsRouter);
 
 app.use((err, req, res, next) => {
   switch (err.code) {
-    // Invalid type
     case "22P02":
       return res.status(400).send(err.message);
-    // Unique constraint violation
     case "23505":
-    // Foreign key violation
     case "23503":
       return res.status(400).send(err.detail);
     default:
@@ -33,3 +31,5 @@ app.use((err, req, res, next) => {
   console.error(err);
   res.status(500).send("Sorry! Something went wrong.");
 });
+
+export default app;

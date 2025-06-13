@@ -1,15 +1,15 @@
-DROP TABLE IF EXISTS users CASCADE;
-DROP TABLE IF EXISTS properties CASCADE;
-DROP TABLE IF EXISTS units CASCADE;
-DROP TABLE IF EXISTS announcements CASCADE;
-DROP TABLE IF EXISTS rent_payments CASCADE;
-DROP TABLE IF EXISTS utility_information CASCADE;
-DROP TABLE IF EXISTS maintenance_requests CASCADE;
 DROP TABLE IF EXISTS maintenance_photos CASCADE;
+DROP TABLE IF EXISTS maintenance_requests CASCADE;
+DROP TABLE IF EXISTS utility_information CASCADE;
+DROP TABLE IF EXISTS rent_payments CASCADE;
+DROP TABLE IF EXISTS announcements CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS units CASCADE;
+DROP TABLE IF EXISTS properties CASCADE;
 
 CREATE TABLE properties(
-    id SERIAL NOT NULL PRIMARY KEY,
-    property_name VARCHAR (255)
+    id SERIAL PRIMARY KEY,
+    property_name VARCHAR(255)
 );
 
 CREATE TABLE units(
@@ -25,6 +25,8 @@ CREATE TABLE users(
     id SERIAL PRIMARY KEY,
     username VARCHAR(255) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
     email VARCHAR(255) NOT NULL,
     unit INTEGER REFERENCES units(id) NOT NULL,
     is_manager BOOLEAN NOT NULL,
