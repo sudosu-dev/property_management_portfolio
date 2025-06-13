@@ -1,6 +1,11 @@
 import pool from "#db/client";
 import bcrypt from "bcrypt";
 
+export const getUserByIdForAuth = async (id) => {
+  const result = await pool.query("SELECT * FROM users WHERE id = $1", [id]);
+  return result.rows[0] || null;
+};
+
 // POST /users and /users/register
 // create user
 export async function createUser({
@@ -144,7 +149,7 @@ export async function updateUserById(userId, updates, requestingUser) {
 
   const sql = `
     UPDATE users
-    SET ${fields.join(", ")}, updated_at = CURRENT_TIMESTAMP
+    SET ${fields.join(", ")}
     WHERE id = $${counter}
     RETURNING id, username, email, unit, is_manager, created_at
     `;
@@ -172,7 +177,7 @@ export async function deleteUser(userId, requestingUser) {
 
   const sql = `
     UPDATE users
-    SET is_current_user = false, updated_at = CURRENT_TIMESTAMP
+    SET is_current_user = false
     WHERE id = $1 AND is_current_user = true
     `;
 

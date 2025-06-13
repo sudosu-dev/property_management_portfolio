@@ -20,7 +20,7 @@ router
     requireBody(["username", "password", "email", "unit"]),
     async (req, res) => {
       try {
-        // spread /set to always set isManager to false for user registration
+        // spread & copy to always set isManager to false for user role
         const userData = { ...req.body, isManager: false };
         const user = await createUser(userData);
         const token = createToken({ id: user.id });
@@ -87,7 +87,7 @@ router
   })
   .put(
     requireUser,
-    requireBody(["email", "phone", "unit", "isManager", "isCurrentUser"]),
+    requireBody(["email", "unit", "isManager", "isCurrentUser"]),
     async (req, res) => {
       try {
         const user = await updateUserById(req.params.id, req.body, req.user);

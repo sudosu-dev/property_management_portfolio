@@ -1,25 +1,15 @@
-DROP TABLE IF EXISTS users CASCADE;
-DROP TABLE IF EXISTS property CASCADE;
-DROP TABLE IF EXISTS units CASCADE;
-DROP TABLE IF EXISTS announcements CASCADE;
-DROP TABLE IF EXISTS rent_payments CASCADE;
-DROP TABLE IF EXISTS utility_information CASCADE;
-DROP TABLE IF EXISTS maintenance_requests CASCADE;
 DROP TABLE IF EXISTS maintenance_photos CASCADE;
+DROP TABLE IF EXISTS maintenance_requests CASCADE;
+DROP TABLE IF EXISTS utility_information CASCADE;
+DROP TABLE IF EXISTS rent_payments CASCADE;
+DROP TABLE IF EXISTS announcements CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS units CASCADE;
+DROP TABLE IF EXISTS properties CASCADE;
 
-CREATE TABLE users(
-    id SERIAL PRIMARY KEY,
-    username VARCHAR(255) UNIQUE NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    unit INTEGER REFERENCES units(id) NOT NULL,
-    is_manager BOOLEAN NOT NULL,
-    is_current_user BOOLEAN NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
+-- Create tables in dependency order
 CREATE TABLE properties(
-    property_id SERIAL NOT NULL,
+    id SERIAL PRIMARY KEY,  -- Fixed: was property_id, but referenced as id
     property_name VARCHAR(255)
 );
 
@@ -30,6 +20,17 @@ CREATE TABLE units(
     rent_amount DECIMAL(10, 2),
     notes TEXT,
     tenants VARCHAR(255)
+);
+
+CREATE TABLE users(
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(255) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    unit INTEGER REFERENCES units(id) NOT NULL,
+    is_manager BOOLEAN NOT NULL,
+    is_current_user BOOLEAN NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE announcements(
