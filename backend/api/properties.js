@@ -1,23 +1,23 @@
 import express from "express";
+const router = express.Router();
+
 import {
   createProperty,
+  deleteProperty,
   getProperties,
   getPropertyById,
-  getPropertyByName,
-  deleteProperty,
-} from "#db/queries/properties.js";
+} from "#db/queries/properties";
 
-import requireUser from "#middleware/require-user.js";
-import requireBody from "#middleware/require-body.js";
+import requireUser from "#middleware/require-user";
 
-const router = express.Router();
+router.use(requireUser);
 
 router.get("/", async (req, res) => {
   const properties = await getProperties();
   res.json(properties);
 });
 
-router.get("/id/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   const property = await getPropertyById(req.params.id);
   if (property) {
     res.json(property);
@@ -26,26 +26,24 @@ router.get("/id/:id", async (req, res) => {
   }
 });
 
-router.get("/name/:name", async (req, res) => {
-  const property = await getPropertyByName(req.params.name);
-  if (property) {
-    res.json(property);
-  } else {
-    res.status(404).json({ error: "Property not found" });
+router.post("/", async (req, res) => {
+  if (!req.user.is_manager) {
+    return res
+      .status(403)
+      .json({ error: "Only managers can create properties" });
   }
+
+  const property = await createProperty(req.body);
+  res.status(201).json(property);
 });
 
-router.post(
-  "/",
-  requireUser,
-  requireBody(["propertyName"]),
-  async (req, res) => {
-    const property = await createProperty(req.body);
-    res.status(201).json(property);
+router.delete("/:id", async (req, res) => {
+  if (!req.user.is_manager) {
+    return res
+      .status(403)
+      .json({ error: "Only managers can delete properties" });
   }
-);
 
-router.delete("/:id", requireUser, async (req, res) => {
   const deleted = await deleteProperty(req.params.id);
   if (deleted) {
     res.json(deleted);
