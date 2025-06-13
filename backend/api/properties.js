@@ -8,7 +8,7 @@ import {
   getPropertyById,
 } from "#db/queries/properties";
 
-import requireUser from "#middleware/require-user";
+import requireUser from "#middleware/requireUser";
 
 router.use(requireUser);
 
