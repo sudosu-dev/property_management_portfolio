@@ -65,12 +65,10 @@ router
           .send("Unauthorized to update this announcement!");
       }
       const { date, announcement, announcement_type } = req.body;
-      const user_id = req.user.id;
       const updateAnnouncement = await updateAnnouncementById(
         req.announcement.id,
         date,
         announcement,
-        user_id,
         announcement_type
       );
       res.send(updateAnnouncement);

@@ -44,13 +44,7 @@ export async function updateAnnouncementById(
     `;
   const {
     rows: [updateAnnouncement],
-  } = await pool.query(sql, [
-    id,
-    date,
-    announcement,
-    user_id,
-    announcement_type,
-  ]);
+  } = await pool.query(sql, [id, date, announcement, announcement_type]);
   return updateAnnouncement;
 }
 
