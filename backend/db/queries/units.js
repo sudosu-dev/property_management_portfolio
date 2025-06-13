@@ -35,7 +35,8 @@ export async function getUnitsByPropertyId(propertyId) {
     SELECT units.*, 
     properties.property_name
     FROM units
-    JOIN properties ON units.property_id = properties.id;
+    JOIN properties ON units.property_id = properties.id
+    WHERE properties.id = $1;
     `;
   const { rows } = await pool.query(sql, [propertyId]);
   return rows;
