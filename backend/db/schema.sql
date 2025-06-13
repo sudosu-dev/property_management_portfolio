@@ -28,7 +28,7 @@ CREATE TABLE users(
     email VARCHAR(255) NOT NULL,
     unit INTEGER REFERENCES units(id) NOT NULL,
     is_manager BOOLEAN NOT NULL,
-    -- is_current_user BOOLEAN NOT NULL,
+    is_current_user BOOLEAN NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
