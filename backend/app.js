@@ -10,14 +10,14 @@ import getUserFromToken from "#middleware/getUserFromToken";
 app.use(express.json());
 app.use(getUserFromToken);
 
-app.use("/", (req, res) => {
-  res.status(200).send("Property Management Capstone!");
-});
-
 app.use("/users", userRouter);
 app.use("/announcements", announcementsRouter);
 app.use("/units", unitsRouter);
 app.use("/properties", propertiesRouter);
+
+app.use("/", (req, res) => {
+  res.status(200).send("Property Management Capstone!");
+});
 
 app.use((err, req, res, next) => {
   switch (err.code) {
