@@ -18,6 +18,8 @@ export async function getUserById(id) {
 export async function createUser({
   username,
   password,
+  firstName,
+  lastName,
   email,
   unit,
   isManager,
@@ -28,12 +30,20 @@ export async function createUser({
   // to false at that point). If you want to be able to create a user who isn't active
   // then change true to $6 in values
   const sql = `
-    INSERT INTO users (username, password_hash, email, unit, is_manager, is_current_user )
-    VALUES ($1, $2, $3, $4, $5, true)
-    RETURNING id, username, email, unit, is_manager, created_at
+    INSERT INTO users (username, password_hash, first_name, last_name, email, unit, is_manager, is_current_user )
+    VALUES ($1, $2, $3, $4, $5, $6, $7, true)
+    RETURNING id, username, first_name, last_name, email, unit, is_manager, created_at
     `;
   const hashedPassword = await bcrypt.hash(password, 10);
-  const values = [username, hashedPassword, email, unit, isManager];
+  const values = [
+    username,
+    hashedPassword,
+    firstName,
+    lastName,
+    email,
+    unit,
+    isManager,
+  ];
 
   const {
     rows: [user],
@@ -83,13 +93,13 @@ export async function getUserByIdSecure(userId, requestingUser) {
 
   if (requestingUser.is_manager) {
     sql = `
-        SELECT id, username, email, unit, is_manager, is_current_user, created_at
+        SELECT id, first_name, last_name, email, unit, is_manager, is_current_user, created_at
         FROM users
         WHERE id = $1
         `;
   } else {
     sql = `
-        SELECT id, username, email, unit, is_manager, created_at
+        SELECT id, first_name, last_name, email, unit, is_manager, created_at
         FROM users
         WHERE id = $1
         `;
@@ -112,8 +122,10 @@ export async function updateUserById(userId, updates, requestingUser) {
     throw new Error("Access denied - you can only update your own profile");
   }
 
-  const userAllowedFields = ["email", "phone"];
+  const userAllowedFields = ["firstName", "lastName", "email", "phone"];
   const managerAllowedFields = [
+    "firstName",
+    "lastName",
     "email",
     "phone",
     "unit",
@@ -127,6 +139,8 @@ export async function updateUserById(userId, updates, requestingUser) {
 
   const mapToDbColumn = (key) => {
     const mapping = {
+      firstName: "first_name",
+      lastName: "last_name",
       isManager: "is_manager",
       isCurrentUser: "is_current_user",
     };
@@ -158,7 +172,7 @@ export async function updateUserById(userId, updates, requestingUser) {
     UPDATE users
     SET ${fields.join(", ")}
     WHERE id = $${counter}
-    RETURNING id, username, email, unit, is_manager, created_at
+    RETURNING id, username, first_name, last_name, email, unit, is_manager, created_at
     `;
 
   const {
@@ -202,7 +216,7 @@ export async function getAllUsers(requestingUser) {
     throw new Error("Access denied.");
   }
   const sql = `
-        SELECT id, username, email, unit, is_manager, is_current_user, created_at
+        SELECT id, username, first_name, last_name, email, unit, is_manager, is_current_user, created_at
         FROM users
         ORDER BY username
     `;

@@ -17,7 +17,14 @@ import {
 router
   .route("/register")
   .post(
-    requireBody(["username", "password", "email", "unit"]),
+    requireBody([
+      "username",
+      "password",
+      "firstName",
+      "lastName",
+      "email",
+      "unit",
+    ]),
     async (req, res) => {
       try {
         // spread & copy to always set isManager to false for user role
