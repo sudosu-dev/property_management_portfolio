@@ -15,7 +15,7 @@ app.use("/announcements", announcementsRouter);
 app.use("/units", unitsRouter);
 app.use("/properties", propertiesRouter);
 
-app.use("/", (req, res) => {
+app.get("/", (req, res) => {
   res.status(200).send("Property Management Capstone!");
 });
 
