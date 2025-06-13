@@ -6,10 +6,10 @@ import {
   getUnitsByPropertyIdAndUnitNumber,
   getUnitByPropertyIdAndTenantName,
   deleteUnit,
-} from "#db/queries/units.js";
+} from "#db/queries/units";
 
-import requireUser from "#middleware/require-user.js";
-import requireBody from "#middleware/require-body.js";
+import requireUser from "#middleware/requireUser";
+import requireBody from "#middleware/requireBody";
 
 const router = express.Router();
 
