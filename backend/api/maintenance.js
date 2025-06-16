@@ -87,7 +87,11 @@ router.post(
         await Promise.all(photoPromises);
       }
 
-      res.status(201).json(newRequest);
+      const completedNewRequest = await getMaintenanceRequestById(
+        newRequest.id
+      );
+
+      res.status(201).json(completedNewRequest);
     } catch (error) {
       console.error(error);
       res.status(500).json({
