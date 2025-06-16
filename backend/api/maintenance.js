@@ -6,6 +6,10 @@ import requireBody from "#middleware/requireBody";
 import {
   createMaintenanceRequest,
   addMaintenancePhoto,
+  getMaintenanceRequests,
+  getMaintenanceRequestById,
+  updateMaintenanceRequestById,
+  updateMaintenanceRequestCompletion,
 } from "#db/queries/maintenance";
 
 const router = express.Router();
@@ -132,30 +136,65 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.put("/:id", requireBody(["completed"]), async (req, res) => {
+/**
+ * @route   PUT /maintenance/:id
+ * @desc    Update the information text of a maintenance request
+ * @access  Private (Owner or Manager only)
+ */
+router.put("/:id", requireBody(["information"]), async (req, res) => {
   try {
-    // 1. Authorize: Only managers can update requests.
+    const { id } = req.params;
+    const request = await getMaintenanceRequestById(id);
+
+    if (!request) {
+      return res.status(404).json({ error: "Maintenance request not found." });
+    }
+
+    if (!req.user.is_manager && request.user_id !== req.user.id) {
+      return res
+        .status(403)
+        .json({ error: "Forbidden: You can only update your own requests." });
+    }
+
+    const updatedRequest = await updateMaintenanceRequestById(
+      id,
+      req.body,
+      req.user
+    );
+    res.json(updatedRequest);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "An error occurred while updating the maintenance request.",
+    });
+  }
+});
+
+/**
+ * @route   PUT /maintenance/:id/completion
+ * @desc    Update the completion status of a maintenance request
+ * @access  Private (Manager only)
+ */
+router.put("/:id/completion", requireBody(["completed"]), async (req, res) => {
+  try {
     if (!req.user.is_manager) {
       return res
         .status(403)
-        .json({ error: "Forbidden: Only managers can update requests." });
+        .json({ error: "Forbidden: Only managers can update request status." });
     }
 
     const { id } = req.params;
     const { completed } = req.body;
 
-    // 2. Validate: Ensure the 'completed' value is a boolean.
     if (typeof completed !== "boolean") {
-      return res.status(400).json({
-        error:
-          "Bad Request: 'completed' field must be a boolean (true or false).",
-      });
+      return res
+        .status(400)
+        .json({ error: "Bad Request: 'completed' field must be a boolean." });
     }
+    const updatedRequest = await updateMaintenanceRequestCompletion(id, {
+      completed,
+    });
 
-    // 3. Update: Call the database function.
-    const updatedRequest = await updateMaintenanceRequest(id, { completed });
-
-    // 4. Respond: Check if the update was successful.
     if (!updatedRequest) {
       return res.status(404).json({ error: "Maintenance request not found." });
     }
