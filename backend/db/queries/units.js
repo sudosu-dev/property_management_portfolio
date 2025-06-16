@@ -76,7 +76,23 @@ export async function getUnitByPropertyIdAndTenantName(
   return unit;
 }
 
-// --- INSERT UPDATE UNIT FUNCTION HERE ---
+export async function updateUnit(id, updates) {
+  const fields = [];
+  const values = [];
+  let index = 1;
+
+  for (const key in updates) {
+    fields.push(`${key} = $${index}`);
+    values.push(updates[key]);
+    index++;
+  }
+
+  const result = await db.query(
+    `UPDATE units SET ${fields.join(", ")} WHERE id = $${index} RETURNING *`,
+    [...values, id]
+  );
+  return result.rows[0];
+}
 
 export async function deleteUnit(id) {
   const sql = `DELETE FROM units WHERE id = $1 RETURNING *`;
