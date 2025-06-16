@@ -79,7 +79,7 @@ router.post(
       });
 
       // check if any files were uploaded and if so then loop over them with map
-      // use a promise to wait until all files are uploaded before moving on
+      // ** wait until all files are uploaded before moving on **
       if (req.files && req.files.length > 0) {
         const photoPromises = req.files.map((file) => {
           return addMaintenancePhoto(newRequest.id, file.path);
