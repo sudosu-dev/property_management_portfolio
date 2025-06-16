@@ -6,6 +6,7 @@ import announcementsRouter from "#api/announcements";
 import unitsRouter from "#api/units";
 import propertiesRouter from "#api/properties";
 import getUserFromToken from "#middleware/getUserFromToken";
+import utilitiesRouter from "#api/utility_information";
 
 app.use(express.json());
 app.use(getUserFromToken);
@@ -14,6 +15,7 @@ app.use("/users", userRouter);
 app.use("/announcements", announcementsRouter);
 app.use("/units", unitsRouter);
 app.use("/properties", propertiesRouter);
+app.use("/utilities", utilitiesRouter);
 
 app.get("/", (req, res) => {
   res.status(200).send("Property Management Capstone!");
