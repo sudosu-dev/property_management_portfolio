@@ -9,17 +9,6 @@ import maintenanceRouter from "#api/maintenance";
 import getUserFromToken from "#middleware/getUserFromToken";
 import limiter from "#middleware/rateLimiter";
 
-// --- ADD THIS DEBUGGING LOGGER ---
-app.use((req, res, next) => {
-  console.log(`\n--- INCOMING REQUEST ---`);
-  console.log(`Time:   ${new Date().toLocaleTimeString()}`);
-  console.log(`Method: ${req.method}`);
-  console.log(`URL:    ${req.originalUrl}`);
-  console.log(`----------------------\n`);
-  next();
-});
-// --- END LOGGER ---
-
 app.use(limiter);
 app.use(express.json());
 app.use(getUserFromToken);

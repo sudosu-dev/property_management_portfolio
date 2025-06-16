@@ -172,6 +172,3 @@ export async function updateMaintenanceRequestById(requestId, updates, user) {
   } = await pool.query(sql, values);
   return updatedRequest;
 }
-// make an update one to all fields function
-// rename the current update function to show it just handles completion
-// have an endpoint for completion and an endpoint for updates

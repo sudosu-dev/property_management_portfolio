@@ -11,15 +11,6 @@ export default async function getUserFromToken(req, res, next) {
     const { id } = verifyToken(token);
     const user = await getUserById(id);
 
-    // --- ADD THIS LOG ---
-    // We are logging the user we found (or didn't find).
-    // We log just the id/username to keep the console clean.
-    console.log(
-      `[getUserFromToken] Attempted to find user by token. User object is:`,
-      user ? { id: user.id, username: user.username } : user
-    );
-    // --- END LOG ---
-
     req.user = user;
     next();
   } catch (e) {
@@ -27,5 +18,3 @@ export default async function getUserFromToken(req, res, next) {
     res.status(401).send("Invalid token.");
   }
 }
-
-//=== TO DO === make getUserByID function
