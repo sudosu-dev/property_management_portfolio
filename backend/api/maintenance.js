@@ -11,6 +11,7 @@ import {
   updateMaintenanceRequestById,
   updateMaintenanceRequestCompletion,
 } from "#db/queries/maintenance";
+import { imageFileFilter } from "#utilities/fileFilters";
 
 const router = express.Router();
 
@@ -29,10 +30,11 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage: storage }).array(
-  "maintenance_photos",
-  MAX_PHOTO_COUNT
-);
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 10 * 1024 * 1024 },
+  fileFilter: imageFileFilter,
+}).array("maintenance_photos", MAX_PHOTO_COUNT);
 
 router.use(requireUser);
 
