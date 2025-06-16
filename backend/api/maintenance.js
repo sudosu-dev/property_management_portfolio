@@ -40,7 +40,6 @@ router.use(requireUser);
 
 router.post(
   "/",
-  requireBody(["information"]),
   (req, res, next) => {
     upload(req, res, function (error) {
       if (error instanceof multer.MulterError) {
@@ -48,6 +47,8 @@ router.post(
           error: `File upload error: ${error.message} Max ${MAX_PHOTO_COUNT} photos allowed.`,
         });
       } else if (error) {
+        // ---------- DEBUG: NEEDS TO BE REMOVED ------------
+        console.error("MULTER ERROR HANDLER CAUGHT:", error);
         return res
           .status(500)
           .json({ error: "An unknown error occured during file upload." });
@@ -55,6 +56,7 @@ router.post(
       next();
     });
   },
+  requireBody(["information"]),
   async (req, res) => {
     try {
       let unitId;

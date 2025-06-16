@@ -51,6 +51,11 @@ export async function getMaintenanceRequests(user, filters = {}) {
     values.push(filters.unitId);
   }
 
+  if (filters.searchTerm) {
+    clauses.push(`mr.information ILIKE $${paramIndex++}`);
+    values.push(`%${filters.searchTerm}%`);
+  }
+
   const whereSql = clauses.length > 0 ? `WHERE ${clauses.join(" AND ")}` : "";
 
   const sql = `

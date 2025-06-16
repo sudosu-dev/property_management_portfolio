@@ -43,7 +43,32 @@ router
   .post(requireBody(["username", "password"]), async (req, res) => {
     try {
       const { username, password } = req.body;
+
+      // --- START OF DEBUGGING LOGS ---
+      console.log("\n--- LOGIN ATTEMPT RECEIVED ---");
+      console.log("Timestamp:", new Date().toLocaleTimeString());
+      console.log("Username from Postman:", username);
+      console.log("Password from Postman:", password);
+      // --- END OF DEBUGGING ---
+
       const user = await getUserByUsernameAndPassword(username, password);
+
+      // --- MORE DEBUGGING ---
+      if (!user) {
+        console.log(
+          "Database Result: getUserByUsernameAndPassword returned null."
+        );
+        console.log(
+          "Conclusion: No user found with that username, OR the password was incorrect."
+        );
+        console.log("--- END OF LOGIN ATTEMPT ---\n");
+        return res.status(404).json({ error: "Invalid username or password." });
+      }
+
+      console.log("Database Result: User found successfully!");
+      console.log("--- END OF LOGIN ATTEMPT ---\n");
+      // --- END OF DEBUGGING ---
+
       if (!user) {
         return res.status(404).json({ error: "Invalid username or password." });
       }
