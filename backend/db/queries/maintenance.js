@@ -37,13 +37,11 @@ export async function getMaintenanceRequests(user, filters = {}) {
   const values = [];
   const clauses = [];
 
-  // users can only see their own requests.
   if (!user.is_manager) {
     clauses.push(`mr.user_id = $${paramIndex++}`);
     values.push(user.id);
   }
 
-  // Add WHERE clauses based on provided filters.
   if (filters.completed !== undefined) {
     clauses.push(`mr.completed = $${paramIndex++}`);
     values.push(filters.completed);
@@ -93,20 +91,20 @@ export async function getMaintenanceRequestById(requestId) {
   return request;
 }
 
-export async function updateMaintenanceRequest(requestId, updates) {
+export async function updateMaintenanceRequestCompletion(requestId, updates) {
   const { completed } = updates;
-  const clauses = [];
+  const fields = [];
   const values = [];
   let counter = 1;
 
   if (completed !== undefined) {
-    clauses.push(`completed = $${counter++}`);
+    fields.push(`completed = $${counter++}`);
     values.push(completed);
-    clauses.push(`completed_at = $${counter++}`);
+    fields.push(`completed_at = $${counter++}`);
     values.push(completed ? new Date() : null);
   }
 
-  if (clauses.length === 0) {
+  if (fields.length === 0) {
     throw new Error("No valid fields to update.");
   }
 
@@ -114,7 +112,7 @@ export async function updateMaintenanceRequest(requestId, updates) {
 
   const sql = `
     UPDATE maintenance_requests
-    SET ${clauses.join(", ")}
+    SET ${fields.join(", ")}
     WHERE id = $${counter}
     RETURNING *;
   `;
@@ -124,3 +122,51 @@ export async function updateMaintenanceRequest(requestId, updates) {
   } = await pool.query(sql, values);
   return updatedRequest;
 }
+
+export async function updateMaintenanceRequestById(requestId, updates, user) {
+  const fields = [];
+  const values = [];
+  let counter = 1;
+
+  const residentAllowedFields = ["information"];
+  const managerAllowedFields = ["information", "unitNumber"];
+  const allowedFields = user.is_manager
+    ? managerAllowedFields
+    : residentAllowedFields;
+
+  const mapToDbColumn = (key) => {
+    const mapping = {
+      unitNumber: "unit_number",
+    };
+    return mapping[key] || key;
+  };
+
+  for (const key in updates) {
+    if (allowedFields.includes(key)) {
+      const dbColumn = mapToDbColumn(key);
+      fields.push(`${dbColumn} = $${counter++}`);
+      values.push(updates[key]);
+    }
+  }
+
+  if (fields.length === 0) {
+    throw new Error("No valid fields provided for update.");
+  }
+
+  values.push(requestId);
+
+  const sql = `
+    UPDATE maintenance_requests
+    SET ${fields.join(", ")}
+    WHERE id = $${counter}
+    RETURNING *;
+  `;
+
+  const {
+    rows: [updatedRequest],
+  } = await pool.query(sql, values);
+  return updatedRequest;
+}
+// make an update one to all fields function
+// rename the current update function to show it just handles completion
+// have an endpoint for completion and an endpoint for updates
