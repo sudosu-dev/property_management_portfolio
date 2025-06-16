@@ -12,7 +12,7 @@ import {
 
 const router = express.Router();
 
-router.use(requireUser); // enforce user authentication on all routes
+router.use(requireUser);
 
 // Managers only: get all rent payments
 router.get("/", async (req, res) => {
