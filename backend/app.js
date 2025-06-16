@@ -3,17 +3,21 @@ const app = express();
 
 import userRouter from "#api/users";
 import announcementsRouter from "#api/announcements";
+import unitsRouter from "#api/units";
+import propertiesRouter from "#api/properties";
 import getUserFromToken from "#middleware/getUserFromToken";
 
 app.use(express.json());
 app.use(getUserFromToken);
 
-app.use("/", (req, res) => {
-  res.status(200).send("Property Management Capstone!");
-});
-
 app.use("/users", userRouter);
 app.use("/announcements", announcementsRouter);
+app.use("/units", unitsRouter);
+app.use("/properties", propertiesRouter);
+
+app.get("/", (req, res) => {
+  res.status(200).send("Property Management Capstone!");
+});
 
 app.use((err, req, res, next) => {
   switch (err.code) {

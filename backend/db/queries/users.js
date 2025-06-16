@@ -88,7 +88,7 @@ export async function getUserByIdSecure(userId, requestingUser) {
   }
 
   if (!requestingUser.is_manager && requestingUser.id !== parseInt(userId)) {
-    throw new Error("Acces denied - you can only view your own profile.");
+    throw new Error("Access denied - you can only view your own profile.");
   }
 
   if (requestingUser.is_manager) {
