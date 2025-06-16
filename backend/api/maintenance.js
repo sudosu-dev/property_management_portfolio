@@ -72,6 +72,8 @@ router.post(
         unitId: unitId,
       });
 
+      // check if any files were uploaded and if so then loop over them with map
+      // use a promise to wait until all files are uploaded before moving on
       if (req.files && req.files.length > 0) {
         const photoPromises = req.files.map((file) => {
           return addMaintenancePhoto(newRequest.id, file.path);
@@ -88,5 +90,83 @@ router.post(
     }
   }
 );
+
+router.get("/", async (req, res) => {
+  try {
+    // We pass the logged-in user and any query parameters (e.g., /maintenance?completed=false)
+    // directly to our database function. It will handle all the logic.
+    const requests = await getMaintenanceRequests(req.user, req.query);
+    res.json(requests);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "An error occurred while fetching maintenance requests.",
+    });
+  }
+});
+
+router.get("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const request = await getMaintenanceRequestById(id);
+
+    // First, check if a request with that ID even exists.
+    if (!request) {
+      return res.status(404).json({ error: "Maintenance request not found." });
+    }
+
+    // Next, check for permission.
+    // Allow access if the user is a manager OR if the request's user_id matches the logged-in user's id.
+    if (!req.user.is_manager && request.user_id !== req.user.id) {
+      // To avoid revealing that the request exists, we send a 404 Not Found instead of a 403 Forbidden.
+      return res.status(404).json({ error: "Maintenance request not found." });
+    }
+
+    // If all checks pass, send the request.
+    res.json(request);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "An error occurred while fetching the maintenance request.",
+    });
+  }
+});
+
+router.put("/:id", requireBody(["completed"]), async (req, res) => {
+  try {
+    // 1. Authorize: Only managers can update requests.
+    if (!req.user.is_manager) {
+      return res
+        .status(403)
+        .json({ error: "Forbidden: Only managers can update requests." });
+    }
+
+    const { id } = req.params;
+    const { completed } = req.body;
+
+    // 2. Validate: Ensure the 'completed' value is a boolean.
+    if (typeof completed !== "boolean") {
+      return res.status(400).json({
+        error:
+          "Bad Request: 'completed' field must be a boolean (true or false).",
+      });
+    }
+
+    // 3. Update: Call the database function.
+    const updatedRequest = await updateMaintenanceRequest(id, { completed });
+
+    // 4. Respond: Check if the update was successful.
+    if (!updatedRequest) {
+      return res.status(404).json({ error: "Maintenance request not found." });
+    }
+
+    res.json(updatedRequest);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "An error occurred while updating the maintenance request.",
+    });
+  }
+});
 
 export default router;
