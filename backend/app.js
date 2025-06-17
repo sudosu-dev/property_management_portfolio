@@ -12,8 +12,11 @@ import maintenanceRouter from "#api/maintenance";
 import getUserFromToken from "#middleware/getUserFromToken";
 import limiter from "#middleware/rateLimiter";
 
-app.use(limiter);
+import cors from "cors";
+
+app.use(cors());
 app.use(express.json());
+app.use(limiter);
 app.use(getUserFromToken);
 
 app.use("/users", userRouter);
