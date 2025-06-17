@@ -6,7 +6,7 @@ export const imageFileFilter = function (req, file, cb) {
   } else {
     cb(
       new Error(
-        "Invalide file type. Only JPG, PNG, and GIF files are allowedl."
+        "Invalid file type. Only JPG, PNG, and GIF files are allowed."
       ),
       false
     );
