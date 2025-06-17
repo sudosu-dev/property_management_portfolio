@@ -5,10 +5,10 @@ import { API } from "../api/ApiContext";
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [token, setToken] = useState(sessionStorage.getItem("token"));
+  const [token, setToken] = useState(localStorage.getItem("token"));
 
   useEffect(() => {
-    if (token) sessionStorage.setItem("token", token);
+    if (token) localStorage.setItem("token", token);
   }, [token]);
 
   const register = async (credentials) => {
@@ -35,7 +35,7 @@ export function AuthProvider({ children }) {
 
   const logout = () => {
     setToken(null);
-    sessionStorage.removeItem("token");
+    localStorage.removeItem("token");
   };
 
   const value = { token, register, login, logout };
