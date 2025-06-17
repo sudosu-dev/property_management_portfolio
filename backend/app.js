@@ -5,10 +5,13 @@ import userRouter from "#api/users";
 import announcementsRouter from "#api/announcements";
 import unitsRouter from "#api/units";
 import propertiesRouter from "#api/properties";
-import rentPaymentsRouter from "#api/rent_payments";
+import maintenanceRouter from "#api/maintenance";
 import getUserFromToken from "#middleware/getUserFromToken";
+import limiter from "#middleware/rateLimiter";
+import rentPaymentsRouter from "#api/rent_payments";
 import utilitiesRouter from "#api/utility_information";
 
+app.use(limiter);
 app.use(express.json());
 app.use(getUserFromToken);
 
@@ -16,6 +19,7 @@ app.use("/users", userRouter);
 app.use("/announcements", announcementsRouter);
 app.use("/units", unitsRouter);
 app.use("/properties", propertiesRouter);
+app.use("/maintenance", maintenanceRouter);
 app.use("/utilities", utilitiesRouter);
 app.use("/rent_payments", rentPaymentsRouter);
 

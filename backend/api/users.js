@@ -48,7 +48,9 @@ router
   .post(requireBody(["username", "password"]), async (req, res) => {
     try {
       const { username, password } = req.body;
+
       const user = await getUserByUsernameAndPassword(username, password);
+
       if (!user) {
         return res.status(404).json({ error: "Invalid username or password." });
       }
