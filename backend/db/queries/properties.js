@@ -34,6 +34,26 @@ export async function getPropertyByName(propertyName) {
   return property;
 }
 
+export async function updateProperty(id, updates) {
+  const fields = [];
+  const values = [];
+  let index = 1;
+
+  for (const key in updates) {
+    fields.push(`${key} = $${index}`);
+    values.push(updates[key]);
+    index++;
+  }
+
+  const result = await db.query(
+    `UPDATE properties SET ${fields.join(
+      ", "
+    )} WHERE id = $${index} RETURNING *`,
+    [...values, id]
+  );
+  return result.rows[0];
+}
+
 export async function deleteProperty(propertyId) {
   const sql = `
     DELETE FROM properties

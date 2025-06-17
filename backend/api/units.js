@@ -5,6 +5,7 @@ import {
   getUnitsByPropertyId,
   getUnitsByPropertyIdAndUnitNumber,
   getUnitByPropertyIdAndTenantName,
+  updateUnit,
   deleteUnit,
 } from "#db/queries/units";
 
@@ -13,10 +14,29 @@ import requireBody from "#middleware/requireBody";
 
 const router = express.Router();
 
-// Require authentication for all routes
 router.use(requireUser);
 
-// GET /units - managers see all, residents see their own
+// Post a new unit
+router.post(
+  "/",
+  requireBody(["propertyId", "unitNumber", "tenantName"]),
+  async (req, res) => {
+    try {
+      if (!req.user.is_manager) {
+        return res
+          .status(403)
+          .json({ error: "Only managers can create units." });
+      }
+
+      const unit = await createUnit(req.body);
+      res.status(201).json(unit);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+);
+
+// Get all units - if not manager, returns user's unit
 router.get("/", async (req, res) => {
   try {
     if (req.user.is_manager) {
@@ -24,7 +44,6 @@ router.get("/", async (req, res) => {
       return res.json(units);
     }
 
-    // Resident: only return the unit they belong to
     const userUnit = await getUnitsByPropertyIdAndUnitNumber(
       req.user.unit.property_id,
       req.user.unit.unit_number
@@ -40,7 +59,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// GET /units/property/:propertyId
+// Get all units - from specified property ID
 router.get("/property/:propertyId", async (req, res) => {
   try {
     if (!req.user.is_manager) {
@@ -56,9 +75,15 @@ router.get("/property/:propertyId", async (req, res) => {
   }
 });
 
-// GET /units/property/:propertyId/unit/:unitNumber
+// Get single unit - from specified property ID and unit number
 router.get("/property/:propertyId/unit/:unitNumber", async (req, res) => {
   try {
+    if (!req.user.is_manager) {
+      return res
+        .status(403)
+        .json({ error: "Only managers can access this route." });
+    }
+
     const unit = await getUnitsByPropertyIdAndUnitNumber(
       req.params.propertyId,
       req.params.unitNumber
@@ -68,22 +93,13 @@ router.get("/property/:propertyId/unit/:unitNumber", async (req, res) => {
       return res.status(404).json({ error: "Unit not found" });
     }
 
-    // If not manager, verify user belongs to this unit
-    if (
-      !req.user.is_manager &&
-      (req.user.unit.property_id !== unit.property_id ||
-        req.user.unit.unit_number !== unit.unit_number)
-    ) {
-      return res.status(403).json({ error: "Access denied to this unit." });
-    }
-
     res.json(unit);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-// GET /units/property/:propertyId/tenant/:tenantName
+// Get single unit - from specified property ID and tenant name
 router.get("/property/:propertyId/tenant/:tenantName", async (req, res) => {
   try {
     if (!req.user.is_manager) {
@@ -107,27 +123,25 @@ router.get("/property/:propertyId/tenant/:tenantName", async (req, res) => {
   }
 });
 
-// POST /units - managers only
-router.post(
-  "/",
-  requireBody(["propertyId", "unitNumber", "tenantName"]),
-  async (req, res) => {
-    try {
-      if (!req.user.is_manager) {
-        return res
-          .status(403)
-          .json({ error: "Only managers can create units." });
-      }
-
-      const unit = await createUnit(req.body);
-      res.status(201).json(unit);
-    } catch (error) {
-      res.status(400).json({ error: error.message });
+// Patch single unit - by unit ID
+router.patch("/:id", requireUser, async (req, res) => {
+  try {
+    if (!req.user.is_manager) {
+      return res.status(403).json({ error: "Only managers can update units." });
     }
-  }
-);
 
-// DELETE /units/:id - managers only
+    const updated = await updateUnit(req.params.id, req.body);
+    if (!updated) {
+      return res.status(404).json({ error: "Unit not found" });
+    }
+
+    res.json(updated);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Delete single unit - by unit ID
 router.delete("/:id", async (req, res) => {
   try {
     if (!req.user.is_manager) {

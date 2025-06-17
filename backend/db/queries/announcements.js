@@ -21,7 +21,7 @@ export async function getAnnouncements() {
 }
 
 export async function getAnnouncementById(id) {
-  const sql = `SELECT id, date, announcement, announcement_type FROM announcements
+  const sql = `SELECT id, date, announcement, user_id, announcement_type FROM announcements
     WHERE id = $1`;
   const {
     rows: [announcement],
