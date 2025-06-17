@@ -11,8 +11,11 @@ import limiter from "#middleware/rateLimiter";
 import rentPaymentsRouter from "#api/rent_payments";
 import utilitiesRouter from "#api/utility_information";
 
-app.use(limiter);
+import cors from "cors";
+
+app.use(cors());
 app.use(express.json());
+app.use(limiter);
 app.use(getUserFromToken);
 
 app.use("/users", userRouter);
