@@ -47,8 +47,6 @@ router.post(
           error: `File upload error: ${error.message} Max ${MAX_PHOTO_COUNT} photos allowed.`,
         });
       } else if (error) {
-        // ---------- DEBUG: NEEDS TO BE REMOVED ------------
-        console.error("MULTER ERROR HANDLER CAUGHT:", error);
         return res
           .status(500)
           .json({ error: "An unknown error occured during file upload." });
