@@ -12,6 +12,11 @@ import {
   deleteUser,
   getAllUsers,
 } from "#db/queries/users";
+import {
+  createUtility_information,
+  getUtility_informationByUserIdAndPaidStatus,
+  updateUtility_informationPaidStatusByUserId,
+} from "#db/queries/utility_information";
 
 // UNPROTECTED ROUTES
 router
@@ -113,5 +118,49 @@ router
       res.status(204).send();
     } catch (error) {
       res.status(403).json({ error: error.message });
+    }
+  });
+
+router.use(requireUser);
+
+router
+  .route("/:id/utilities")
+  .get(async (req, res) => {
+    try {
+      const utility_information =
+        await getUtility_informationByUserIdAndPaidStatus(req.params.id);
+      res.status(200).send(utility_information);
+    } catch (err) {
+      console.log(err);
+      res
+        .status(500)
+        .json({ error: "something went wrong getting utility information" });
+    }
+  })
+  .post(requireBody([]), async (req, res) => {
+    try {
+      req.body.user_id = req.params.id;
+      const utility_information = await createUtility_information(req.body);
+      res.status(201).send(utility_information);
+    } catch (err) {
+      console.log(err);
+      res
+        .status(500)
+        .json({ error: "something went wrong creating utility information" });
+    }
+  })
+  .patch(requireBody(["paid"]), async (req, res) => {
+    try {
+      const utility_information =
+        await updateUtility_informationPaidStatusByUserId(
+          req.body.paid,
+          req.params.id
+        );
+      res.status(200).send(utility_information);
+    } catch (err) {
+      console.log(err);
+      res
+        .status(500)
+        .json({ error: "something went wrong updating utility information" });
     }
   });
