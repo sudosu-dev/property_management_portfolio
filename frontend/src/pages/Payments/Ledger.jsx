@@ -1,5 +1,6 @@
 import styles from "./Ledger.module.css";
 import axios from "axios";
+import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import { API } from "../../api/ApiContext";
 import { useAuth } from "../../auth/AuthContext";
@@ -10,6 +11,8 @@ export default function Ledger() {
   const [payments, setPayments] = useState([]);
   const [rentCharges, setRentCharges] = useState([]);
   const [utilityCharges, setUtilityCharges] = useState([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!token || !user) return;
@@ -123,6 +126,7 @@ export default function Ledger() {
             )}
           </tbody>
         </table>
+        <button onClick={() => navigate("/payments")}>Back</button>
       </div>
     </div>
   );
