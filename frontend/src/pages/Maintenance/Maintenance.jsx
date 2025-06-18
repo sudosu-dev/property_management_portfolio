@@ -1,9 +1,11 @@
 import { useState } from "react";
-
+import { useAuth } from "../../auth/AuthContext";
 import styles from "./Maintenance.module.css";
 
 function Maintenance() {
+  const { user, token } = useAuth();
   const [formData, setFormData] = useState({});
+  const [status, setStatus] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -18,7 +20,7 @@ function Maintenance() {
         <h2>Make New Maintenance Request</h2>
         <form onSubmit={handleSubmit}>
           <label>
-            Information
+            Issue
             <input
               value={formData.information}
               type="text"
