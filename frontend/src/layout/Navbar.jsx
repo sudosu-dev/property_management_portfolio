@@ -18,7 +18,7 @@ export default function Navbar() {
             <NavLink to="/profile">Profile</NavLink>
             <NavLink to="/payments">Payments</NavLink>
             <NavLink to="/maintenance">Maintenance</NavLink>
-            <button onClick={logout}>Log Out</button>
+            <button onClick={logout}>Logout</button>
           </div>
         ) : (
           <div className={styles.landingPageNav}>
