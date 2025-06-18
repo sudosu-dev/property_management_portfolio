@@ -5,23 +5,35 @@ import { API } from "../../api/ApiContext";
 
 export default function Ledger() {
   const [payments, setPayments] = useState([]);
+  const [rentCharges, setRentCharges] = useState([]);
   const [utilityCharges, setUtilityCharges] = useState([]);
 
   useEffect(() => {
     axios
-      .get(`${API}/rent_payments`)
-      .then((res) => {
-        console.log("payments loaded:", res.data);
-        setPayments(res.data);
+      .get(`${API}/rent_payments`, {
+        headers: {
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwiaWF0IjoxNzUwMTA4NzgwLCJleHAiOjE3NTA3MTM1ODB9.N1t7wpbncRuhQwI8Z7MFkNbuI1Zleamlz3ZzRO3T-k4`,
+        },
       })
+      .then((res) => setPayments(res.data))
       .catch((err) => console.error("Failed to fetch rent payments", err));
 
     axios
-      .get(`${API}/utility_information/my`)
-      .then((res) => {
-        console.log("utility charges loaded:", res.data);
-        setUtilityCharges(res.data);
+      .get(`${API}/rent_charges/my`, {
+        headers: {
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwiaWF0IjoxNzUwMTA4NzgwLCJleHAiOjE3NTA3MTM1ODB9.N1t7wpbncRuhQwI8Z7MFkNbuI1Zleamlz3ZzRO3T-k4`,
+        },
       })
+      .then((res) => setRentCharges(res.data))
+      .catch((err) => console.error("Failed to fetch rent charges", err));
+
+    axios
+      .get(`${API}/utility_information/my`, {
+        headers: {
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwiaWF0IjoxNzUwMTA4NzgwLCJleHAiOjE3NTA3MTM1ODB9.N1t7wpbncRuhQwI8Z7MFkNbuI1Zleamlz3ZzRO3T-k4`,
+        },
+      })
+      .then((res) => setUtilityCharges(res.data))
       .catch((err) => console.error("Failed to fetch utility charges", err));
   }, []);
 
@@ -40,6 +52,14 @@ export default function Ledger() {
       description: "Resident Payment",
       amount: -p.payment_amount,
       user_id: p.user_id,
+    })),
+    ...rentCharges.map((r) => ({
+      type: "rent",
+      id: `${r.unit_id}-${r.created_at}`,
+      date: r.created_at,
+      description: "Monthly Rent",
+      amount: parseFloat(r.rent_amount),
+      user_id: r.user_id,
     })),
     ...utilityCharges.map((u) => ({
       type: "utility",
