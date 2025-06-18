@@ -3,6 +3,7 @@ import Layout from "./layout/Layout";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
 import Announcements from "./pages/Announcements/Announcements";
+import Profile from "./pages/profile/profile";
 
 export default function App() {
   return (
@@ -12,6 +13,7 @@ export default function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/announcements" element={<Announcements />} />
+        <Route path="/profile" element={<Profile />} />
       </Route>
     </Routes>
   );
