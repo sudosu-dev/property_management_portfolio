@@ -1,12 +1,32 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../../auth/AuthContext";
-import styles from "./Maintenance.module.css";
 import { API } from "../../api/ApiContext";
+import styles from "./Maintenance.module.css";
 
 function Maintenance() {
   const { user, token } = useAuth();
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({ information: "", files: [] });
   const [message, setMessage] = useState("");
+  const [requests, setRequests] = useState([]);
+
+  const fetchRequests = async () => {
+    try {
+      const res = await fetch(`${API}/maintenance`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!res.ok) throw new Error("Failed to fetch requests");
+      const data = await res.json();
+      setRequests(data);
+    } catch (err) {
+      console.error("Error loading maintenance request:", err);
+    }
+  };
+
+  useEffect(() => {
+    if (token) fetchRequests();
+  }, [token]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,22 +37,28 @@ function Maintenance() {
     }
 
     try {
-      const response = await fetch(`${API}/maintenance`, {
+      const form = new FormData();
+      form.append("information", formData.information);
+      if (formData.files && formData.files.length > 0) {
+        formData.files.forEach((file) => {
+          form.append("maintenance_photos", file);
+        });
+      }
+
+      const res = await fetch(`${API}/maintenance`, {
         method: "POST",
         headers: {
-          "Content-type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({
-          information: formData.information,
-        }),
+        body: form,
       });
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || "Request faied.");
+      if (!res.ok) {
+        const error = await res.json();
+        throw new Error(error.error || "Request failed.");
       }
       setMessage("Maintenance request submitted successfully.");
       setFormData({ information: "" });
+      await fetchRequests();
     } catch (err) {
       console.error("Submission error:", err.message);
       setMessage("Failed to submit request");
@@ -42,7 +68,7 @@ function Maintenance() {
   return (
     <>
       <h1>Maintenance Requests</h1>
-      <div className={styles.requests}>
+      <div className={styles.newRequests}>
         <h2>Make New Maintenance Request</h2>
         <div className={styles.info}>
           <p>
@@ -61,7 +87,7 @@ function Maintenance() {
             <input
               value={formData.information}
               type="text"
-              name="issue"
+              name="information"
               onChange={(e) =>
                 setFormData({ ...formData, [e.target.name]: e.target.value })
               }
@@ -69,8 +95,36 @@ function Maintenance() {
               placeholder="Please describe the issue..."
             />
           </label>
+          <br />
+          <label>
+            <strong>Photos: </strong>
+            <input
+              type="file"
+              name="photos"
+              onChange={(e) =>
+                setFormData({ ...formData, files: Array.from(e.target.files) })
+              }
+            />
+          </label>
+          <br />
           <button type="submit">Submit Request</button>
         </form>
+        {message && <p>{message}</p>}
+      </div>
+      <div className={styles.allRequests}>
+        <h2>All Maintenance Requests</h2>
+        {requests.length === 0 ? (
+          <p>No requests found.</p>
+        ) : (
+          <ul>
+            {requests.map((req) => (
+              <li key={req.id}>
+                Issue: {req.information} <br />
+                Status: {req.completed ? "Completed" : "Pending"} <br />
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </>
   );
