@@ -48,9 +48,8 @@ router
   .post(requireBody(["username", "password"]), async (req, res) => {
     try {
       const { username, password } = req.body;
-
+      console.log(username);
       const user = await getUserByUsernameAndPassword(username, password);
-
       if (!user) {
         return res.status(404).json({ error: "Invalid username or password." });
       }
@@ -111,21 +110,17 @@ router
       res.status(403).json({ error: error.message });
     }
   })
-  .put(
-    requireUser,
-    requireBody(["email", "unit", "isManager", "isCurrentUser"]),
-    async (req, res) => {
-      try {
-        const user = await updateUserById(req.params.id, req.body, req.user);
-        if (!user) {
-          return res.status(404).json({ error: "User not found." });
-        }
-        res.json(user);
-      } catch (error) {
-        res.status(403).json({ error: error.message });
+  .put(requireUser, async (req, res) => {
+    try {
+      const user = await updateUserById(req.params.id, req.body, req.user);
+      if (!user) {
+        return res.status(404).json({ error: "User not found." });
       }
+      res.json(user);
+    } catch (error) {
+      res.status(403).json({ error: error.message });
     }
-  )
+  })
   .delete(requireUser, async (req, res) => {
     try {
       await deleteUser(req.params.id, req.user);

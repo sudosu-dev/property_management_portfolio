@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useEffect, useState } from "react";
 
 import { API } from "../api/ApiContext";
@@ -5,27 +6,27 @@ import { API } from "../api/ApiContext";
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [token, setToken] = useState(localStorage.getItem("token"));
-  const [user, setUser] = useState(null);
+
+  const [token, setToken] = useState(sessionStorage.getItem("token"));
+  const [user, setUser] = useState(
+    JSON.parse(sessionStorage.getItem("user") || "null")
+  );
 
   useEffect(() => {
     if (token) {
-      localStorage.setItem("token", token);
-
-      fetch(API + "/users/me", {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-        .then((res) => res.json())
-        .then((data) => setUser(data))
-        .catch((err) => {
-          console.error("Failed to fetch user:", err);
-          setUser(null);
-        });
+      sessionStorage.setItem("token", token);
     } else {
-      localStorage.removeItem("token");
-      setUser(null);
+      sessionStorage.removeItem("token");
     }
   }, [token]);
+
+  useEffect(() => {
+    if (user) {
+      sessionStorage.setItem("user", JSON.stringify(user));
+    } else {
+      sessionStorage.removeItem("user");
+    }
+  }, [user]);
 
   const register = async (credentials) => {
     const response = await fetch(API + "/users/register", {
@@ -34,7 +35,7 @@ export function AuthProvider({ children }) {
       body: JSON.stringify(credentials),
     });
     const result = await response.json();
-    if (!response.ok) throw Error(result.error);
+    if (!response.ok) throw Error(result.error || "Registration Failed.");
     setToken(result.token);
     setUser(result.user);
   };
@@ -46,14 +47,16 @@ export function AuthProvider({ children }) {
       body: JSON.stringify(credentials),
     });
     const result = await response.json();
-    if (!response.ok) throw Error(result.error);
+    if (!response.ok) throw Error(result.error || "Login Failed.");
     setToken(result.token);
     setUser(result.user);
   };
 
   const logout = () => {
     setToken(null);
-    localStorage.removeItem("token");
+    setUser(null);
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("user");
   };
 
   const value = { token, user, register, login, logout };

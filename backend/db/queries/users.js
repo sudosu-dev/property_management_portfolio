@@ -55,7 +55,7 @@ export async function createUser({
 // getUserByUsernameAndPassword
 export async function getUserByUsernameAndPassword(username, password) {
   const sql = `
-        SELECT id, username, email, unit, is_manager, created_at, password_hash
+        SELECT id, username, first_name, last_name, email, unit, is_manager, created_at, password_hash
         FROM users 
         WHERE username = $1
     `;
