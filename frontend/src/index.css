@@ -1,0 +1,21 @@
+:root {
+  /* color variables used throughout the site */
+  --primary-color: #1c7ed6;
+
+  --black-200: #020202;
+  --black-300: #333333;
+  --black-400: #1f1e31;
+  --black-500: #555555;
+  --grey-100: #888888;
+
+  --color-white: #fff;
+
+  --color-offwhite: #f0f0f0;
+}
+
+/* --- GLOBAL STYLES --- */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
