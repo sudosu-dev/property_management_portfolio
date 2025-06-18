@@ -1,0 +1,26 @@
+.navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 1rem 2rem;
+
+  background-color: var(--color-offwhite);
+}
+
+.brand {
+  font-size: 20px;
+}
+
+.loggedInNav {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+}
+
+.landingPageNav {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+}
