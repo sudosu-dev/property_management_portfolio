@@ -85,6 +85,18 @@ router
     }
   );
 
+router.get("/me", requireUser, async (req, res) => {
+  try {
+    const user = await getUserByIdSecure(req.user.id, req.user);
+    if (!user) {
+      return res.status(400).json({ error: "User not found." });
+    }
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: "Unable to retrieve user data" });
+  }
+});
+
 router
   .route("/:id")
   .get(requireUser, async (req, res) => {

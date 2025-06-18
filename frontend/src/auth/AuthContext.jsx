@@ -6,9 +6,25 @@ const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [token, setToken] = useState(localStorage.getItem("token"));
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    if (token) localStorage.setItem("token", token);
+    if (token) {
+      localStorage.setItem("token", token);
+
+      fetch(API + "/users/me", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+        .then((res) => res.json())
+        .then((data) => setUser(data))
+        .catch((err) => {
+          console.error("Failed to fetch user:", err);
+          setUser(null);
+        });
+    } else {
+      localStorage.removeItem("token");
+      setUser(null);
+    }
   }, [token]);
 
   const register = async (credentials) => {
@@ -17,9 +33,10 @@ export function AuthProvider({ children }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials),
     });
-    const result = await response.text();
-    if (!response.ok) throw Error(result);
-    setToken(result);
+    const result = await response.json();
+    if (!response.ok) throw Error(result.error);
+    setToken(result.token);
+    setUser(result.user);
   };
 
   const login = async (credentials) => {
@@ -28,9 +45,10 @@ export function AuthProvider({ children }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials),
     });
-    const result = await response.text();
-    if (!response.ok) throw Error(result);
-    setToken(result);
+    const result = await response.json();
+    if (!response.ok) throw Error(result.error);
+    setToken(result.token);
+    setUser(result.user);
   };
 
   const logout = () => {
@@ -38,7 +56,7 @@ export function AuthProvider({ children }) {
     localStorage.removeItem("token");
   };
 
-  const value = { token, register, login, logout };
+  const value = { token, user, register, login, logout };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
