@@ -55,15 +55,15 @@ export default function Ledger() {
       id: p.id,
       date: p.paid_date,
       description: "Resident Payment",
-      amount: p.payment_amount,
+      amount: -p.payment_amount,
       user_id: p.user_id,
     })),
     ...rentCharges.map((r) => ({
       type: "rent",
       id: `${r.unit_id}-${r.created_at}`,
       date: r.created_at,
-      description: "Monthly Rent",
-      amount: -parseFloat(r.rent_amount),
+      description: "Base Rent",
+      amount: parseFloat(r.rent_amount),
       user_id: r.user_id,
     })),
     ...utilityCharges.map((u) => ({
@@ -71,11 +71,7 @@ export default function Ledger() {
       id: u.id,
       date: u.created_at,
       description: "Utility Charge",
-      amount: -(
-        (u.water_cost || 0) +
-        (u.electric_cost || 0) +
-        (u.gas_cost || 0)
-      ),
+      amount: (u.water_cost || 0) + (u.electric_cost || 0) + (u.gas_cost || 0),
       user_id: u.user_id,
     })),
   ];
@@ -93,8 +89,8 @@ export default function Ledger() {
               <th>Date</th>
               <th>Description</th>
               <th>Paid By</th>
-              <th>Credit</th>
               <th>Debit</th>
+              <th>Credit</th>
               <th>Balance</th>
             </tr>
           </thead>

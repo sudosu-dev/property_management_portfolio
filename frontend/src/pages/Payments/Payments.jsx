@@ -3,21 +3,87 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { API } from "../../api/ApiContext";
+import { useAuth } from "../../auth/AuthContext";
 
 export default function Payments() {
   const [pastPayments, setPastPayments] = useState([]);
+  const [rentCharges, setRentCharges] = useState([]);
+  const [utilityCharges, setUtilityCharges] = useState([]);
+  const { token, user } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!token || !user) return;
+
     axios
-      .get(`${API}/rent_payments`, {
-        headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwiaWF0IjoxNzUwMTA4NzgwLCJleHAiOjE3NTA3MTM1ODB9.N1t7wpbncRuhQwI8Z7MFkNbuI1Zleamlz3ZzRO3T-k4`,
-        },
+      .get(`${API}/rent_payments/user/${user.id}`, {
+        headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setPastPayments(res.data))
       .catch((err) => console.error("Failed to fetch rent payments", err));
-  }, []);
+
+    axios
+      .get(`${API}/rent_charges/${user.id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => setRentCharges(res.data))
+      .catch((err) => console.error("Failed to fetch rent charges", err));
+
+    axios
+      .get(`${API}/utilities/${user.id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => setUtilityCharges(res.data))
+      .catch((err) => console.error("Failed to fetch utility charges", err));
+  }, [token, user]);
+
+  function calcBalance() {
+    const totalPayments = pastPayments.reduce(
+      (sum, p) => sum - p.payment_amount,
+      0
+    );
+
+    const totalRentCharges = rentCharges.reduce(
+      (sum, r) => sum + parseFloat(r.rent_amount),
+      0
+    );
+
+    const totalUtilityCharges = utilityCharges.reduce(
+      (sum, u) =>
+        sum + (u.water_cost || 0) + (u.electric_cost || 0) + (u.gas_cost || 0),
+      0
+    );
+
+    return totalPayments + totalRentCharges + totalUtilityCharges;
+  }
+
+  function totalRent() {
+    return rentCharges.reduce((sum, r) => sum + parseFloat(r.rent_amount), 0);
+  }
+
+  function formatCurrency(amount) {
+    return amount.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD",
+    });
+  }
+
+  const totalUtilityCharges = utilityCharges.reduce(
+    (sum, u) =>
+      sum + (u.water_cost || 0) + (u.electric_cost || 0) + (u.gas_cost || 0),
+    0
+  );
+
+  function getFirstDayOfNextMonth() {
+    const now = new Date();
+    const nextMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+
+    const year = nextMonth.getFullYear();
+    const month = String(nextMonth.getMonth() + 1).padStart(2, "0");
+    const day = String(nextMonth.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+  }
 
   return (
     <div className={styles.page}>
@@ -26,12 +92,8 @@ export default function Payments() {
         <section className={styles.currentBalance}>
           <div>
             <h2>Your Current Balance</h2>
-            <p>$$$</p>
-            <p>Next bill due on...</p>
-          </div>
-          <div>
-            <p>If you set up auto pay - you have a scheduled payment for...</p>
-            <p>If you have not set up auto pay - hide</p>
+            <p>{formatCurrency(calcBalance())}</p>
+            <p>Next bill due on {getFirstDayOfNextMonth()}</p>
           </div>
           <div>
             <button>Make Payment</button>
@@ -49,7 +111,11 @@ export default function Payments() {
               <tbody>
                 <tr>
                   <td>Rent</td>
-                  <td>$$$</td>
+                  <td>{formatCurrency(totalRent())}</td>
+                </tr>
+                <tr>
+                  <td>Utilities</td>
+                  <td>{formatCurrency(totalUtilityCharges)}</td>
                 </tr>
               </tbody>
             </table>
@@ -57,7 +123,7 @@ export default function Payments() {
               <tbody>
                 <tr>
                   <td>Total Balance</td>
-                  <td>$$$</td>
+                  <td>{formatCurrency(calcBalance())}</td>
                 </tr>
               </tbody>
             </table>

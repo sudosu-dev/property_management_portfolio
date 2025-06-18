@@ -7,7 +7,6 @@ export default router;
 
 router.use(requireUser);
 
-// GET /rent_charges/my
 router.get("/:id", async (req, res) => {
   try {
     const charges = await getRentChargesByUserId(req.user.id);
