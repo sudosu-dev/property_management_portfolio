@@ -131,7 +131,7 @@ router
       console.log(err);
       res
         .status(500)
-        .json({ error: "something went wrong getting utility information" });
+        .json({ error: "Something went wrong getting utility information" });
     }
   })
   .post(requireBody([]), async (req, res) => {
@@ -143,7 +143,7 @@ router
       console.log(err);
       res
         .status(500)
-        .json({ error: "something went wrong creating utility information" });
+        .json({ error: "Something went wrong creating utility information" });
     }
   })
   .patch(requireBody(["paid"]), async (req, res) => {
@@ -158,6 +158,6 @@ router
       console.log(err);
       res
         .status(500)
-        .json({ error: "something went wrong updating utility information" });
+        .json({ error: "Something went wrong updating utility information" });
     }
   });

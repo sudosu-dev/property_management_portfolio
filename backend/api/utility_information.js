@@ -2,7 +2,6 @@ import express from "express";
 const router = express.Router();
 export default router;
 
-import requireBody from "#middleware/requireBody";
 import requireUser from "#middleware/requireUser";
 import {
   getAllUnpaidUtility_information,
@@ -21,7 +20,7 @@ router.route("/").get(async (req, res) => {
     console.log(err);
     res
       .status(500)
-      .json({ error: "something went wrong getting utility information" });
+      .json({ error: "Something went wrong getting utility information" });
   }
 });
 
@@ -35,6 +34,6 @@ router.route("/unpaid").get(async (req, res) => {
     console.log(err);
     res
       .status(500)
-      .json({ error: "something went wrong updating utility information" });
+      .json({ error: "Something went wrong updating utility information" });
   }
 });

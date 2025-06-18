@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useEffect, useState } from "react";
 
 import { API } from "../api/ApiContext";
@@ -5,6 +6,7 @@ import { API } from "../api/ApiContext";
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
+
   const [token, setToken] = useState(sessionStorage.getItem("token"));
   const [user, setUser] = useState(
     JSON.parse(sessionStorage.getItem("user") || "null")
@@ -26,10 +28,6 @@ export function AuthProvider({ children }) {
     }
   }, [user]);
 
-  useEffect(() => {
-    if (token) sessionStorage.setItem("token", token);
-  }, [token]);
-
   const register = async (credentials) => {
     const response = await fetch(API + "/users/register", {
       method: "POST",
@@ -49,8 +47,6 @@ export function AuthProvider({ children }) {
       body: JSON.stringify(credentials),
     });
     const result = await response.json();
-    // ----------DEBUG REMOVE THIS -----------
-    console.log("Login result:", result);
     if (!response.ok) throw Error(result.error || "Login Failed.");
     setToken(result.token);
     setUser(result.user);

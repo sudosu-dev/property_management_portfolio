@@ -2,14 +2,15 @@ import express from "express";
 const app = express();
 
 import userRouter from "#api/users";
-import announcementsRouter from "#api/announcements";
-import unitsRouter from "#api/units";
 import propertiesRouter from "#api/properties";
-import maintenanceRouter from "#api/maintenance";
-import getUserFromToken from "#middleware/getUserFromToken";
-import limiter from "#middleware/rateLimiter";
+import unitsRouter from "#api/units";
 import rentPaymentsRouter from "#api/rent_payments";
 import utilitiesRouter from "#api/utility_information";
+import announcementsRouter from "#api/announcements";
+import maintenanceRouter from "#api/maintenance";
+
+import getUserFromToken from "#middleware/getUserFromToken";
+import limiter from "#middleware/rateLimiter";
 
 import cors from "cors";
 
@@ -19,12 +20,12 @@ app.use(limiter);
 app.use(getUserFromToken);
 
 app.use("/users", userRouter);
-app.use("/announcements", announcementsRouter);
-app.use("/units", unitsRouter);
 app.use("/properties", propertiesRouter);
-app.use("/maintenance", maintenanceRouter);
-app.use("/utilities", utilitiesRouter);
+app.use("/units", unitsRouter);
 app.use("/rent_payments", rentPaymentsRouter);
+app.use("/utilities", utilitiesRouter);
+app.use("/announcements", announcementsRouter);
+app.use("/maintenance", maintenanceRouter);
 
 app.get("/", (req, res) => {
   res.status(200).send("Property Management Capstone!");

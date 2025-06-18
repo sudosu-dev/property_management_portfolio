@@ -1,6 +1,5 @@
 import express from "express";
 const router = express.Router();
-export default router;
 
 import {
   createAnnouncements,
@@ -84,3 +83,5 @@ router
     await deleteAnnouncementById(req.announcement.id);
     res.sendStatus(204);
   });
+
+export default router;
