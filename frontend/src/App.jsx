@@ -8,14 +8,30 @@ import Ledger from "./pages/Payments/Ledger";
 import Profile from "./pages/profile/profile";
 
 export default function App() {
-  return (
+    return (
     <Routes>
       <Route element={<Layout />}>
         <Route index element={<p>Home page</p>} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/payments" element={<Payments />} />;
-        <Route path="/ledger" element={<Ledger />} />;
+        <Route
+          path="/payments"
+          element={
+            <ProtectedRoute>
+              <Payments />
+            </ProtectedRoute>
+          }
+        />
+        ;
+        <Route
+          path="/ledger"
+          element={
+            <ProtectedRoute>
+              <Ledger />
+            </ProtectedRoute>
+          }
+        />
+        ;
         <Route
           path="/profile"
           element={
