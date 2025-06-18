@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useEffect, useState } from "react";
 
 import { API } from "../api/ApiContext";
@@ -5,10 +6,10 @@ import { API } from "../api/ApiContext";
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [token, setToken] = useState(localStorage.getItem("token"));
+  const [token, setToken] = useState(sessionStorage.getItem("token"));
 
   useEffect(() => {
-    if (token) localStorage.setItem("token", token);
+    if (token) sessionStorage.setItem("token", token);
   }, [token]);
 
   const register = async (credentials) => {
@@ -35,7 +36,7 @@ export function AuthProvider({ children }) {
 
   const logout = () => {
     setToken(null);
-    localStorage.removeItem("token");
+    sessionStorage.removeItem("token");
   };
 
   const value = { token, register, login, logout };
