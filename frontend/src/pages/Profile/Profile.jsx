@@ -63,7 +63,6 @@ export default function Profile() {
   console.log("User from AuthContext:", user);
   return (
     <div>
-      <p>Debug: {JSON.stringify(user)}</p>
       <h1>Account Profile</h1>
       <div
         style={{ width: "1041px", height: "660px", border: "1px solid #ccc" }}
