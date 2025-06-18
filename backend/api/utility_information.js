@@ -39,14 +39,21 @@ router.route("/unpaid").get(async (req, res) => {
   }
 });
 
-router.route("/my").get(async (req, res) => {
+router.get("/:id", async (req, res) => {
+  const requestedId = parseInt(req.params.id);
+
+  if (!req.user.is_manager && req.user.id !== requestedId) {
+    return res.status(403).json({ error: "Access denied." });
+  }
+
   try {
-    const utility_information = await getUtility_informationByUserId(
-      req.user.id
-    );
-    res.status(200).json(utility_information);
+    const utilityInfo = await getUtility_informationByUserId(requestedId);
+    if (!utilityInfo) {
+      return res.status(404).json({ error: "Utility info not found" });
+    }
+    res.status(200).json(utilityInfo);
   } catch (err) {
-    console.log(err);
+    console.error(err);
     res.status(500).json({ error: "Failed to load utility information" });
   }
 });

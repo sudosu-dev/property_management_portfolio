@@ -2,40 +2,45 @@ import styles from "./Ledger.module.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { API } from "../../api/ApiContext";
+import { useAuth } from "../../auth/AuthContext";
 
 export default function Ledger() {
+  const { token, user } = useAuth();
+
   const [payments, setPayments] = useState([]);
   const [rentCharges, setRentCharges] = useState([]);
   const [utilityCharges, setUtilityCharges] = useState([]);
 
   useEffect(() => {
+    if (!token || !user) return;
+
     axios
-      .get(`${API}/rent_payments`, {
+      .get(`${API}/rent_payments/user/${user.id}`, {
         headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwiaWF0IjoxNzUwMTA4NzgwLCJleHAiOjE3NTA3MTM1ODB9.N1t7wpbncRuhQwI8Z7MFkNbuI1Zleamlz3ZzRO3T-k4`,
+          Authorization: `Bearer ${token}`,
         },
       })
       .then((res) => setPayments(res.data))
       .catch((err) => console.error("Failed to fetch rent payments", err));
 
     axios
-      .get(`${API}/rent_charges/my`, {
+      .get(`${API}/rent_charges/${user.id}`, {
         headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwiaWF0IjoxNzUwMTA4NzgwLCJleHAiOjE3NTA3MTM1ODB9.N1t7wpbncRuhQwI8Z7MFkNbuI1Zleamlz3ZzRO3T-k4`,
+          Authorization: `Bearer ${token}`,
         },
       })
       .then((res) => setRentCharges(res.data))
       .catch((err) => console.error("Failed to fetch rent charges", err));
 
     axios
-      .get(`${API}/utility_information/my`, {
+      .get(`${API}/utilities/${user.id}`, {
         headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwiaWF0IjoxNzUwMTA4NzgwLCJleHAiOjE3NTA3MTM1ODB9.N1t7wpbncRuhQwI8Z7MFkNbuI1Zleamlz3ZzRO3T-k4`,
+          Authorization: `Bearer ${token}`,
         },
       })
       .then((res) => setUtilityCharges(res.data))
       .catch((err) => console.error("Failed to fetch utility charges", err));
-  }, []);
+  }, [token, user]);
 
   function formatCurrency(amount) {
     return amount.toLocaleString("en-US", {
