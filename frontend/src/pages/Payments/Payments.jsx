@@ -10,11 +10,12 @@ export default function Payments() {
 
   useEffect(() => {
     axios
-      .get(`${API}/rent_payments`)
-      .then((res) => {
-        console.log("payments loaded:", res.data);
-        setPastPayments(res.data);
+      .get(`${API}/rent_payments`, {
+        headers: {
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwiaWF0IjoxNzUwMTA4NzgwLCJleHAiOjE3NTA3MTM1ODB9.N1t7wpbncRuhQwI8Z7MFkNbuI1Zleamlz3ZzRO3T-k4`,
+        },
       })
+      .then((res) => setPastPayments(res.data))
       .catch((err) => console.error("Failed to fetch rent payments", err));
   }, []);
 
@@ -40,8 +41,10 @@ export default function Payments() {
             <table>
               <caption>Rent Charge Breakdown</caption>
               <thead>
-                <th>Description</th>
-                <th>Amount</th>
+                <tr>
+                  <th>Description</th>
+                  <th>Amount</th>
+                </tr>
               </thead>
               <tbody>
                 <tr>
@@ -85,7 +88,9 @@ export default function Payments() {
                   </tr>
                 ))
               ) : (
-                <p>No payments found.</p>
+                <tr>
+                  <td colSpan="100%">No payments found.</td>
+                </tr>
               )}
             </tbody>
           </table>
