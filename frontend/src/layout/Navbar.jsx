@@ -15,15 +15,15 @@ export default function Navbar() {
         {token ? (
           <div className={styles.loggedInNav}>
             <NavLink to="/dashboard">Dashboard</NavLink>
-            <NavLink to="/profile">profile</NavLink>
-            <NavLink to="/payments">payments</NavLink>
-            <NavLink to="/maintenance">maintenance</NavLink>
-            <button onClick={logout}>Log out</button>
+            <NavLink to="/profile">Profile</NavLink>
+            <NavLink to="/payments">Payments</NavLink>
+            <NavLink to="/maintenance">Maintenance</NavLink>
+            <button onClick={logout}>Log Out</button>
           </div>
         ) : (
           <div className={styles.landingPageNav}>
-            <NavLink to="/login">Log in</NavLink>
-            <NavLink to="/about">about</NavLink>
+            <NavLink to="/login">Login</NavLink>
+            <NavLink to="/about">About</NavLink>
           </div>
         )}
       </nav>
