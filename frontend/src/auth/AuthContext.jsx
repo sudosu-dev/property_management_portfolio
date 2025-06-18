@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useEffect, useState } from "react";
 
 import { API } from "../api/ApiContext";
@@ -5,11 +6,27 @@ import { API } from "../api/ApiContext";
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [token, setToken] = useState(localStorage.getItem("token"));
+
+  const [token, setToken] = useState(sessionStorage.getItem("token"));
+  const [user, setUser] = useState(
+    JSON.parse(sessionStorage.getItem("user") || "null")
+  );
 
   useEffect(() => {
-    if (token) localStorage.setItem("token", token);
+    if (token) {
+      sessionStorage.setItem("token", token);
+    } else {
+      sessionStorage.removeItem("token");
+    }
   }, [token]);
+
+  useEffect(() => {
+    if (user) {
+      sessionStorage.setItem("user", JSON.stringify(user));
+    } else {
+      sessionStorage.removeItem("user");
+    }
+  }, [user]);
 
   const register = async (credentials) => {
     const response = await fetch(API + "/users/register", {
@@ -17,9 +34,10 @@ export function AuthProvider({ children }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials),
     });
-    const result = await response.text();
-    if (!response.ok) throw Error(result);
-    setToken(result);
+    const result = await response.json();
+    if (!response.ok) throw Error(result.error || "Registration Failed.");
+    setToken(result.token);
+    setUser(result.user);
   };
 
   const login = async (credentials) => {
@@ -28,17 +46,20 @@ export function AuthProvider({ children }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials),
     });
-    const result = await response.text();
-    if (!response.ok) throw Error(result);
-    setToken(result);
+    const result = await response.json();
+    if (!response.ok) throw Error(result.error || "Login Failed.");
+    setToken(result.token);
+    setUser(result.user);
   };
 
   const logout = () => {
     setToken(null);
-    localStorage.removeItem("token");
+    setUser(null);
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("user");
   };
 
-  const value = { token, register, login, logout };
+  const value = { token, user, register, login, logout };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
