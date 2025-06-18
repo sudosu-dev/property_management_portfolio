@@ -6,6 +6,7 @@ import requireUser from "#middleware/requireUser";
 import {
   getAllUnpaidUtility_information,
   getAllUtility_information,
+  getUtility_informationByUserId,
 } from "#db/queries/utility_information";
 
 router.use(requireUser);
@@ -35,5 +36,17 @@ router.route("/unpaid").get(async (req, res) => {
     res
       .status(500)
       .json({ error: "Something went wrong updating utility information" });
+  }
+});
+
+router.route("/my").get(async (req, res) => {
+  try {
+    const utility_information = await getUtility_informationByUserId(
+      req.user.id
+    );
+    res.status(200).json(utility_information);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Failed to load utility information" });
   }
 });
