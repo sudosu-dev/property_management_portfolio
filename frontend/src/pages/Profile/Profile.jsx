@@ -5,6 +5,9 @@ import { API } from "../../api/ApiContext";
 export default function Profile() {
   const { user, token } = useAuth();
 
+  console.log("Profile component - user:", user);
+  console.log("Profile component - token:", token);
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -57,9 +60,10 @@ export default function Profile() {
       console.error("Error updating profile:", error);
     }
   };
-
+  console.log("User from AuthContext:", user);
   return (
     <div>
+      <p>Debug: {JSON.stringify(user)}</p>
       <h1>Account Profile</h1>
       <div
         style={{ width: "1041px", height: "660px", border: "1px solid #ccc" }}
