@@ -76,7 +76,7 @@ CREATE TABLE maintenance_requests(
     user_id INTEGER REFERENCES users(id) NOT NULL,
     completed BOOLEAN NOT NULL DEFAULT false,
     unit_number INTEGER REFERENCES units(id) NOT NULL, 
-    completed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    completed_at TIMESTAMP
 );
 
 CREATE TABLE maintenance_photos (
