@@ -57,7 +57,7 @@ function Maintenance() {
         throw new Error(error.error || "Request failed.");
       }
       setMessage("Maintenance request submitted successfully.");
-      setFormData({ information: "" });
+      setFormData({ information: "", files: [] });
       await fetchRequests();
     } catch (err) {
       console.error("Submission error:", err.message);
@@ -100,7 +100,8 @@ function Maintenance() {
             <strong>Photos: </strong>
             <input
               type="file"
-              name="photos"
+              name="maintenance_photos"
+              multiple
               onChange={(e) =>
                 setFormData({ ...formData, files: Array.from(e.target.files) })
               }
