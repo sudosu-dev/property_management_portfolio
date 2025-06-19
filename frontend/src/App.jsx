@@ -6,6 +6,7 @@ import Register from "./auth/Register";
 import Payments from "./pages/Payments/Payments";
 import Ledger from "./pages/Payments/Ledger";
 import Profile from "./pages/profile/profile";
+import Maintenance from "./pages/Maintenance/Maintenance";
 
 export default function App() {
     return (
@@ -37,6 +38,14 @@ export default function App() {
           element={
             <ProtectedRoute>
               <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/maintenance"
+          element={
+            <ProtectedRoute>
+              <Maintenance />
             </ProtectedRoute>
           }
         />

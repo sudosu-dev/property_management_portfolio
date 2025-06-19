@@ -30,7 +30,7 @@ export async function createUser({
   // to false at that point). If you want to be able to create a user who isn't active
   // then change true to $6 in values
   const sql = `
-    INSERT INTO users (username, password_hash, first_name, last_name, email, unit, is_manager, is_current_user )
+    INSERT INTO users (username, password_hash, first_name, last_name, email, unit, is_manager, is_current_user)
     VALUES ($1, $2, $3, $4, $5, $6, $7, true)
     RETURNING id, username, first_name, last_name, email, unit, is_manager, created_at
     `;
