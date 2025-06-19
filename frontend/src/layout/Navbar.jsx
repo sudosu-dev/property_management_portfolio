@@ -14,7 +14,7 @@ export default function Navbar() {
       <nav>
         {token ? (
           <div className={styles.loggedInNav}>
-            <NavLink to="/dashboard">Dashboard</NavLink>
+            <NavLink to="/dashboard/resident">Dashboard</NavLink>
             <NavLink to="/profile">Profile</NavLink>
             <NavLink to="/payments">Payments</NavLink>
             <NavLink to="/maintenance">Maintenance</NavLink>

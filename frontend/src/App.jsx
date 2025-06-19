@@ -7,14 +7,25 @@ import Payments from "./pages/Payments/Payments";
 import Ledger from "./pages/Payments/Ledger";
 import Profile from "./pages/profile/profile";
 import Maintenance from "./pages/Maintenance/Maintenance";
+import ResidentDashboard from "./pages/ResidentDashboard/ResidentDashboard";
 
 export default function App() {
-    return (
+  return (
     <Routes>
       <Route element={<Layout />}>
         <Route index element={<p>Home page</p>} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/dashboard">
+          <Route
+            path="resident"
+            element={
+              <ProtectedRoute>
+                <ResidentDashboard />
+              </ProtectedRoute>
+            }
+          />
+        </Route>
         <Route
           path="/payments"
           element={
