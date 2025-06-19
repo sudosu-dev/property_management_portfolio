@@ -4,7 +4,7 @@ import { API } from "../../api/ApiContext";
 import "./profile.css";
 
 export default function Profile() {
-  const { user, token } = useAuth();
+  const { user, token, setUser } = useAuth();
 
   console.log("Profile component - user:", user);
   console.log("Profile component - token:", token);
@@ -52,8 +52,12 @@ export default function Profile() {
       }
 
       const result = await response.json();
-
       console.log("Profile updated successfully.", result);
+      console.log("Backend returned:", result); // remove this
+      console.log("Current user before setUser:", user); // remove this
+
+      setUser(result);
+      console.log("User after setUser should update on next render"); //remove this
     } catch (error) {
       console.error("Error updating profile:", error);
     }
@@ -88,6 +92,7 @@ export default function Profile() {
   }
 
   function viewProfile() {
+    console.log("viewProfile rendering with user:", user); // remove this
     return (
       <div
         style={{ width: "1041px", height: "660px", border: "1px solid #ccc" }}

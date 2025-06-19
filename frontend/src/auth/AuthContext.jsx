@@ -6,7 +6,6 @@ import { API } from "../api/ApiContext";
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-
   const [token, setToken] = useState(sessionStorage.getItem("token"));
   const [user, setUser] = useState(
     JSON.parse(sessionStorage.getItem("user") || "null")
@@ -59,7 +58,7 @@ export function AuthProvider({ children }) {
     sessionStorage.removeItem("user");
   };
 
-  const value = { token, user, register, login, logout };
+  const value = { token, user, setUser, register, login, logout };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
