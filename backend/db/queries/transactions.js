@@ -53,3 +53,9 @@ export async function postUnbilledUtilitiesToLedger() {
     }
   }
 }
+
+export async function getTransactionsByUserId(userId) {
+  const sql = `SELECT * FROM transactions WHERE user_id = $1 ORDER BY created_at DESC;`;
+  const { rows } = await pool.query(sql, [userId]);
+  return rows;
+}

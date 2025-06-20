@@ -1,65 +1,59 @@
+// frontend/src/pages/Payments/Payments.jsx
+
 import styles from "./Payments.module.css";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { API } from "../../api/ApiContext";
-import { useAuth } from "../../auth/AuthContext";
+import { useState, useEffect } from "react";
+import useQuery from "../../api/useQuery";
+import { useApi } from "../../api/ApiContext";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import CheckoutForm from "./CheckoutForm";
+
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 export default function Payments() {
-  const [pastPayments, setPastPayments] = useState([]);
-  const [rentCharges, setRentCharges] = useState([]);
-  const [utilityCharges, setUtilityCharges] = useState([]);
-  const { token, user } = useAuth();
   const navigate = useNavigate();
+  const { request } = useApi();
+  const {
+    data: transactions,
+    loading,
+    query: refetchTransactions,
+  } = useQuery("/transactions/my-history", "transactions");
+
+  const [showCheckout, setShowCheckout] = useState(false);
+  const [clientSecret, setClientSecret] = useState("");
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
 
   useEffect(() => {
-    if (!token || !user) return;
+    const urlParams = new URLSearchParams(window.location.search);
+    const paymentIntentSecret = urlParams.get("payment_intent_client_secret");
+    if (paymentIntentSecret) {
+      setIsProcessingPayment(true);
+      const timer = setTimeout(() => {
+        refetchTransactions();
+        setIsProcessingPayment(false);
+        navigate("/payments", { replace: true });
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, []);
 
-    axios
-      .get(`${API}/rent_payments/user/${user.id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => setPastPayments(res.data))
-      .catch((err) => console.error("Failed to fetch rent payments", err));
+  const balance = transactions
+    ? transactions.reduce((sum, tx) => sum + parseFloat(tx.amount), 0)
+    : 0;
 
-    axios
-      .get(`${API}/rent_charges/${user.id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => setRentCharges(res.data))
-      .catch((err) => console.error("Failed to fetch rent charges", err));
-
-    axios
-      .get(`${API}/utilities/${user.id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => setUtilityCharges(res.data))
-      .catch((err) => console.error("Failed to fetch utility charges", err));
-  }, [token, user]);
-
-  function calcBalance() {
-    const totalPayments = pastPayments.reduce(
-      (sum, p) => sum - p.payment_amount,
-      0
-    );
-
-    const totalRentCharges = rentCharges.reduce(
-      (sum, r) => sum + parseFloat(r.rent_amount),
-      0
-    );
-
-    const totalUtilityCharges = utilityCharges.reduce(
-      (sum, u) =>
-        sum + (u.water_cost || 0) + (u.electric_cost || 0) + (u.gas_cost || 0),
-      0
-    );
-
-    return totalPayments + totalRentCharges + totalUtilityCharges;
-  }
-
-  function totalRent() {
-    return rentCharges.reduce((sum, r) => sum + parseFloat(r.rent_amount), 0);
-  }
+  const handleMakePayment = async () => {
+    try {
+      const { clientSecret: secret } = await request(
+        "/stripe_payments/create-payment",
+        { method: "POST" }
+      );
+      setClientSecret(secret);
+      setShowCheckout(true);
+    } catch (error) {
+      alert("Could not initiate payment. Please try again later.");
+    }
+  };
 
   function formatCurrency(amount) {
     return amount.toLocaleString("en-US", {
@@ -68,100 +62,72 @@ export default function Payments() {
     });
   }
 
-  const totalUtilityCharges = utilityCharges.reduce(
-    (sum, u) =>
-      sum + (u.water_cost || 0) + (u.electric_cost || 0) + (u.gas_cost || 0),
-    0
-  );
-
-  function getFirstDayOfNextMonth() {
-    const now = new Date();
-    const nextMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1);
-
-    const year = nextMonth.getFullYear();
-    const month = String(nextMonth.getMonth() + 1).padStart(2, "0");
-    const day = String(nextMonth.getDate()).padStart(2, "0");
-
-    return `${year}-${month}-${day}`;
-  }
+  const appearance = { theme: "stripe" };
+  const options = { clientSecret, appearance };
 
   return (
     <div className={styles.page}>
       <h1>Payments</h1>
+      {isProcessingPayment && (
+        <div className={styles.processingMessage}>
+          Processing your payment, please wait...
+        </div>
+      )}
       <div className={styles.sectionLayout}>
         <section className={styles.currentBalance}>
           <div>
             <h2>Your Current Balance</h2>
-            <p>{formatCurrency(calcBalance())}</p>
-            <p>Next bill due on {getFirstDayOfNextMonth()}</p>
+            {loading ? <p>Calculating...</p> : <p>{formatCurrency(balance)}</p>}
           </div>
           <div>
-            <button>Make Payment</button>
-            <button>Set Up Autopay</button>
-          </div>
-          <div>
-            <table>
-              <caption>Rent Charge Breakdown</caption>
-              <thead>
-                <tr>
-                  <th>Description</th>
-                  <th>Amount</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Rent</td>
-                  <td>{formatCurrency(totalRent())}</td>
-                </tr>
-                <tr>
-                  <td>Utilities</td>
-                  <td>{formatCurrency(totalUtilityCharges)}</td>
-                </tr>
-              </tbody>
-            </table>
-            <table>
-              <tbody>
-                <tr>
-                  <td>Total Balance</td>
-                  <td>{formatCurrency(calcBalance())}</td>
-                </tr>
-              </tbody>
-            </table>
+            <button
+              onClick={handleMakePayment}
+              disabled={balance <= 0 || showCheckout}
+            >
+              Make Payment
+            </button>
           </div>
         </section>
-
         <section className={styles.accountLedger}>
           <h2>Account Ledger</h2>
           <p>Need more help understanding your balance?</p>
-          <button onClick={() => navigate("/ledger")}>
+          <button onClick={() => navigate("/ledger")} disabled={showCheckout}>
             View full account ledger
           </button>
         </section>
-
         <section className={styles.pastPayments}>
-          <p>Past Payments</p>
+          <p>Recent Activity</p>
           <table>
             <tbody>
-              {pastPayments && pastPayments.length > 0 ? (
-                pastPayments.slice(0, 5).map((payment) => (
-                  <tr key={payment.id}>
-                    <td>🟢</td>
-                    <td>
-                      <p>{payment.created_date}</p>
-                      <p>{payment.receipt_number}</p>
+              {transactions && transactions.length > 0 ? (
+                transactions.slice(0, 5).map((tx) => (
+                  <tr key={tx.id}>
+                    <td style={{ color: tx.amount < 0 ? "green" : "red" }}>
+                      ●
                     </td>
-                    <td>{payment.payment_amount}</td>
+                    <td>
+                      <p>{tx.description}</p>
+                      <p style={{ fontSize: "0.8em", color: "#666" }}>
+                        {new Date(tx.created_at).toLocaleDateString()}
+                      </p>
+                    </td>
+                    <td>{formatCurrency(tx.amount)}</td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan="100%">No payments found.</td>
+                  <td colSpan="3">No recent activity.</td>
                 </tr>
               )}
             </tbody>
           </table>
         </section>
       </div>
+      {showCheckout && clientSecret && (
+        <Elements options={options} stripe={stripePromise}>
+          <CheckoutForm onBack={() => setShowCheckout(false)} />
+        </Elements>
+      )}
     </div>
   );
 }
