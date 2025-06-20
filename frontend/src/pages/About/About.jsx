@@ -1,9 +1,9 @@
 import styles from "./About.module.css";
 import modernHome from "../../assets/modern-home.jpg";
-import { useNavigate } from "react-router";
+// import { useNavigate } from "react-router";
 
 export default function About() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   return (
     <>
