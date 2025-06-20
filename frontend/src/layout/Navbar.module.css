@@ -14,14 +14,45 @@
   font-size: 20px;
 }
 
+.links {
+  text-decoration: none;
+  color: var(--black-200);
+}
+
+/* --- LOGGED IN NAV --- */
 .loggedInNav {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
   gap: 2rem;
 }
+.logoutButton {
+  padding: 0.5rem 2rem;
+  border: none;
+  border-radius: 5px;
 
+  text-decoration: none;
+  color: var(--color-white);
+  background-color: var(--primary-color);
+  cursor: pointer;
+}
+
+/* --- LANDING PAGE NAV --- */
 .landingPageNav {
   display: flex;
   flex-direction: row;
-  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+}
+.loginButton {
+  padding: 0.5rem 2rem;
+  border: none;
+  border-radius: 5px;
+
+  text-decoration: none;
+  color: var(--color-white);
+  background-color: var(--primary-color);
+  cursor: pointer;
 }
