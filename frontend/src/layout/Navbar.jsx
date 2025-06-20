@@ -33,7 +33,7 @@ function ManagerNav({ logout }) {
       <NavLink to="/admin/dashboard" className={styles.links}>
         Dashboard
       </NavLink>
-      <NavLink to="/admin/properties" className={styles.links}>
+      <NavLink to="/admin/propertyinfo" className={styles.links}>
         Property Info
       </NavLink>
       <NavLink to="/admin/units" className={styles.links}>
@@ -51,7 +51,7 @@ function ManagerNav({ logout }) {
       <NavLink to="/admin/maintenance" className={styles.links}>
         Maintenance
       </NavLink>
-      <NavLink to="/admin/community" className={styles.links}>
+      <NavLink to="/admin/announcements" className={styles.links}>
         Announcements
       </NavLink>
       <button onClick={logout} className={styles.logoutButton}>
