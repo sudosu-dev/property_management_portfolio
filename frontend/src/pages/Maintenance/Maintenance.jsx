@@ -4,6 +4,7 @@ import { API } from "../../api/ApiContext";
 import styles from "./Maintenance.module.css";
 import MaintenanceForm from "./MaintenanceForm";
 import RequestList from "./RequestList";
+import RequestDetails from "./RequestDetails";
 
 function Maintenance() {
   const { user, token } = useAuth();
@@ -88,6 +89,12 @@ function Maintenance() {
           />
         </div>
       </div>
+      {selectedRequest && (
+        <RequestDetails
+          request={selectedRequest}
+          onClose={() => setSelectedRequest(null)}
+        />
+      )}
     </>
   );
 }

@@ -8,7 +8,7 @@ export default function RequestList({
   setSelectedRequest,
 }) {
   return (
-    <section className={styles.allRequests}>
+    <section className={styles.activeRequests}>
       <h2>Active Requests</h2>
       {requests.length === 0 ? (
         <p>No requests found.</p>
