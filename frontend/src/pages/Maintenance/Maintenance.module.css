@@ -16,17 +16,9 @@ button {
   margin: 2rem;
 }
 
-.newRequests,
-.allRequests {
-  border: 1px var(--grey-100) solid;
-}
-
-.allRequests {
-  background-color: var(--grey-100);
-}
-
 .info p,
-form label {
+form label,
+.allRequests ul li {
   display: block;
   margin-bottom: 0.5rem;
 }
@@ -35,19 +27,47 @@ form label {
   list-style: none;
 }
 
-.adjustWidth {
+.requestForm,
+.allRequests ul li {
+  border: 1px var(--grey-100) solid;
+  border-radius: 1rem;
+  padding: 1rem;
+  background-color: var(--color-offwhite);
+  cursor: pointer;
+}
+
+.allRequests ul li:hover {
+  background-color: var(--primary-color);
+}
+
+.requestForm {
+  width: 75%;
+}
+
+.textBox {
   width: 50%;
 }
 
-button {
+.newRequests button {
   padding: 0.5rem;
   border-radius: 0.5rem;
+  width: 50%;
 }
 
-button:hover {
+.newRequests button:hover {
   background-color: var(--primary-color);
 }
 
 img {
   width: 20%;
+}
+
+.showMore {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  width: 100%;
+}
+
+.showMore:hover {
+  background-color: var(--primary-color);
 }
