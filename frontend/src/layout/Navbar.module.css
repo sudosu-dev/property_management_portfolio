@@ -1,26 +1,76 @@
-.navbar {
+/* --- ALL NAVBARS --- */
+.links {
+  text-decoration: none;
+  color: var(--black-200);
+}
+.loginButton {
+  padding: 0.5rem 2rem;
+  border: none;
+  border-radius: 5px;
+
+  text-decoration: none;
+  color: var(--color-white);
+  background-color: var(--primary-color);
+  cursor: pointer;
+}
+.logoutButton {
+  padding: 0.5rem 2rem;
+  border: none;
+  border-radius: 5px;
+
+  text-decoration: none;
+  color: var(--color-white);
+  background-color: var(--black-200);
+  cursor: pointer;
+}
+
+/* --- RESIDENT NAVBAR --- */
+.residentNav {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+  gap: 2rem;
+
+  padding: 0 10%;
+  height: 10vh;
+
+  background-color: var(--color-offwhite);
+}
+
+/* --- MANAGER NAVBAR --- */
+.managerNav {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+  gap: 2rem;
+
+  padding: 0 10%;
+  height: 10vh;
+
+  background-color: var(--color-offwhite);
+}
+
+/* --- LANDING PAGE NAVBAR --- */
+.landingPageNav {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 
-  padding: 1rem 2rem;
+  padding: 0 10%;
+  height: 10vh;
 
   background-color: var(--color-offwhite);
 }
-
-.brand {
+.landingPageNavLogo {
   font-size: 20px;
 }
-
-.loggedInNav {
+.landingPageNavLinks {
   display: flex;
   flex-direction: row;
-  gap: 2rem;
-}
-
-.landingPageNav {
-  display: flex;
-  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   gap: 2rem;
 }

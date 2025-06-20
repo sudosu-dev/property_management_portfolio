@@ -1,0 +1,73 @@
+.maintenance h1 {
+  margin: 1rem 2rem;
+}
+
+.maintenance h2 {
+  margin: 1rem 0;
+}
+
+.maintenance button {
+  cursor: pointer;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  margin: 2rem;
+}
+
+.info p,
+.maintenance form label,
+.allRequests ul li {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.allRequests ul {
+  list-style: none;
+}
+
+.requestForm,
+.allRequests ul li {
+  border: 1px var(--grey-100) solid;
+  border-radius: 1rem;
+  padding: 1rem;
+  background-color: var(--color-offwhite);
+  cursor: pointer;
+}
+
+.allRequests ul li:hover {
+  background-color: var(--primary-color);
+}
+
+.requestForm {
+  width: 75%;
+}
+
+.textBox {
+  width: 50%;
+}
+
+.newRequests button {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  width: 50%;
+}
+
+.newRequests button:hover {
+  background-color: var(--primary-color);
+}
+
+.maintenance img {
+  width: 20%;
+}
+
+.showMore {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  width: 100%;
+}
+
+.showMore:hover {
+  background-color: var(--primary-color);
+}

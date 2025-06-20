@@ -1,0 +1,33 @@
+.btn {
+  font-size: calc(var(--btn-scale) * 1rem);
+  background: var(--btn-bg);
+  color: var(--btn-color);
+  padding: 0.7em 1.8em;
+  text-decoration: none;
+  display: inline-block;
+  margin-right: 1em;
+}
+
+.btn-primary {
+  --btn-color: #333;
+  --btn-bg: lightblue;
+}
+
+.btn-primary:hover {
+  --btn-color: white;
+  --btn-bg: blue;
+}
+
+.btn-secondary {
+  --btn-color: red;
+  --btn-bg: pink;
+}
+
+.btn-secondary:hover {
+  --btn-color: white;
+  --btn-bg: red;
+}
+
+.btn-small {
+  --btn-scale: 0.8;
+}

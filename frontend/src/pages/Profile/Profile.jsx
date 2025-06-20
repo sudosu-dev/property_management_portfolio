@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../../auth/AuthContext";
 import { API } from "../../api/ApiContext";
+import "./profile.css";
 
 export default function Profile() {
-  const { user, token } = useAuth();
+  const { user, token, setUser } = useAuth();
 
   console.log("Profile component - user:", user);
   console.log("Profile component - token:", token);
@@ -15,6 +16,9 @@ export default function Profile() {
     username: "",
     unit: "",
   });
+
+  const [currentView, setCurrentView] = useState("view");
+  const [pendingChanges, setPendingChanges] = useState({});
 
   useEffect(() => {
     if (user) {
@@ -31,12 +35,6 @@ export default function Profile() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const updateData = {
-      firstName: formData.firstName,
-      lastName: formData.lastName,
-      email: formData.email,
-    };
-
     try {
       const response = await fetch(`${API}/users/${user.id}`, {
         method: "PUT",
@@ -44,7 +42,7 @@ export default function Profile() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(updateData),
+        body: JSON.stringify(pendingChanges),
       });
 
       if (!response.ok) {
@@ -54,62 +52,196 @@ export default function Profile() {
       }
 
       const result = await response.json();
-
       console.log("Profile updated successfully.", result);
+      console.log("Backend returned:", result); // remove this
+      console.log("Current user before setUser:", user); // remove this
+
+      setUser(result);
+      console.log("User after setUser should update on next render"); //remove this
     } catch (error) {
       console.error("Error updating profile:", error);
     }
+    setCurrentView("view");
   };
-  console.log("User from AuthContext:", user);
-  return (
-    <div>
-      <h1>Account Profile</h1>
+
+  const handleCancel = () => {
+    setFormData({
+      firstName: user.first_name || "",
+      lastName: user.last_name || "",
+      email: user.email || "",
+      username: user.username || "",
+      unit: user.unit || "",
+    });
+    setPendingChanges({});
+    setCurrentView("view");
+  };
+
+  function stageProfileChanges() {
+    const changes = {};
+    if (formData.firstName !== user.first_name) {
+      changes.firstName = formData.firstName;
+    }
+    if (formData.lastName !== user.last_name) {
+      changes.lastName = formData.lastName;
+    }
+    if (formData.email !== user.email) {
+      changes.email = formData.email;
+    }
+    setPendingChanges(changes);
+    setCurrentView("confirm");
+  }
+
+  function viewProfile() {
+    console.log("viewProfile rendering with user:", user); // remove this
+    return (
       <div
         style={{ width: "1041px", height: "660px", border: "1px solid #ccc" }}
       >
-        <h2>Edit Profile</h2>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label>First Name</label>
-            <input
-              type="text"
-              value={formData.firstName}
-              onChange={(e) =>
-                setFormData({ ...formData, firstName: e.target.value })
-              }
-            />
-            <label>Last Name</label>
-            <input
-              type="text"
-              value={formData.lastName}
-              onChange={(e) =>
-                setFormData({ ...formData, lastName: e.target.value })
-              }
-            />
-          </div>
-          <div>
-            <label>Email</label>
-            <input
-              type="email"
-              value={formData.email}
-              onChange={(e) =>
-                setFormData({ ...formData, email: e.target.value })
-              }
-            />
-          </div>
-          <div>
-            <label>Username</label>
-            <input type="text" value={formData.username} readOnly />
-          </div>
-          <div>
-            <label>Unit</label>
-            <input type="text" value={formData.unit} readOnly />
-          </div>
-          <div>
-            <button type="submit">Save Changes</button>
-          </div>
-        </form>
+        <h2>Account Profile</h2>
+        <table>
+          <tr>
+            <td>First Name:</td>
+            <td>{user.first_name || "(not set)"}</td>
+          </tr>
+          <tr>
+            <td>Last Name:</td>
+            <td>{user.last_name || "(not set)"}</td>
+          </tr>
+          <tr>
+            <td>Email:</td>
+            <td>{user.email || "(not set)"}</td>
+          </tr>
+          <tr>
+            <td>Username:</td>
+            <td>{user.username || "(not set)"} </td>
+          </tr>
+          <tr>
+            <td>Unit:</td>
+            <td>{user.unit || "(not set)"}</td>
+          </tr>
+        </table>
+        <div>
+          <button
+            className="btn btn-primary btn-small"
+            onClick={() => setCurrentView("edit")}
+          >
+            Edit Profile
+          </button>
+        </div>
       </div>
+    );
+  }
+  function editProfile() {
+    return (
+      <div>
+        <div
+          style={{ width: "1041px", height: "660px", border: "1px solid #ccc" }}
+        >
+          <h2>Edit Profile</h2>
+          <form>
+            <div>
+              <label>First Name</label>
+              <input
+                type="text"
+                value={formData.firstName}
+                onChange={(e) =>
+                  setFormData({ ...formData, firstName: e.target.value })
+                }
+              />
+              <label>Last Name</label>
+              <input
+                type="text"
+                value={formData.lastName}
+                onChange={(e) =>
+                  setFormData({ ...formData, lastName: e.target.value })
+                }
+              />
+            </div>
+            <div>
+              <label>Email</label>
+              <input
+                type="email"
+                value={formData.email}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
+              />
+            </div>
+            <div>
+              <label>Username</label>
+              <input type="text" value={formData.username} readOnly />
+            </div>
+            <div>
+              <label>Unit</label>
+              <input type="text" value={formData.unit} readOnly />
+            </div>
+            <div>
+              <button
+                className="btn btn-primary btn-small"
+                onClick={stageProfileChanges}
+              >
+                Next
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    );
+  }
+  function confirmProfile() {
+    return (
+      <div
+        style={{ width: "1041px", height: "660px", border: "1px solid #ccc" }}
+      >
+        <h2>Account Profile</h2>
+        <table>
+          <tr>
+            <td>First Name:</td>
+            <td style={{ color: pendingChanges.firstName ? "red" : "black" }}>
+              {pendingChanges.firstName || user.first_name}
+            </td>
+          </tr>
+          <tr>
+            <td>Last Name:</td>
+            <td style={{ color: pendingChanges.lastName ? "red" : "black" }}>
+              {pendingChanges.lastName || user.last_name}
+            </td>
+          </tr>
+          <tr>
+            <td>Email:</td>
+            <td style={{ color: pendingChanges.email ? "red" : "black" }}>
+              {pendingChanges.email || user.email}
+            </td>
+          </tr>
+          <tr>
+            <td>Username:</td>
+            <td>{user.username || "(not set)"} </td>
+          </tr>
+          <tr>
+            <td>Unit:</td>
+            <td>{user.unit || "(not set)"}</td>
+          </tr>
+        </table>
+        <div>
+          <button className="btn btn-primary btn-small" onClick={handleSubmit}>
+            Save Changes
+          </button>
+          <button
+            className="btn btn-secondary btn-small"
+            onClick={handleCancel}
+          >
+            Cancel Changes
+          </button>
+        </div>
+      </div>
+    );
+  }
+  return (
+    <div>
+      <h1>Account Profile</h1>
+      {currentView === "view" && viewProfile()}
+      {currentView === "edit" && editProfile()}
+      {currentView === "confirm" && confirmProfile()}
     </div>
   );
 }
