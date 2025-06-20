@@ -10,6 +10,13 @@ import Maintenance from "./pages/Maintenance/Maintenance";
 import ResidentDashboard from "./pages/ResidentDashboard/ResidentDashboard";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import About from "./pages/About/About";
+import ManagePropertyInfo from "./pages/ManagePropertyInfo/ManagePropertyInfo";
+import ManageUnits from "./pages/ManageUnits/ManageUnits";
+import ManageResidents from "./pages/ManageResidents/ManageResidents";
+import ManagePayments from "./pages/ManagePayments/ManagePayments";
+import ManageUtilities from "./pages/ManageUtilities/ManageUtilities";
+import ManageMaintenance from "./pages/ManageMaintenance/ManageMaintenance";
+import ManageAnnouncements from "./pages/ManageAnnouncements/ManageAnnouncements";
 
 export default function App() {
   return (
@@ -19,6 +26,13 @@ export default function App() {
         <Route path="/about" element={<About />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/admin/propertyinfo" element={<ManagePropertyInfo />} />
+        <Route path="/admin/units" element={<ManageUnits />} />
+        <Route path="/admin/residents" element={<ManageResidents />} />
+        <Route path="/admin/payments" element={<ManagePayments />} />
+        <Route path="/admin/utilities" element={<ManageUtilities />} />
+        <Route path="/admin/maintenance" element={<ManageMaintenance />} />
+        <Route path="/admin/announcements" element={<ManageAnnouncements />} />
         <Route path="/dashboard">
           <Route
             path="resident"
