@@ -33,6 +33,7 @@
 
   color: var(--color-white);
   background-color: var(--primary-color);
+  cursor: pointer;
 }
 
 /* --- FEATURES SECTION --- */
@@ -124,4 +125,5 @@
 
   color: var(--color-white);
   background-color: var(--black-200);
+  cursor: pointer;
 }
