@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS maintenance_photos CASCADE;
 DROP TABLE IF EXISTS maintenance_requests CASCADE;
+DROP TABLE IF EXISTS transactions CASCADE;
 DROP TABLE IF EXISTS utility_information CASCADE;
-DROP TABLE IF EXISTS rent_payments CASCADE;
 DROP TABLE IF EXISTS announcements CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS units CASCADE;
@@ -42,15 +42,15 @@ CREATE TABLE announcements(
     announcement_type VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE rent_payments(
+CREATE TABLE transactions (
     id SERIAL PRIMARY KEY,
-    created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    due_date DATE NOT NULL,
-    paid_date TIMESTAMP,
-    receipt_number VARCHAR(50),
-    payment_amount DECIMAL(10, 2) NOT NULL,
     user_id INTEGER REFERENCES users(id) NOT NULL,
-    unit INTEGER REFERENCES units(id) NOT NULL
+    unit_id INTEGER REFERENCES units(id) NOT NULL,
+    type VARCHAR(50) NOT NULL,
+    description TEXT,
+    amount DECIMAL(10, 2) NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    stripe_payment_id VARCHAR(255) UNIQUE NULL
 );
 
 CREATE TABLE utility_information(
@@ -64,6 +64,7 @@ CREATE TABLE utility_information(
     gas_usage DECIMAL,
     due_date DATE,
     paid_date TIMESTAMP,
+    is_posted_to_ledger BOOLEAN NOT NULL DEFAULT false,
     paid BOOLEAN NOT NULL DEFAULT false,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
