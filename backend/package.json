@@ -1,5 +1,5 @@
 {
-  "name": "property_management_capstone",
+  "name": "property_management_capstone_backend",
   "type": "module",
   "imports": {
     "#*": "./*.js"

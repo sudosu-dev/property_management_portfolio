@@ -1,5 +1,5 @@
 {
-  "name": "foobar",
+  "name": "property_management_capstone_frontend",
   "type": "module",
   "scripts": {
     "dev": "vite",
