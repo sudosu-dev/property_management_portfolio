@@ -9,7 +9,6 @@ import { getUserBalance, recordStripePayment } from "#db/queries/transactions";
 const router = express.Router();
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-// The webhook route remains first and has NO authentication. This is correct.
 router.post(
   "/webhook",
   express.raw({ type: "application/json" }),
