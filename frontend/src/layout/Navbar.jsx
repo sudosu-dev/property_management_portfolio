@@ -5,7 +5,7 @@ import { useAuth } from "../auth/AuthContext";
 function ResidentNav({ logout }) {
   return (
     <div className={styles.residentNav}>
-      <NavLink to="/dashboard" className={styles.links}>
+      <NavLink to="/dashboard/resident" className={styles.links}>
         Dashboard
       </NavLink>
       <NavLink to="/payments" className={styles.links}>

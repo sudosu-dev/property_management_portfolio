@@ -7,6 +7,7 @@ import Payments from "./pages/Payments/Payments";
 import Ledger from "./pages/Payments/Ledger";
 import Profile from "./pages/profile/profile";
 import Maintenance from "./pages/Maintenance/Maintenance";
+import ResidentDashboard from "./pages/ResidentDashboard/ResidentDashboard";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import About from "./pages/About/About";
 
@@ -18,6 +19,16 @@ export default function App() {
         <Route path="/about" element={<About />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/dashboard">
+          <Route
+            path="resident"
+            element={
+              <ProtectedRoute>
+                <ResidentDashboard />
+              </ProtectedRoute>
+            }
+          />
+        </Route>
         <Route
           path="/payments"
           element={
