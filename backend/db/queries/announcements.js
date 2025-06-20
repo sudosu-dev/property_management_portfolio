@@ -15,7 +15,7 @@ export async function createAnnouncements(
 }
 
 export async function getAnnouncements() {
-  const sql = `SELECT id, date, announcement, announcement_type FROM announcements ORDER BY date DESC`;
+  const sql = `SELECT id, date, announcement, user_id, announcement_type FROM announcements ORDER BY date DESC`;
   const { rows: announcements } = await pool.query(sql);
   return announcements;
 }
