@@ -7,12 +7,13 @@ import Payments from "./pages/Payments/Payments";
 import Ledger from "./pages/Payments/Ledger";
 import Profile from "./pages/profile/profile";
 import Maintenance from "./pages/Maintenance/Maintenance";
+import LandingPage from "./pages/LandingPage/LandingPage";
 
 export default function App() {
-    return (
+  return (
     <Routes>
       <Route element={<Layout />}>
-        <Route index element={<p>Home page</p>} />
+        <Route index element={<LandingPage />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route
