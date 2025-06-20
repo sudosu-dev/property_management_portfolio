@@ -5,7 +5,9 @@ import Navbar from "./Navbar";
 export default function Layout() {
   return (
     <>
-      <Navbar />
+      <header>
+        <Navbar />
+      </header>
       <main>
         <Outlet />
       </main>

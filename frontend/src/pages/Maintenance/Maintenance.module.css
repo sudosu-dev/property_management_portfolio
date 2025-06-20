@@ -1,12 +1,12 @@
-h1 {
+.maintenance h1 {
   margin: 1rem 2rem;
 }
 
-h2 {
+.maintenance h2 {
   margin: 1rem 0;
 }
 
-button {
+.maintenance button {
   cursor: pointer;
 }
 
@@ -17,7 +17,7 @@ button {
 }
 
 .info p,
-form label,
+.maintenance form label,
 .allRequests ul li {
   display: block;
   margin-bottom: 0.5rem;
@@ -58,7 +58,7 @@ form label,
   background-color: var(--primary-color);
 }
 
-img {
+.maintenance img {
   width: 20%;
 }
 

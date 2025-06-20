@@ -67,118 +67,119 @@ function Maintenance() {
     }
   };
 
-  console.log(requests);
-
   return (
     <>
-      <h1>Maintenance Requests</h1>
-      <div className={styles.content}>
-        <section className={styles.newRequests}>
-          <h2>Make New Maintenance Request</h2>
-          <div className={styles.requestForm}>
-            <div className={styles.info}>
-              <p>
-                <strong>Name:</strong> {`${user.first_name} ${user.last_name}`}
-              </p>
-              <p>
-                <strong>Unit: </strong> {`${user.unit}`}
-              </p>
-              <p>
-                <strong>Email: </strong> {`${user.email}`}
-              </p>
+      <div className={styles.maintenance}>
+        <h1>Maintenance Requests</h1>
+        <div className={styles.content}>
+          <section className={styles.newRequests}>
+            <h2>Make New Maintenance Request</h2>
+            <div className={styles.requestForm}>
+              <div className={styles.info}>
+                <p>
+                  <strong>Name:</strong>{" "}
+                  {`${user.first_name} ${user.last_name}`}
+                </p>
+                <p>
+                  <strong>Unit: </strong> {`${user.unit}`}
+                </p>
+                <p>
+                  <strong>Email: </strong> {`${user.email}`}
+                </p>
+              </div>
+              <form onSubmit={handleSubmit}>
+                <label>
+                  <strong>Issue: </strong>
+                  <br />
+                  <textarea
+                    className={styles.textBox}
+                    value={formData.information}
+                    type="text"
+                    name="information"
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        [e.target.name]: e.target.value,
+                      })
+                    }
+                    required
+                    placeholder="Please describe the issue..."
+                    rows={4}
+                  />
+                </label>
+                <br />
+                <label>
+                  <strong>Photos: </strong>
+                  <br />
+                  <input
+                    type="file"
+                    name="maintenance_photos"
+                    multiple
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        files: Array.from(e.target.files),
+                      })
+                    }
+                  />
+                </label>
+                <br />
+                <button type="submit">Submit Request</button>
+              </form>
             </div>
-            <form onSubmit={handleSubmit}>
-              <label>
-                <strong>Issue: </strong>
-                <br />
-                <textarea
-                  className={styles.textBox}
-                  value={formData.information}
-                  type="text"
-                  name="information"
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      [e.target.name]: e.target.value,
-                    })
-                  }
-                  required
-                  placeholder="Please describe the issue..."
-                  rows={4}
-                />
-              </label>
-              <br />
-              <label>
-                <strong>Photos: </strong>
-                <br />
-                <input
-                  type="file"
-                  name="maintenance_photos"
-                  multiple
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      files: Array.from(e.target.files),
-                    })
-                  }
-                />
-              </label>
-              <br />
-              <button type="submit">Submit Request</button>
-            </form>
-          </div>
-          {message && <p>{message}</p>}
-        </section>
+            {message && <p>{message}</p>}
+          </section>
 
-        <section className={styles.allRequests}>
-          <h2>Active Requests</h2>
-          {requests.length === 0 ? (
-            <p>No requests found.</p>
-          ) : (
-            <ul>
-              {(showAll ? requests : requests.slice(0, 2)).map((req) => (
-                <li key={req.id} onClick={() => setSelectedRequest(req)}>
-                  <p>
-                    <strong>Issue: </strong>
-                    {req.information}
-                  </p>
-                  <br />
-                  <p>
-                    <strong>Status: </strong>
-                    {req.completed ? "Completed" : "Pending"}
-                  </p>
-                  <br />
-                  {req.photos && req.photos.length > 0 && (
-                    <div className={styles.photos}>
-                      {req.photos.map((photo) => {
-                        const url = `${API}/${photo.photo_url.replace(
-                          /\\/g,
-                          `/`
-                        )}`;
-                        return (
-                          <img
-                            key={photo.id}
-                            src={url}
-                            alt={`Photo for request ${req.id}`}
-                            className={styles.thumbnail}
-                          />
-                        );
-                      })}
-                    </div>
-                  )}
-                </li>
-              ))}
-              {requests.length > 2 && (
-                <button
-                  className={styles.showMore}
-                  onClick={() => setShowAll(!showAll)}
-                >
-                  {showAll ? "Show Less" : "Show All"}
-                </button>
-              )}
-            </ul>
-          )}
-        </section>
+          <section className={styles.allRequests}>
+            <h2>Active Requests</h2>
+            {requests.length === 0 ? (
+              <p>No requests found.</p>
+            ) : (
+              <ul>
+                {(showAll ? requests : requests.slice(0, 2)).map((req) => (
+                  <li key={req.id} onClick={() => setSelectedRequest(req)}>
+                    <p>
+                      <strong>Issue: </strong>
+                      {req.information}
+                    </p>
+                    <br />
+                    <p>
+                      <strong>Status: </strong>
+                      {req.completed ? "Completed" : "Pending"}
+                    </p>
+                    <br />
+                    {req.photos && req.photos.length > 0 && (
+                      <div className={styles.photos}>
+                        {req.photos.map((photo) => {
+                          const url = `${API}/${photo.photo_url.replace(
+                            /\\/g,
+                            `/`
+                          )}`;
+                          return (
+                            <img
+                              key={photo.id}
+                              src={url}
+                              alt={`Photo for request ${req.id}`}
+                              className={styles.thumbnail}
+                            />
+                          );
+                        })}
+                      </div>
+                    )}
+                  </li>
+                ))}
+                {requests.length > 2 && (
+                  <button
+                    className={styles.showMore}
+                    onClick={() => setShowAll(!showAll)}
+                  >
+                    {showAll ? "Show Less" : "Show All"}
+                  </button>
+                )}
+              </ul>
+            )}
+          </section>
+        </div>
       </div>
     </>
   );

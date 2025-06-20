@@ -15,7 +15,11 @@ export default function About() {
             voluptas et aperiam, quo qui in vitae repellat eos temporibus.
           </p>
         </div>
-        <img src={modernHome} alt="Image of a home" />
+        <img
+          className={styles.modernHome}
+          src={modernHome}
+          alt="Image of a home"
+        />
       </section>
       <section className={styles.description}>
         <p>

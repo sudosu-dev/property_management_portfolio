@@ -1,4 +1,6 @@
-section {
+.welcome,
+.description,
+.features {
   padding: 5%;
 }
 
@@ -19,7 +21,8 @@ section {
   padding-bottom: 0.5em;
 }
 
-img {
+.modernHome,
+.featuresCard img {
   width: 100%;
   max-height: 650px;
   align-items: center;
