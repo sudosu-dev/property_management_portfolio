@@ -65,67 +65,98 @@ function Maintenance() {
     }
   };
 
+  console.log(requests);
+
   return (
     <>
       <h1>Maintenance Requests</h1>
-      <div className={styles.newRequests}>
-        <h2>Make New Maintenance Request</h2>
-        <div className={styles.info}>
-          <p>
-            <strong>Name:</strong> {`${user.first_name} ${user.last_name}`}
-          </p>
-          <p>
-            <strong>Unit: </strong> {`${user.unit}`}
-          </p>
-          <p>
-            <strong>Email: </strong> {`${user.email}`}
-          </p>
-        </div>
-        <form onSubmit={handleSubmit}>
-          <label>
-            <strong>Issue: </strong>
-            <input
-              value={formData.information}
-              type="text"
-              name="information"
-              onChange={(e) =>
-                setFormData({ ...formData, [e.target.name]: e.target.value })
-              }
-              required
-              placeholder="Please describe the issue..."
-            />
-          </label>
-          <br />
-          <label>
-            <strong>Photos: </strong>
-            <input
-              type="file"
-              name="maintenance_photos"
-              multiple
-              onChange={(e) =>
-                setFormData({ ...formData, files: Array.from(e.target.files) })
-              }
-            />
-          </label>
-          <br />
-          <button type="submit">Submit Request</button>
-        </form>
-        {message && <p>{message}</p>}
-      </div>
-      <div className={styles.allRequests}>
-        <h2>All Maintenance Requests</h2>
-        {requests.length === 0 ? (
-          <p>No requests found.</p>
-        ) : (
-          <ul>
-            {requests.map((req) => (
-              <li key={req.id}>
-                Issue: {req.information} <br />
-                Status: {req.completed ? "Completed" : "Pending"} <br />
-              </li>
-            ))}
-          </ul>
-        )}
+      <div className={styles.content}>
+        <section className={styles.newRequests}>
+          <h2>Make New Maintenance Request</h2>
+          <div className={styles.info}>
+            <p>
+              <strong>Name:</strong> {`${user.first_name} ${user.last_name}`}
+            </p>
+            <p>
+              <strong>Unit: </strong> {`${user.unit}`}
+            </p>
+            <p>
+              <strong>Email: </strong> {`${user.email}`}
+            </p>
+          </div>
+          <form onSubmit={handleSubmit}>
+            <label>
+              <strong>Issue: </strong>
+              <br />
+              <textarea
+                className={styles.adjustWidth}
+                value={formData.information}
+                type="text"
+                name="information"
+                onChange={(e) =>
+                  setFormData({ ...formData, [e.target.name]: e.target.value })
+                }
+                required
+                placeholder="Please describe the issue..."
+                rows={4}
+              />
+            </label>
+            <br />
+            <label>
+              <strong>Photos: </strong>
+              <br />
+              <input
+                type="file"
+                name="maintenance_photos"
+                multiple
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    files: Array.from(e.target.files),
+                  })
+                }
+              />
+            </label>
+            <br />
+            <button type="submit" className={styles.adjustWidth}>
+              Submit Request
+            </button>
+          </form>
+          {message && <p>{message}</p>}
+        </section>
+        <section className={styles.allRequests}>
+          <h2>Active Requests</h2>
+          {requests.length === 0 ? (
+            <p>No requests found.</p>
+          ) : (
+            <ul>
+              {requests.map((req) => (
+                <li key={req.id}>
+                  Issue: {req.information} <br />
+                  Status: {req.completed ? "Completed" : "Pending"} <br />
+                  {req.photos && req.photos.length > 0 && (
+                    <div className={styles.photos}>
+                      {req.photos.map((photo) => {
+                        const url = `${API}/${photo.photo_url.replace(
+                          /\\/g,
+                          `/`
+                        )}`;
+                        return (
+                          <img
+                            key={photo.id}
+                            src={url}
+                            alt={`Photo for request ${req.id}`}
+                            className={styles.thumbnail}
+                          />
+                        );
+                      })}
+                    </div>
+                  )}
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
       </div>
     </>
   );

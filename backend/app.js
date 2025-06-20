@@ -1,4 +1,5 @@
 import express from "express";
+import path from "path";
 const app = express();
 
 import userRouter from "#api/users";
@@ -18,6 +19,7 @@ app.use(cors());
 app.use(express.json());
 app.use(limiter);
 app.use(getUserFromToken);
+app.use("/uploads", express.static(path.resolve("uploads")));
 
 app.use("/users", userRouter);
 app.use("/properties", propertiesRouter);
