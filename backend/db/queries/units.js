@@ -1,6 +1,5 @@
 import pool from "#db/client";
 
-// Create a new unit
 export async function createUnit({
   propertyId,
   unitNumber,
@@ -25,14 +24,12 @@ export async function createUnit({
   return unit;
 }
 
-// Get all units - from all properties
 export async function getUnits() {
   const sql = `SELECT * FROM units`;
   const { rows } = await pool.query(sql);
   return rows;
 }
 
-// Get all units - from specified property ID
 export async function getUnitsByPropertyId(propertyId) {
   const sql = `
     SELECT units.*, 
@@ -45,7 +42,6 @@ export async function getUnitsByPropertyId(propertyId) {
   return rows;
 }
 
-// Get single unit - from specified property ID and unit number
 export async function getUnitsByPropertyIdAndUnitNumber(
   propertyId,
   unitNumber
@@ -63,7 +59,6 @@ export async function getUnitsByPropertyIdAndUnitNumber(
   return unit;
 }
 
-// Get single unit - from specified property ID and tenant name
 export async function getUnitByPropertyIdAndTenantName(
   propertyId,
   residentName
@@ -81,7 +76,6 @@ export async function getUnitByPropertyIdAndTenantName(
   return unit;
 }
 
-// Update single unit
 export async function updateUnit(id, updates) {
   const fields = [];
   const values = [];
@@ -100,7 +94,6 @@ export async function updateUnit(id, updates) {
   return result.rows[0];
 }
 
-// Delete single unit
 export async function deleteUnit(id) {
   const sql = `DELETE FROM units WHERE id = $1 RETURNING *`;
   const {

@@ -14,7 +14,6 @@ const router = express.Router();
 
 router.use(requireUser);
 
-// Managers only: get all rent payments
 router.get("/", async (req, res) => {
   try {
     if (!req.user.is_manager) {
@@ -27,7 +26,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Get rent payments by user id (user themselves or manager)
 router.get("/user/:userId", async (req, res) => {
   try {
     const userId = parseInt(req.params.userId);
@@ -45,7 +43,6 @@ router.get("/user/:userId", async (req, res) => {
   }
 });
 
-// Create rent payment (managers only)
 router.post(
   "/",
   requireBody(["due_date", "payment_amount", "user_id", "unit"]),
@@ -65,7 +62,6 @@ router.post(
   }
 );
 
-// Update rent payment by id (managers only)
 router.put("/:id", async (req, res) => {
   try {
     if (!req.user.is_manager) {
@@ -87,7 +83,6 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-// Delete rent payment by id (managers only)
 router.delete("/:id", async (req, res) => {
   try {
     if (!req.user.is_manager) {

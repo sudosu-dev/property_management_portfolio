@@ -49,6 +49,8 @@ export function AuthProvider({ children }) {
     if (!response.ok) throw Error(result.error || "Login Failed.");
     setToken(result.token);
     setUser(result.user);
+
+    return result.user;
   };
 
   const logout = () => {
@@ -58,7 +60,7 @@ export function AuthProvider({ children }) {
     sessionStorage.removeItem("user");
   };
 
-  const value = { token, user, register, login, logout };
+  const value = { token, user, setUser, register, login, logout };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 

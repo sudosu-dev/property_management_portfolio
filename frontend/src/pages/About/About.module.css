@@ -1,0 +1,60 @@
+.welcome,
+.description,
+.features {
+  padding: 5%;
+}
+
+.welcome {
+  /* DEV ONLY */
+  /* background-color: aqua; */
+  display: flex;
+  flex-direction: column;
+}
+
+.welcomeText {
+  /* DEV ONLY */
+  /* background-color: aquamarine; */
+  padding-bottom: 3em;
+}
+
+.welcomeText h1 {
+  padding-bottom: 0.5em;
+}
+
+.modernHome,
+.featuresCard img {
+  width: 100%;
+  max-height: 650px;
+  align-items: center;
+}
+
+.description {
+  /* DEV ONLY */
+  /* background-color: burlywood; */
+  margin: auto;
+}
+
+.description p {
+  padding: 0.5em;
+}
+
+.features h2 {
+  margin-bottom: 1em;
+}
+
+.featuresCards {
+  /* DEV ONLY */
+  /* background-color: cadetblue; */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin: 0 auto;
+}
+
+.featuresCard {
+  flex-basis: 300px;
+  /* DEV ONLY */
+  /* border: 2px solid purple; */
+  padding: 5px;
+  text-align: left;
+}

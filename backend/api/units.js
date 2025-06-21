@@ -16,7 +16,6 @@ const router = express.Router();
 
 router.use(requireUser);
 
-// Post a new unit
 router.post(
   "/",
   requireBody(["propertyId", "unitNumber", "tenantName"]),
@@ -36,7 +35,6 @@ router.post(
   }
 );
 
-// Get all units - if not manager, returns user's unit
 router.get("/", async (req, res) => {
   try {
     if (req.user.is_manager) {
@@ -59,7 +57,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Get all units - from specified property ID
 router.get("/property/:propertyId", async (req, res) => {
   try {
     if (!req.user.is_manager) {
@@ -75,7 +72,6 @@ router.get("/property/:propertyId", async (req, res) => {
   }
 });
 
-// Get single unit - from specified property ID and unit number
 router.get("/property/:propertyId/unit/:unitNumber", async (req, res) => {
   try {
     if (!req.user.is_manager) {
@@ -99,7 +95,6 @@ router.get("/property/:propertyId/unit/:unitNumber", async (req, res) => {
   }
 });
 
-// Get single unit - from specified property ID and tenant name
 router.get("/property/:propertyId/tenant/:tenantName", async (req, res) => {
   try {
     if (!req.user.is_manager) {
@@ -123,7 +118,6 @@ router.get("/property/:propertyId/tenant/:tenantName", async (req, res) => {
   }
 });
 
-// Patch single unit - by unit ID
 router.patch("/:id", requireUser, async (req, res) => {
   try {
     if (!req.user.is_manager) {
@@ -141,7 +135,6 @@ router.patch("/:id", requireUser, async (req, res) => {
   }
 });
 
-// Delete single unit - by unit ID
 router.delete("/:id", async (req, res) => {
   try {
     if (!req.user.is_manager) {

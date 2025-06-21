@@ -14,6 +14,7 @@ const ApiContext = createContext();
 export function ApiProvider({ children }) {
   const { token } = useAuth();
   const headers = { "Content-Type": "application/json" };
+
   if (token) headers["Authorization"] = `Bearer ${token}`;
 
   const request = async (resource, options) => {
