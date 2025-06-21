@@ -1,0 +1,27 @@
+.header {
+  padding: 0 10%;
+  margin: 2rem auto;
+}
+.propertyCards {
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+
+  padding: 0 10%;
+  margin: 0 auto;
+}
+
+.propertyCard {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+
+  border: 1px solid var(--grey-100);
+  border-top-width: 10px;
+  border-top-color: var(--secondary-color);
+}
+
+.propertyCard img {
+  width: 200px;
+}
