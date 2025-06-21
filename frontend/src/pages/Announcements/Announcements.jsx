@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAnnouncements } from "../../Context/AnnouncementsContext";
 import { useApi } from "../../api/ApiContext";
+import "./announcements.css";
 
 export default function Announcements() {
   const {
@@ -74,9 +75,11 @@ export default function Announcements() {
   if (user.is_manager)
     return (
       <>
-        <h1>Announcements</h1>
-        {todaysAnnouncements.length === 0 && <p>No announcements today.</p>}
-        <ul>
+        <h1 className="announcements-header">Announcements</h1>
+        <ul className="todays-announcements-card-container">
+          {todaysAnnouncements.length === 0 && (
+            <li className="no-announcements">No announcements today</li>
+          )}
           {todaysAnnouncements.map((obj, i) => (
             <AnnouncementsCard
               key={i}
@@ -86,23 +89,38 @@ export default function Announcements() {
           ))}
         </ul>
         {newAnnouncement === false && (
-          <button onClick={() => setNewAnnouncement(true)}>
+          <button
+            className="new-announcement-button"
+            onClick={() => setNewAnnouncement(true)}
+          >
             New Announcement
           </button>
         )}
         {newAnnouncement === true && (
-          <form onSubmit={handlePost}>
-            <label>
-              Announcement title: <input name="title" type="text" />
+          <form className="announcements-post-form" onSubmit={handlePost}>
+            <label className="announcement-form-title">
+              Announcement title:{" "}
+              <input
+                className="announcement-input-title"
+                name="title"
+                type="text"
+              />
             </label>
-            <label>
-              Announcement: <input name="content" type="text" />
+            <label className="announcement-form-content">
+              Announcement:<span> </span>
+              <textarea
+                className="announcement-input-content"
+                name="content"
+                type="text"
+              />
             </label>
-            <button type="submit">post</button>
+            <button className="announcement-form-button" type="submit">
+              post
+            </button>
           </form>
         )}
-        <h3>Past Announcements</h3>
-        <ul>
+        <h3 className="past-announcements-header">Past Announcements</h3>
+        <ul className="past-announcements-card-container">
           {oldAnnouncements.map((obj, i) => (
             <AnnouncementsCard key={i} announcement={obj} />
           ))}
@@ -112,9 +130,11 @@ export default function Announcements() {
 
   return (
     <>
-      <h1>Announcements</h1>
-      {todaysAnnouncements.length === 0 && <p>No announcements today.</p>}
-      <ul>
+      <h1 className="announcements-header">Announcements</h1>
+      <ul className="todays-announcements-card-container">
+        {todaysAnnouncements.length === 0 && (
+          <li className="no-announcements">No announcements today</li>
+        )}
         {todaysAnnouncements.map((obj, i) => (
           <AnnouncementsCard
             key={i}
@@ -123,14 +143,10 @@ export default function Announcements() {
           />
         ))}
       </ul>
-      <h3>Past Announcements</h3>
-      <ul>
+      <h3 className="past-announcements-header">Past Announcements</h3>
+      <ul className="past-announcements-card-container">
         {oldAnnouncements.map((obj, i) => (
-          <AnnouncementsCard
-            key={i}
-            classname="past-announcements"
-            announcement={obj}
-          />
+          <AnnouncementsCard key={i} announcement={obj} />
         ))}
       </ul>
     </>
@@ -156,22 +172,24 @@ export function AnnouncementsCard({ announcement }) {
   if (!author) return null;
 
   return (
-    <li>
-      <section>
-        <h3>{announcement.announcement_type}</h3>
-        <p>{announcement.announcement}</p>
-        <p>
-          {author.first_name}
-          <span>
-            {(() => {
-              const [year, month, day] = announcement.date
-                .slice(0, 10)
-                .split("-");
-              return `${day}-${month}-${year}`;
-            })()}
-          </span>
-        </p>
-      </section>
+    <li className="announcements-card">
+      <h3 className="announcements-card-header">
+        {announcement.announcement_type}
+      </h3>
+      <p className="announcements-card-content">{announcement.announcement}</p>
+      <p className="announcements-card-info">
+        Created by {author.first_name} {author.last_name}
+        <span>
+          {" "}
+          on{" "}
+          {(() => {
+            const [year, month, day] = announcement.date
+              .slice(0, 10)
+              .split("-");
+            return `${day}-${month}-${year}`;
+          })()}
+        </span>
+      </p>
     </li>
   );
 }
