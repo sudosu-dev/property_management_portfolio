@@ -3,6 +3,7 @@ import Layout from "./layout/Layout";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
+import Announcements from "./pages/Announcements/Announcements";
 import Payments from "./pages/Payments/Payments";
 import Ledger from "./pages/Payments/Ledger";
 import Profile from "./pages/profile/profile";
@@ -27,6 +28,8 @@ export default function App() {
         <Route path="/about" element={<About />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/announcements" element={<Announcements />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/admin/dashboard" element={<ManagerDashboard />} />
         <Route path="/admin/propertyinfo" element={<ManagePropertyInfo />} />
         <Route path="/admin/units" element={<ManageUnits />} />
