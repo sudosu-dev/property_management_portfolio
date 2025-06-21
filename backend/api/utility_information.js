@@ -7,9 +7,40 @@ import {
   getAllUnpaidUtility_information,
   getAllUtility_information,
   getUtility_informationByUserId,
+  createBatchUtilityBills,
 } from "#db/queries/utility_information";
+import { postUnbilledUtilitiesToLedger } from "#db/queries/transactions";
 
 router.use(requireUser);
+
+router.post("/", async (req, res) => {
+  if (!req.user.is_manager) {
+    return res
+      .status(403)
+      .json({ error: "Only managers can create utility bills." });
+  }
+
+  const bills = req.body;
+  if (!Array.isArray(bills) || bills.length === 0) {
+    return res
+      .status(400)
+      .json({ error: "Request body must be a non-empty array of bills." });
+  }
+
+  try {
+    const createdBills = await createBatchUtilityBills(bills);
+    await postUnbilledUtilitiesToLedger();
+    res.status(201).json({
+      message: `${createdBills.length} utility bills created and posted to tenant ledgers successfully.`,
+      data: createdBills,
+    });
+  } catch (error) {
+    console.error("Failed to create batch utility bills:", error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while creating utility bills." });
+  }
+});
 
 router.route("/").get(async (req, res) => {
   try {

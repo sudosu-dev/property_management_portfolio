@@ -19,6 +19,7 @@ import ManagePayments from "./pages/ManagePayments/ManagePayments";
 import ManageUtilities from "./pages/ManageUtilities/ManageUtilities";
 import ManageMaintenance from "./pages/ManageMaintenance/ManageMaintenance";
 import ManageAnnouncements from "./pages/ManageAnnouncements/ManageAnnouncements";
+import ManageSettings from "./pages/ManageUtilities/ManageSettings";
 
 export default function App() {
   return (
@@ -38,6 +39,15 @@ export default function App() {
         <Route path="/admin/utilities" element={<ManageUtilities />} />
         <Route path="/admin/maintenance" element={<ManageMaintenance />} />
         <Route path="/admin/announcements" element={<ManageAnnouncements />} />
+        <Route
+          path="/admin/settings"
+          element={
+            <ProtectedRoute>
+              <ManageSettings />
+            </ProtectedRoute>
+          }
+        />
+
         <Route path="/dashboard">
           <Route
             path="resident"
@@ -56,7 +66,6 @@ export default function App() {
             </ProtectedRoute>
           }
         />
-        ;
         <Route
           path="/ledger"
           element={
@@ -65,7 +74,6 @@ export default function App() {
             </ProtectedRoute>
           }
         />
-        ;
         <Route
           path="/profile"
           element={
