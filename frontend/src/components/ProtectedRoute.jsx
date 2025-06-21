@@ -3,5 +3,5 @@ import { useAuth } from "../auth/AuthContext";
 
 export default function ProtectedRoute({ children }) {
   const { token } = useAuth();
-  return token ? children : <Navigate to="/login" />;
+  return token ? children : <Navigate to="/about" />;
 }
