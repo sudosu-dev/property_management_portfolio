@@ -10,6 +10,7 @@ import Maintenance from "./pages/Maintenance/Maintenance";
 import ResidentDashboard from "./pages/ResidentDashboard/ResidentDashboard";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import About from "./pages/About/About";
+import ManagerDashboard from "./pages/ManagerDashboard/ManagerDashboard";
 import ManagePropertyInfo from "./pages/ManagePropertyInfo/ManagePropertyInfo";
 import ManageUnits from "./pages/ManageUnits/ManageUnits";
 import ManageResidents from "./pages/ManageResidents/ManageResidents";
@@ -26,6 +27,7 @@ export default function App() {
         <Route path="/about" element={<About />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/admin/dashboard" element={<ManagerDashboard />} />
         <Route path="/admin/propertyinfo" element={<ManagePropertyInfo />} />
         <Route path="/admin/units" element={<ManageUnits />} />
         <Route path="/admin/residents" element={<ManageResidents />} />
