@@ -49,6 +49,8 @@ export function AuthProvider({ children }) {
     if (!response.ok) throw Error(result.error || "Login Failed.");
     setToken(result.token);
     setUser(result.user);
+
+    return result.user;
   };
 
   const logout = () => {

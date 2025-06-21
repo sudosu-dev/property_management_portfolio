@@ -1,5 +1,5 @@
 import styles from "./Navbar.module.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 
 function ResidentNav({ logout }) {
@@ -86,6 +86,12 @@ function PublicNav() {
 
 export default function Navbar() {
   const { token, logout, user } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
   return (
     <header>
@@ -93,9 +99,9 @@ export default function Navbar() {
         {!token ? (
           <PublicNav />
         ) : user?.is_manager ? (
-          <ManagerNav logout={logout} />
+          <ManagerNav logout={handleLogout} />
         ) : (
-          <ResidentNav logout={logout} />
+          <ResidentNav logout={handleLogout} />
         )}
       </nav>
     </header>
