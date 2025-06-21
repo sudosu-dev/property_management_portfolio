@@ -14,6 +14,7 @@ import announcementsRouter from "#api/announcements";
 import maintenanceRouter from "#api/maintenance";
 import stripePaymentRouter from "#api/stripe_payments";
 import transactionsRouter from "#api/transactions";
+import settingsRouter from "#api/settings";
 
 import getUserFromToken from "#middleware/getUserFromToken";
 import limiter from "#middleware/rateLimiter";
@@ -40,6 +41,7 @@ app.use("/utilities", utilitiesRouter);
 app.use("/announcements", announcementsRouter);
 app.use("/maintenance", maintenanceRouter);
 app.use("/transactions", transactionsRouter);
+app.use("/settings", settingsRouter);
 
 app.get("/", (req, res) => {
   res.status(200).send("Property Management Capstone!");

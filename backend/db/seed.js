@@ -10,10 +10,8 @@ async function createProperties() {
   const {
     rows: [property],
   } = await pool.query(
-    `INSERT INTO properties (property_name, address, total_units)
-     VALUES ($1, $2, $3)
-     RETURNING *`,
-    ["Oakwood Apartments", "101 Oakwood Dr, Portland, OR", 25]
+    `INSERT INTO properties(property_name) VALUES($1) RETURNING *`,
+    ["Oakwood Apartments"]
   );
   return property;
 }
@@ -100,23 +98,19 @@ async function createUsers(units) {
 
 async function createTransactions(users, units) {
   const tenants = users.filter((u) => !u.is_manager);
-
   for (const tenant of tenants) {
     const unit = units.find((u) => u.id === tenant.unit);
     const rent = parseFloat(unit.rent_amount);
-
     for (let i = 3; i >= 1; i--) {
       const date = new Date();
       date.setMonth(date.getMonth() - i);
       const description = `Monthly Rent for ${date.toLocaleString("default", {
         month: "long",
       })}`;
-
       await pool.query(
         `INSERT INTO transactions(user_id, unit_id, type, description, amount, created_at) VALUES($1, $2, 'Rent', $3, $4, $5)`,
         [tenant.id, unit.id, description, rent, date]
       );
-
       if (i > 1) {
         await pool.query(
           `INSERT INTO transactions(user_id, unit_id, type, description, amount, created_at) VALUES($1, $2, 'Payment', 'Online Payment', $3, $4)`,
@@ -124,7 +118,6 @@ async function createTransactions(users, units) {
         );
       }
     }
-
     if (tenants.indexOf(tenant) === 0) {
       const utilityAmount = parseFloat(
         faker.commerce.price({ min: 50, max: 150 })
@@ -137,15 +130,36 @@ async function createTransactions(users, units) {
   }
 }
 
+async function createSettings() {
+  const settingsToCreate = [
+    {
+      key: "rate_water",
+      value: "0.05",
+      description: "Cost per gallon of water",
+    },
+    {
+      key: "rate_electric",
+      value: "0.12",
+      description: "Cost per kWh of electricity",
+    },
+    { key: "rate_gas", value: "1.10", description: "Cost per therm of gas" },
+  ];
+  for (const setting of settingsToCreate) {
+    await pool.query(
+      `INSERT INTO settings(key, value, description) VALUES($1, $2, $3)`,
+      [setting.key, setting.value, setting.description]
+    );
+  }
+}
+
 async function seedDatabase() {
   try {
     console.log("Starting data seed...");
-
     const properties = await createProperties();
     const units = await createUnits(properties);
     const { createdUsers, usersForLogin } = await createUsers(units);
     await createTransactions(createdUsers, units);
-
+    await createSettings();
     console.log("\nDatabase has been successfully seeded!");
     console.log("Here are the test user logins:");
     console.table(usersForLogin);
