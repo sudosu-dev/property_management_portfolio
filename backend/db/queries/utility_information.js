@@ -67,3 +67,39 @@ export async function updateUtility_informationPaidStatusByUserId(
   } = await pool.query(sql, [bool, user_id]);
   return utility_information;
 }
+
+export async function createBatchUtilityBills(bills) {
+  const client = await pool.connect();
+  try {
+    await client.query("BEGIN");
+    const createdBills = [];
+    for (const bill of bills) {
+      const sql = `
+        INSERT INTO utility_information (user_id, water_cost, water_usage, electric_usage, electric_cost, gas_cost, gas_usage, due_date)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+        RETURNING *;
+      `;
+      const values = [
+        bill.user_id,
+        bill.water_cost,
+        bill.water_usage,
+        bill.electric_usage,
+        bill.electric_cost,
+        bill.gas_cost,
+        bill.gas_usage,
+        bill.due_date,
+      ];
+      const {
+        rows: [newBill],
+      } = await client.query(sql, values);
+      createdBills.push(newBill);
+    }
+    await client.query("COMMIT");
+    return createdBills;
+  } catch (e) {
+    await client.query("ROLLBACK");
+    throw e;
+  } finally {
+    client.release();
+  }
+}

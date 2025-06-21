@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS maintenance_photos CASCADE;
 DROP TABLE IF EXISTS maintenance_requests CASCADE;
 DROP TABLE IF EXISTS transactions CASCADE;
+DROP TABLE IF EXISTS settings CASCADE;
 DROP TABLE IF EXISTS utility_information CASCADE;
 DROP TABLE IF EXISTS announcements CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
@@ -9,9 +10,7 @@ DROP TABLE IF EXISTS properties CASCADE;
 
 CREATE TABLE properties(
     id SERIAL PRIMARY KEY,
-    property_name VARCHAR(255),
-    address VARCHAR(255) NOT NULL,
-    total_units INTEGER NOT NULL
+    property_name VARCHAR(255)
 );
 
 CREATE TABLE units(
@@ -53,6 +52,13 @@ CREATE TABLE transactions (
     amount DECIMAL(10, 2) NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     stripe_payment_id VARCHAR(255) UNIQUE NULL
+);
+
+CREATE TABLE settings (
+    key VARCHAR(50) PRIMARY KEY,
+    value TEXT NOT NULL,
+    description TEXT,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE utility_information(
