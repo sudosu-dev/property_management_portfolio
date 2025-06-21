@@ -9,7 +9,9 @@ DROP TABLE IF EXISTS properties CASCADE;
 
 CREATE TABLE properties(
     id SERIAL PRIMARY KEY,
-    property_name VARCHAR(255)
+    property_name VARCHAR(255),
+    address VARCHAR(255) NOT NULL,
+    total_units INTEGER NOT NULL
 );
 
 CREATE TABLE units(
