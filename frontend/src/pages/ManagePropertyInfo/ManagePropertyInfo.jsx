@@ -3,11 +3,18 @@ import propertyPlaceholder from "../../assets/property-placeholder.jpg";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../auth/AuthContext";
 import { API } from "../../api/ApiContext";
+import { useNavigate } from "react-router-dom";
 
 export default function ManagePropertyInfo() {
   const { token, user } = useAuth();
   const [properties, setProperties] = useState([]);
   const [error, setError] = useState(null);
+
+  const navigate = useNavigate();
+
+  const toAddPropertyForm = () => {
+    navigate("/admin/addproperty");
+  };
 
   if (!user?.is_manager) {
     return <p>Access Denied</p>;
@@ -43,7 +50,14 @@ export default function ManagePropertyInfo() {
 
   return (
     <div>
-      <h1 className={styles.header}>Properties</h1>
+      <div className={styles.topBar}>
+        <h1>Properties</h1>
+        <div className={styles.crudButtons}>
+          <button onClick={toAddPropertyForm}>Add new property</button>
+          <button>Edit properties</button>
+          <button>Delete property</button>
+        </div>
+      </div>
       <ul className={styles.propertyCards}>
         {properties.map((property) => (
           <li key={property.id} className={styles.propertyCard}>

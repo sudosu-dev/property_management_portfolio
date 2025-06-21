@@ -19,6 +19,7 @@ import ManagePayments from "./pages/ManagePayments/ManagePayments";
 import ManageUtilities from "./pages/ManageUtilities/ManageUtilities";
 import ManageMaintenance from "./pages/ManageMaintenance/ManageMaintenance";
 import ManageAnnouncements from "./pages/ManageAnnouncements/ManageAnnouncements";
+import AddPropertyForm from "./pages/ManagePropertyInfo/AddPropertyForm";
 
 export default function App() {
   return (
@@ -38,6 +39,7 @@ export default function App() {
         <Route path="/admin/utilities" element={<ManageUtilities />} />
         <Route path="/admin/maintenance" element={<ManageMaintenance />} />
         <Route path="/admin/announcements" element={<ManageAnnouncements />} />
+        <Route path="/admin/addproperty" element={<AddPropertyForm />} />
         <Route path="/dashboard">
           <Route
             path="resident"
