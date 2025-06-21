@@ -25,7 +25,19 @@ export async function createUnit({
 }
 
 export async function getUnits() {
-  const sql = `SELECT * FROM units`;
+  const sql = `
+  SELECT
+      u.*,
+      json_build_object(
+        'id', usr.id,
+        'first_name', usr.first_name,
+        'last_name', usr.last_name
+      ) as tenant_info
+    FROM units u
+    LEFT JOIN users usr ON u.id = usr.unit
+    ORDER BY u.unit_number;
+
+  `;
   const { rows } = await pool.query(sql);
   return rows;
 }
