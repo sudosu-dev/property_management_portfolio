@@ -45,7 +45,7 @@ export async function updateProperty(id, updates) {
     index++;
   }
 
-  const result = await db.query(
+  const result = await pool.query(
     `UPDATE properties SET ${fields.join(
       ", "
     )} WHERE id = $${index} RETURNING *`,

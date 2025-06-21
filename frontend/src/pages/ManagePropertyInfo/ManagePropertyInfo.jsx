@@ -48,14 +48,37 @@ export default function ManagePropertyInfo() {
 
   if (error) return <p>Error: {error}</p>;
 
+  const handleDelete = async (propertyId) => {
+    if (!window.confirm("Are you sure you want to delete this property?"))
+      return;
+
+    try {
+      const response = await fetch(`${API}/properties/${propertyId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to delete property");
+      }
+
+      setProperties((prev) => prev.filter((p) => p.id !== propertyId));
+    } catch (err) {
+      alert("Error deleting property: " + err.message);
+      console.error("Delete error:", err);
+    }
+  };
+
   return (
     <div>
       <div className={styles.topBar}>
         <h1>Properties</h1>
         <div className={styles.crudButtons}>
           <button onClick={toAddPropertyForm}>Add new property</button>
-          <button>Edit properties</button>
-          <button>Delete property</button>
         </div>
       </div>
       <ul className={styles.propertyCards}>
@@ -68,6 +91,20 @@ export default function ManagePropertyInfo() {
               <h2>{property.property_name}</h2>
               <address>{property.address}</address>
               <p>Unit Count: {property.total_units}</p>
+
+              <button
+                onClick={() => navigate(`/admin/editproperty/${property.id}`)}
+                className={styles.editButton}
+              >
+                Edit
+              </button>
+
+              <button
+                onClick={() => handleDelete(property.id)}
+                className={styles.deleteButton}
+              >
+                Delete
+              </button>
             </div>
           </li>
         ))}
