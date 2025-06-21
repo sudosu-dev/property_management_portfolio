@@ -1,6 +1,16 @@
-.header {
-  padding: 0 10%;
-  margin: 2rem auto;
+.topBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 3rem 10% 1rem;
+  margin: 0 auto;
+}
+.crudButtons {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
 }
 .propertyCards {
   display: flex;
