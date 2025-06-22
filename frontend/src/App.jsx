@@ -25,6 +25,7 @@ import ManageSettings from "./pages/ManageUtilities/ManageSettings";
 import ManageTenantLedger from "./pages/ManagePayments/ManageTenantLedger";
 import AddUnitForm from "./pages/ManageUnits/AddUnitForm";
 import EditUnitForm from "./pages/ManageUnits/EditUnitForm";
+import Error404 from "./Error404";
 
 export default function App() {
   return (
@@ -113,6 +114,7 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="*" element={<Error404 />} />
       </Route>
     </Routes>
   );
