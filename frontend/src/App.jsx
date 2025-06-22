@@ -73,14 +73,16 @@ export default function App() {
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/dashboard/resident"
-          element={
-            <ProtectedRoute>
-              <ResidentDashboard />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/dashboard">
+          <Route
+            path="resident"
+            element={
+              <ProtectedRoute>
+                <ResidentDashboard />
+              </ProtectedRoute>
+            }
+          />
+        </Route>
         <Route
           path="/payments"
           element={
