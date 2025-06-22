@@ -25,6 +25,7 @@ import ManageSettings from "./pages/ManageUtilities/ManageSettings";
 import ManageTenantLedger from "./pages/ManagePayments/ManageTenantLedger";
 import AddUnitForm from "./pages/ManageUnits/AddUnitForm";
 import EditUnitForm from "./pages/ManageUnits/EditUnitForm";
+import Error404 from "./Error404";
 
 export default function App() {
   return (
@@ -51,7 +52,7 @@ export default function App() {
         <Route
           path="/admin/settings"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute requireManager={true}>
               <ManageSettings />
             </ProtectedRoute>
           }
@@ -59,8 +60,16 @@ export default function App() {
         <Route
           path="/admin/ledger/:userId"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute requireManager={true}>
               <ManageTenantLedger />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/maintenance"
+          element={
+            <ProtectedRoute requireManager={true}>
+              <ManageMaintenance />
             </ProtectedRoute>
           }
         />
@@ -106,6 +115,7 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="*" element={<Error404 />} />
       </Route>
     </Routes>
   );
