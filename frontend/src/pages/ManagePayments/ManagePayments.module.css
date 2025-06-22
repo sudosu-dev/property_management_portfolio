@@ -10,19 +10,10 @@
 }
 
 .controls {
-  margin-bottom: 2rem;
   display: flex;
   gap: 1rem;
-}
-
-.primaryButton {
-  background-color: var(--primary-color);
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  align-items: center;
 }
 
 .searchInput {
@@ -30,12 +21,14 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 1rem;
-  width: 300px;
+  width: 350px;
 }
 
-.tableContainer {
-  width: 100%;
-  border: 1px solid #e0e0e0;
+.tableSection {
+  padding: 0;
+  border: 1px solid var(--grey-100);
+  border-top-width: 10px;
+  border-top-color: var(--secondary-color);
   border-radius: 8px;
   overflow: hidden;
 }
@@ -50,6 +43,7 @@
   padding: 1rem;
   text-align: left;
   border-bottom: 1px solid #e0e0e0;
+  vertical-align: middle;
 }
 
 .table th {
@@ -64,6 +58,33 @@
   background-color: #f9f9f9;
 }
 
+.alignRight {
+  text-align: right;
+}
+
+.tenantColumn {
+  width: 100%;
+}
+
+.actionsCell {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+.actionsCell button {
+  padding: 0.4rem 0.8rem;
+  border: 1px solid #ccc;
+  background-color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.actionsCell button:hover {
+  background-color: #f0f0f0;
+}
+
 .balancePositive {
   color: #c0392b;
   font-weight: bold;
@@ -76,4 +97,106 @@
 .balanceNegative {
   color: #27ae60;
   font-weight: bold;
+}
+
+/* --- MODAL STYLES --- */
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  max-height: 90vh;
+  overflow-y: auto;
+  border-top: 10px solid var(--secondary-color);
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.formGroup label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.formGroup select,
+.formGroup textarea {
+  font-size: 1rem;
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.modalActions {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  border-top: 1px solid #eee;
+  padding-top: 1.5rem;
+}
+
+.modalButton {
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.primaryButton {
+  composes: modalButton;
+  background-color: var(--primary-color);
+  color: white;
+}
+.primaryButton:hover {
+  background-color: #1565c0;
+}
+.primaryButton:disabled {
+  background-color: #a5d8ff;
+  cursor: not-allowed;
+}
+
+.secondaryButton {
+  composes: modalButton;
+  background-color: #6c757d;
+  color: white;
+}
+.secondaryButton:hover {
+  background-color: #5a6268;
+}
+.secondaryButton:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+.error {
+  color: #c0392b;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.noWrap {
+  white-space: nowrap;
 }

@@ -20,6 +20,7 @@ import ManageUtilities from "./pages/ManageUtilities/ManageUtilities";
 import ManageMaintenance from "./pages/ManageMaintenance/ManageMaintenance";
 import ManageAnnouncements from "./pages/ManageAnnouncements/ManageAnnouncements";
 import ManageSettings from "./pages/ManageUtilities/ManageSettings";
+import ManageTenantLedger from "./pages/ManagePayments/ManageTenantLedger";
 
 export default function App() {
   return (
@@ -44,6 +45,14 @@ export default function App() {
           element={
             <ProtectedRoute>
               <ManageSettings />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/ledger/:userId"
+          element={
+            <ProtectedRoute>
+              <ManageTenantLedger />
             </ProtectedRoute>
           }
         />

@@ -63,19 +63,19 @@ export async function getTransactionsByUserId(userId) {
 export async function getAggregatedBalances() {
   const sql = `
     SELECT
-    u.id as user_id,
-    u.first_name,
-    u.last_name,
-    un.unit_number,
-    COALESCE(SUM(t.amount), 0.00) as balance
+      u.id as user_id,
+      u.first_name,
+      u.last_name,
+      un.id as unit_id,
+      un.unit_number,
+      COALESCE(SUM(t.amount), 0.00) as balance
     FROM users u
     JOIN units un ON u.unit = un.id
     LEFT JOIN transactions t ON u.id = t.user_id
     WHERE u.is_manager = false
-    GROUP BY u.id, un.unit_number
-    ORDER BY u.last_name, u.first_name
+    GROUP BY u.id, un.id, un.unit_number
+    ORDER BY u.last_name, u.first_name;
   `;
-
   const { rows } = await pool.query(sql);
   return rows;
 }
