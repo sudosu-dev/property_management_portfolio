@@ -81,7 +81,6 @@ export default function App() {
             </ProtectedRoute>
           }
         />
-
         <Route
           path="/payments"
           element={
