@@ -48,24 +48,26 @@ export async function getAnnouncementById(id) {
   return announcement;
 }
 
-export async function updateAnnouncementById(
-  id,
-  date,
-  announcement,
-  announcement_type
-) {
+export async function updateAnnouncementById(id, updates) {
+  const { announcement, announcement_type, publish_at, date } = updates;
   const sql = `
         UPDATE announcements
         SET
-            date = $2,
-            announcement = $3,
-            announcement_type = $4,
-            publish_at = $2
+            announcement = $2,
+            announcement_type = $3,
+            publish_at = $4,
+            date = $5
         WHERE id = $1 RETURNING *;
     `;
   const {
     rows: [updateAnnouncement],
-  } = await pool.query(sql, [id, date, announcement, announcement_type]);
+  } = await pool.query(sql, [
+    id,
+    announcement,
+    announcement_type,
+    publish_at,
+    date,
+  ]);
   return updateAnnouncement;
 }
 
