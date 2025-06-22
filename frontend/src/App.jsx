@@ -22,6 +22,8 @@ import ManageAnnouncements from "./pages/ManageAnnouncements/ManageAnnouncements
 import AddPropertyForm from "./pages/ManagePropertyInfo/AddPropertyForm";
 import EditPropertyForm from "./pages/ManagePropertyInfo/EditPropertyForm";
 import ManageSettings from "./pages/ManageUtilities/ManageSettings";
+import AddUnitForm from "./pages/ManageUnits/AddUnitForm";
+import EditUnitForm from "./pages/ManageUnits/EditUnitForm";
 
 export default function App() {
   return (
@@ -43,6 +45,8 @@ export default function App() {
         <Route path="/admin/announcements" element={<ManageAnnouncements />} />
         <Route path="/admin/addproperty" element={<AddPropertyForm />} />
         <Route path="/admin/editproperty/:id" element={<EditPropertyForm />} />
+        <Route path="/admin/addunit" element={<AddUnitForm />} />
+        <Route path="/admin/editunit/:id" element={<EditUnitForm />} />
         <Route
           path="/admin/settings"
           element={

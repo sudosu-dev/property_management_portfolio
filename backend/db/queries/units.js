@@ -3,9 +3,9 @@ import pool from "#db/client";
 export async function createUnit({
   propertyId,
   unitNumber,
-  rentAmount = null,
-  notes = null,
-  tenants = null,
+  rentAmount,
+  notes,
+  tenants,
 }) {
   const sql = `
     INSERT INTO units (property_id, unit_number, rent_amount, notes, tenants)
@@ -40,6 +40,14 @@ export async function getUnits() {
   `;
   const { rows } = await pool.query(sql);
   return rows;
+}
+
+export async function getUnitById(id) {
+  const sql = `SELECT * FROM units WHERE id = $1`;
+  const {
+    rows: [unit],
+  } = await pool.query(sql, [id]);
+  return unit;
 }
 
 export async function getUnitsByPropertyId(propertyId) {
@@ -99,7 +107,7 @@ export async function updateUnit(id, updates) {
     index++;
   }
 
-  const result = await db.query(
+  const result = await pool.query(
     `UPDATE units SET ${fields.join(", ")} WHERE id = $${index} RETURNING *`,
     [...values, id]
   );

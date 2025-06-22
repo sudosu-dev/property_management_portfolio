@@ -2,6 +2,7 @@ import express from "express";
 import {
   createUnit,
   getUnits,
+  getUnitById,
   getUnitsByPropertyId,
   getUnitsByPropertyIdAndUnitNumber,
   getUnitByPropertyIdAndTenantName,
@@ -18,7 +19,7 @@ router.use(requireUser);
 
 router.post(
   "/",
-  requireBody(["propertyId", "unitNumber", "tenantName"]),
+  requireBody(["propertyId", "unitNumber", "tenants"]),
   async (req, res) => {
     try {
       if (!req.user.is_manager) {
@@ -52,6 +53,26 @@ router.get("/", async (req, res) => {
     }
 
     res.json(userUnit);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.get("/:id", async (req, res) => {
+  try {
+    if (!req.user.is_manager) {
+      return res
+        .status(403)
+        .json({ error: "Only managers can view individual units." });
+    }
+
+    const unit = await getUnitById(req.params.id);
+
+    if (!unit) {
+      return res.status(404).json({ error: "Unit not found" });
+    }
+
+    res.json(unit);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
