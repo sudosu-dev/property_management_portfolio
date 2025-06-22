@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useAuth } from "../../auth/AuthContext";
 import { useAnnouncements } from "../../Context/AnnouncementsContext";
 import { useApi } from "../../api/ApiContext";
 import "./announcements.css";
@@ -13,13 +14,14 @@ export default function Announcements() {
   } = useAnnouncements();
   const [todaysAnnouncements, setTodaysAnnouncements] = useState([]);
   const [oldAnnouncements, setOldAnnouncements] = useState([]);
-  const [user, setUser] = useState();
+  // const [user, setUser] = useState();
+  const { user } = useAuth();
   const [newAnnouncement, setNewAnnouncement] = useState(false);
   const [today, setToday] = useState();
 
   useEffect(() => {
     getAnnouncements();
-    setUser(JSON.parse(sessionStorage.getItem("user")));
+    // setUser(JSON.parse(sessionStorage.getItem("user")));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -72,7 +74,7 @@ export default function Announcements() {
 
   if (loading) return <p>Loading announcements...</p>;
   if (error) return <p>Error GETTING announcements: {error.message}</p>;
-  if (user.is_manager)
+  if (user?.is_manager)
     return (
       <>
         <h1 className="announcements-header">Announcements</h1>

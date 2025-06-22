@@ -17,6 +17,22 @@ export default function RequestList({
           {(showAll ? requests : requests.slice(0, 2)).map((req) => (
             <li key={req.id} onClick={() => setSelectedRequest(req)}>
               <p>
+                <strong>Unit: </strong>
+                {req.unit_number}
+              </p>
+              <br />
+              <p>
+                <strong>Request Date: </strong>
+                {new Date(req.created_at).toLocaleString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                  hour: "numeric",
+                  minute: "2-digit",
+                })}
+              </p>
+              <br />
+              <p>
                 <strong>Issue: </strong>
                 {req.information}
               </p>
