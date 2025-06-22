@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../../auth/AuthContext";
 import { API } from "../../api/ApiContext";
 import styles from "./ManageMaintenance.module.css";
+import ManageRequestList from "./ManageRequestList";
 
 function Maintenance() {
   const { user, token } = useAuth();
@@ -71,14 +72,7 @@ function Maintenance() {
       <div className={styles.maintenance}>
         <h1>Maintenance Requests</h1>
         <div className={styles.content}>
-          <MaintenanceForm
-            user={user}
-            formData={formData}
-            setFormData={setFormData}
-            handleSubmit={handleSubmit}
-            message={message}
-          />
-          <RequestList
+          <ManageRequestList
             requests={requests}
             showAll={showAll}
             setShowAll={setShowAll}
@@ -86,12 +80,6 @@ function Maintenance() {
           />
         </div>
       </div>
-      {selectedRequest && (
-        <RequestDetails
-          request={selectedRequest}
-          onClose={() => setSelectedRequest(null)}
-        />
-      )}
     </>
   );
 }
