@@ -6,7 +6,7 @@ export default function ProtectedRoute({ children, requireManager = false }) {
 
   if (!token) return <Navigate to="/" />;
 
-  if (requireManager && !user.is_manager) {
+  if (requireManager && (!user || !user.is_manager)) {
     return <Navigate to="/dashboard/resident" />;
   }
   return children;
