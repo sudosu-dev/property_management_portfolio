@@ -51,7 +51,7 @@ export default function App() {
         <Route
           path="/admin/settings"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute requireManager={true}>
               <ManageSettings />
             </ProtectedRoute>
           }
@@ -59,21 +59,28 @@ export default function App() {
         <Route
           path="/admin/ledger/:userId"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute requireManager={true}>
               <ManageTenantLedger />
             </ProtectedRoute>
           }
         />
-        <Route path="/dashboard">
-          <Route
-            path="resident"
-            element={
-              <ProtectedRoute>
-                <ResidentDashboard />
-              </ProtectedRoute>
-            }
-          />
-        </Route>
+        <Route
+          path="/admin/maintenance"
+          element={
+            <ProtectedRoute requireManager={true}>
+              <ManageMaintenance />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard/resident"
+          element={
+            <ProtectedRoute>
+              <ResidentDashboard />
+            </ProtectedRoute>
+          }
+        />
+
         <Route
           path="/payments"
           element={
