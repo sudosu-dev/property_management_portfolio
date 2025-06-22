@@ -1,14 +1,14 @@
 import pool from "#db/client";
 
-export async function createProperty({ propertyName }) {
+export async function createProperty({ propertyName, address, totalUnits }) {
   const sql = `
-    INSERT INTO properties (property_name)
-    VALUES ($1)
+    INSERT INTO properties (property_name, address, total_units)
+    VALUES ($1, $2, $3)
     RETURNING *;
   `;
   const {
     rows: [property],
-  } = await pool.query(sql, [propertyName]);
+  } = await pool.query(sql, [propertyName, address, totalUnits]);
   return property;
 }
 
@@ -45,7 +45,7 @@ export async function updateProperty(id, updates) {
     index++;
   }
 
-  const result = await db.query(
+  const result = await pool.query(
     `UPDATE properties SET ${fields.join(
       ", "
     )} WHERE id = $${index} RETURNING *`,
