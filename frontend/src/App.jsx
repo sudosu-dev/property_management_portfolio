@@ -22,6 +22,7 @@ import ManageAnnouncements from "./pages/ManageAnnouncements/ManageAnnouncements
 import AddPropertyForm from "./pages/ManagePropertyInfo/AddPropertyForm";
 import EditPropertyForm from "./pages/ManagePropertyInfo/EditPropertyForm";
 import ManageSettings from "./pages/ManageUtilities/ManageSettings";
+import ManageTenantLedger from "./pages/ManagePayments/ManageTenantLedger";
 import AddUnitForm from "./pages/ManageUnits/AddUnitForm";
 import EditUnitForm from "./pages/ManageUnits/EditUnitForm";
 
@@ -52,6 +53,14 @@ export default function App() {
           element={
             <ProtectedRoute>
               <ManageSettings />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/ledger/:userId"
+          element={
+            <ProtectedRoute>
+              <ManageTenantLedger />
             </ProtectedRoute>
           }
         />
