@@ -44,7 +44,15 @@ export default function App() {
         <Route path="/admin/payments" element={<ManagePayments />} />
         <Route path="/admin/utilities" element={<ManageUtilities />} />
         <Route path="/admin/maintenance" element={<ManageMaintenance />} />
-        <Route path="/admin/announcements" element={<ManageAnnouncements />} />
+        {/* <Route path="/admin/announcements" element={<ManageAnnouncements />} /> */}
+        <Route
+          path="/admin/announcements"
+          element={
+            <ProtectedRoute requireManager={true}>
+              <ManageAnnouncements />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/admin/addproperty" element={<AddPropertyForm />} />
         <Route path="/admin/editproperty/:id" element={<EditPropertyForm />} />
         <Route path="/admin/addunit" element={<AddUnitForm />} />
