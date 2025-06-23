@@ -26,6 +26,7 @@ import ManageTenantLedger from "./pages/ManagePayments/ManageTenantLedger";
 import AddUnitForm from "./pages/ManageUnits/AddUnitForm";
 import EditUnitForm from "./pages/ManageUnits/EditUnitForm";
 import Error404 from "./Error404";
+import ManageUsers from "./pages/ManageUsers/ManageUsers";
 
 export default function App() {
   return (
@@ -71,6 +72,14 @@ export default function App() {
             element={
               <ProtectedRoute requireManager={true}>
                 <ManageMaintenance />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="manage-users"
+            element={
+              <ProtectedRoute requireManager={true}>
+                <ManageUsers />
               </ProtectedRoute>
             }
           />
