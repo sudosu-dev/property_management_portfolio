@@ -1,0 +1,135 @@
+.page {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: auto;
+  background-color: var(--color-offwhite);
+  min-height: calc(100vh - 70px);
+}
+
+.header {
+  margin-bottom: 2rem;
+}
+
+.header h1 {
+  margin: 0 0 0.25rem 0;
+  font-weight: 600;
+}
+
+.mainContent {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 2rem;
+}
+
+.filters {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.filterButton {
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
+  text-align: left;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.filterButton.active {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+.announcementsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.announcementCard {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  border-top: 10px solid var(--secondary-color);
+  padding: 1.5rem;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.authorInfo {
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.4;
+}
+
+.authorInfo p {
+  margin: 0;
+}
+
+.status {
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.statusPending {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.statusApproved {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.statusRejected {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.announcementBody {
+  margin-bottom: 1.5rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.cardFooter {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.actionButton {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.approveButton {
+  background-color: #a7f3d0;
+  color: #047857;
+}
+
+.rejectButton {
+  background-color: #fecaca;
+  color: #991b1b;
+}
+
+.deleteButton {
+  background-color: #e5e7eb;
+  color: #374151;
+}
