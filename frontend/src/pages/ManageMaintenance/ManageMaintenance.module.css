@@ -38,6 +38,7 @@
 
 .activeRequests ul li:hover {
   background-color: var(--primary-color);
+  color: var(--color-white);
 }
 
 .requestForm {
@@ -56,7 +57,7 @@
 
 .newRequests button:hover {
   background-color: var(--primary-color);
-}
+  }
 
 .maintenance img {
   width: 20%;
@@ -70,6 +71,7 @@
 
 .showMore:hover {
   background-color: var(--primary-color);
+  color: var(--color-white);
 }
 
 .container {
