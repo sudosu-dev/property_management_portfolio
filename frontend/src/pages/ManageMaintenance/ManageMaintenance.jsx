@@ -3,8 +3,9 @@ import { useAuth } from "../../auth/AuthContext";
 import { API } from "../../api/ApiContext";
 import styles from "./ManageMaintenance.module.css";
 import ManageRequestList from "./ManageRequestList";
+import ManageRequestDetails from "./ManageRequestDetails";
 
-function Maintenance() {
+function ManageMaintenance() {
   const { user, token } = useAuth();
   const [formData, setFormData] = useState({ information: "", files: [] });
   const [message, setMessage] = useState("");
@@ -80,8 +81,14 @@ function Maintenance() {
           />
         </div>
       </div>
+      {selectedRequest && (
+        <ManageRequestDetails
+          request={selectedRequest}
+          onClose={() => setSelectedRequest(null)}
+        />
+      )}
     </>
   );
 }
 
-export default Maintenance;
+export default ManageMaintenance;

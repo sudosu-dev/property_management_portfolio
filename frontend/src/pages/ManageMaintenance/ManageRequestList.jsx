@@ -1,7 +1,7 @@
 import styles from "./ManageMaintenance.module.css";
 import { API } from "../../api/ApiContext";
 
-export default function RequestList({
+export default function ManageRequestList({
   requests,
   showAll,
   setShowAll,
