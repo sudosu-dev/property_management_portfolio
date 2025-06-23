@@ -49,24 +49,26 @@ export default function App() {
         <Route path="/admin/editproperty/:id" element={<EditPropertyForm />} />
         <Route path="/admin/addunit" element={<AddUnitForm />} />
         <Route path="/admin/editunit/:id" element={<EditUnitForm />} />
+        <Route path="/admin">
+          <Route
+            path="settings"
+            element={
+              <ProtectedRoute requireManager={true}>
+                <ManageSettings />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="ledger/:userId"
+            element={
+              <ProtectedRoute requireManager={true}>
+                <ManageTenantLedger />
+              </ProtectedRoute>
+            }
+          />
+        </Route>
         <Route
-          path="/admin/settings"
-          element={
-            <ProtectedRoute requireManager={true}>
-              <ManageSettings />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/admin/ledger/:userId"
-          element={
-            <ProtectedRoute requireManager={true}>
-              <ManageTenantLedger />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/admin/maintenance"
+          path="maintenance"
           element={
             <ProtectedRoute requireManager={true}>
               <ManageMaintenance />
