@@ -1,14 +1,19 @@
 import pool from "#db/client";
 
-export async function createProperty({ propertyName, address, totalUnits }) {
+export async function createProperty({
+  propertyName,
+  address,
+  phoneNumber,
+  totalUnits,
+}) {
   const sql = `
-    INSERT INTO properties (property_name, address, total_units)
-    VALUES ($1, $2, $3)
+    INSERT INTO properties (property_name, address, phone_number, total_units)
+    VALUES ($1, $2, $3, $4)
     RETURNING *;
   `;
   const {
     rows: [property],
-  } = await pool.query(sql, [propertyName, address, totalUnits]);
+  } = await pool.query(sql, [propertyName, address, phoneNumber, totalUnits]);
   return property;
 }
 
