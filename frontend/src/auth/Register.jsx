@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
+import styles from "./Register.module.css";
 
 import { useAuth } from "./AuthContext";
 
@@ -28,36 +29,40 @@ export default function Register() {
 
   return (
     <>
-      <h1>Register for an account</h1>
-      <form action={onRegister}>
-        <label>
-          Username
-          <input type="text" name="username" required />
-        </label>
-        <label>
-          Password
-          <input type="password" name="password" required />
-        </label>
-        <label>
-          First Name
-          <input type="text" name="firstName" required />
-        </label>
-        <label>
-          Last Name
-          <input type="text" name="lastName" required />
-        </label>
-        <label>
-          Email
-          <input type="email" name="email" required />
-        </label>
-        <label>
-          Unit
-          <input type="number" name="unit" />
-        </label>
-        <button>Register</button>
-        {error && <output>an error occurred, please try again</output>}
-      </form>
-      <Link to="/login">Already have an account? Log in here.</Link>
+      <div className={styles.register}>
+        <div className={styles.registerForm}>
+          <h1>Register For An Account</h1>
+          <form action={onRegister}>
+            <label>
+              <strong>Username: </strong>
+              <input type="text" name="username" required />
+            </label>
+            <label>
+              <strong>Password: </strong>
+              <input type="password" name="password" required />
+            </label>
+            <label>
+              <strong>First Name: </strong>
+              <input type="text" name="firstName" required />
+            </label>
+            <label>
+              <strong>Last Name: </strong>
+              <input type="text" name="lastName" required />
+            </label>
+            <label>
+              <strong>Email: </strong>
+              <input type="email" name="email" required />
+            </label>
+            <label>
+              <strong>Unit: </strong>
+              <input type="number" name="unit" />
+            </label>
+            <button>Register</button>
+            {error && <output>an error occurred, please try again</output>}
+          </form>
+          <Link to="/login">Already have an account? Log in here.</Link>
+        </div>
+      </div>
     </>
   );
 }
