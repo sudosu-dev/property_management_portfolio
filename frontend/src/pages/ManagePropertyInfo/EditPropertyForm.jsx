@@ -7,6 +7,7 @@ import { useAuth } from "../../auth/AuthContext";
 export default function EditPropertyForm() {
   const [propertyName, setPropertyName] = useState("");
   const [address, setAddress] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [totalUnits, setTotalUnits] = useState("");
 
   const { id } = useParams();
@@ -24,10 +25,12 @@ export default function EditPropertyForm() {
           },
         });
 
-        const { property_name, address, total_units } = response.data;
+        const { property_name, address, phone_number, total_units } =
+          response.data;
 
         setPropertyName(property_name);
         setAddress(address);
+        setPhoneNumber(phone_number);
         setTotalUnits(total_units);
       } catch (error) {
         console.error("Error fetching property:", error);
@@ -47,6 +50,7 @@ export default function EditPropertyForm() {
         {
           property_name: propertyName,
           address,
+          phone_number: phoneNumber,
           total_units: totalUnits,
         },
         {
@@ -82,6 +86,14 @@ export default function EditPropertyForm() {
             type="text"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
+          />
+          <br />
+
+          <label>Phone Number</label>
+          <input
+            type="tel"
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
           />
           <br />
 

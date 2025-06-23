@@ -12,6 +12,7 @@ CREATE TABLE properties(
     id SERIAL PRIMARY KEY,
     property_name VARCHAR(255) NOT NULL,
     address VARCHAR(255) NOT NULL,
+    phone_number VARCHAR(15) NOT NULL,
     total_units INTEGER NOT NULL
 );
 

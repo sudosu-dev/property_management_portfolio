@@ -10,8 +10,8 @@ async function createProperties() {
   const {
     rows: [property],
   } = await pool.query(
-    `INSERT INTO properties(property_name, address, total_units) VALUES($1, $2, $3) RETURNING *`,
-    ["Oakwood Apartments", "101 Oakwood Dr, Portland, OR", 25]
+    `INSERT INTO properties(property_name, address, phone_number, total_units) VALUES($1, $2, $3, $4) RETURNING *`,
+    ["Oakwood Apartments", "101 Oakwood Dr, Portland, OR", 1010101010, 25]
   );
   return property;
 }

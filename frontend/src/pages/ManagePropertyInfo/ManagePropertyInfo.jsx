@@ -73,6 +73,16 @@ export default function ManagePropertyInfo() {
     }
   };
 
+  function formatPhoneNumber(phoneNumberString) {
+    const cleaned = ("" + phoneNumberString).replace(/\D/g, "");
+
+    const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+    if (match) {
+      return `${match[1]}-${match[2]}-${match[3]}`;
+    }
+    return phoneNumberString;
+  }
+
   return (
     <div>
       <div className={styles.topBar}>
@@ -90,15 +100,14 @@ export default function ManagePropertyInfo() {
             <div>
               <h2>{property.property_name}</h2>
               <address>{property.address}</address>
+              <p>Call at: {formatPhoneNumber(property.phone_number)}</p>
               <p>Unit Count: {property.total_units}</p>
-
               <button
                 onClick={() => navigate(`/admin/editproperty/${property.id}`)}
                 className={styles.editButton}
               >
                 Edit
               </button>
-
               <button
                 onClick={() => handleDelete(property.id)}
                 className={styles.deleteButton}
