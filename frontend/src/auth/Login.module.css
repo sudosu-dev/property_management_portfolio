@@ -1,0 +1,55 @@
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 5rem;
+  border-radius: 1rem;
+  gap: 1rem;
+  min-width: 350px;
+  background-color: var(--color-offwhite);
+}
+
+.loginForm h1 {
+  margin-bottom: 1rem;
+}
+
+.loginForm form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.loginForm input {
+  padding: 0.25rem;
+  border: 1px solid var(--grey-100);
+  border-radius: 0.2rem;
+  width: 100%;
+}
+
+.loginForm button {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  width: 100%;
+}
+
+.loginForm button:hover {
+  background-color: var(--primary-color);
+  color: var(--color-white);
+}
+
+.loginForm a {
+  margin-top: 0.5rem;
+  color: var(--primary-color);
+  font-weight: 540;
+  text-decoration: none;
+}
+
+.loginForm a:hover {
+  text-decoration: underline;
+}

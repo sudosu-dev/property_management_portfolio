@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import styles from "./Login.module.css";
 
 import { useAuth } from "./AuthContext";
 
@@ -29,20 +30,24 @@ export default function Login() {
 
   return (
     <>
-      <h1>Log in to your account</h1>
-      <form action={onLogin}>
-        <label>
-          Username
-          <input type="username" name="username" required />
-        </label>
-        <label>
-          Password
-          <input type="password" name="password" required />
-        </label>
-        <button>Login</button>
-        {error && <output>{error}</output>}
-      </form>
-      <Link to="/register">Need an account? Register here.</Link>
+      <div className={styles.login}>
+        <div className={styles.loginForm}>
+          <h1>Login</h1>
+          <form action={onLogin}>
+            <label>
+              <strong>Username: </strong>
+              <input type="username" name="username" required />
+            </label>
+            <label>
+              <strong>Password: </strong>
+              <input type="password" name="password" required />
+            </label>
+            <button>Login</button>
+            {error && <output>{error}</output>}
+          </form>
+          <Link to="/register">Need an account? Register here.</Link>
+        </div>
+      </div>
     </>
   );
 }

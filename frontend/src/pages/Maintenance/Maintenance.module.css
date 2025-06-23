@@ -1,5 +1,5 @@
 .maintenance h1 {
-  margin: 1rem 2rem;
+  margin: 2rem 3rem;
 }
 
 .maintenance h2 {
@@ -13,7 +13,7 @@
 .content {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  margin: 2rem;
+  margin: 3rem;
 }
 
 .info p,
