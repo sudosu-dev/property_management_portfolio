@@ -33,31 +33,41 @@
   border-radius: 1rem;
   padding: 1rem;
   background-color: var(--color-offwhite);
-  cursor: pointer;
 }
 
 .activeRequests ul li:hover {
   background-color: var(--primary-color);
   color: var(--color-white);
+  cursor: pointer;
+}
+
+.requestForm input[name="unit"] {
+  padding: 0.25rem;
+  border: 1px solid var(--grey-100);
+  border-radius: 0.2rem;
+  width: 20%;
 }
 
 .requestForm {
-  width: 65%;
+  width: 50%;
 }
 
 .textBox {
-  width: 50%;
+  border: 1px solid var(--grey-100);
+  border-radius: 0.2rem;
+  width: 100%;
 }
 
 .newRequests button {
   padding: 0.5rem;
   border-radius: 0.5rem;
-  width: 50%;
+  width: 100%;
 }
 
 .newRequests button:hover {
   background-color: var(--primary-color);
-  }
+  color: var(--color-white);
+}
 
 .maintenance img {
   width: 20%;

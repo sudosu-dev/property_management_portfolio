@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useAuth } from "../../auth/AuthContext";
-import { API } from "../../api/ApiContext";
+import { fetchRequests, createRequest } from "../../api/APIMaintenance";
 import styles from "./ManageMaintenance.module.css";
 import ManageMaintenanceForm from "./ManageMaintenanceForm";
 import ManageRequestList from "./ManageRequestList";
@@ -18,15 +18,11 @@ function ManageMaintenance() {
   const [showAll, setShowAll] = useState(false);
   const [selectedRequest, setSelectedRequest] = useState(null);
 
-  const fetchRequests = async () => {
+  const fileReset = useRef(null);
+
+  const loadRequests = async () => {
     try {
-      const res = await fetch(`${API}/maintenance`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (!res.ok) throw new Error("Failed to fetch requests");
-      const data = await res.json();
+      const data = await fetchRequests(token);
       setRequests(data);
     } catch (err) {
       console.error("Error loading maintenance request:", err);
@@ -34,10 +30,8 @@ function ManageMaintenance() {
   };
 
   useEffect(() => {
-    if (token) fetchRequests();
+    if (token) loadRequests();
   }, [token]);
-
-  const fileReset = useRef(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -48,6 +42,7 @@ function ManageMaintenance() {
     }
     try {
       const form = new FormData();
+      form.append("unit", formData.unit);
       form.append("information", formData.information);
       if (formData.files && formData.files.length > 0) {
         formData.files.forEach((file) => {
@@ -55,23 +50,14 @@ function ManageMaintenance() {
         });
       }
 
-      const res = await fetch(`${API}/maintenance`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: form,
-      });
-      if (!res.ok) {
-        const error = await res.json();
-        throw new Error(error.error || "Request failed.");
-      }
+      await createRequest(form, token);
+
       setMessage("Maintenance request submitted successfully.");
-      setFormData({ information: "", files: [] });
+      setFormData({ unit: "", information: "", files: [] });
       if (fileReset.current) {
         fileReset.current.value = null;
       }
-      await fetchRequests();
+      await loadRequests();
     } catch (err) {
       console.error("Submission error:", err.message);
       setMessage("Failed to submit request");
