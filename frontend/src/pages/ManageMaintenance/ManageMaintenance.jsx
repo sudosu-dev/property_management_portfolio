@@ -1,13 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useAuth } from "../../auth/AuthContext";
 import { API } from "../../api/ApiContext";
 import styles from "./ManageMaintenance.module.css";
+import ManageMaintenanceForm from "./ManageMaintenanceForm";
 import ManageRequestList from "./ManageRequestList";
 import ManageRequestDetails from "./ManageRequestDetails";
 
 function ManageMaintenance() {
   const { user, token } = useAuth();
-  const [formData, setFormData] = useState({ information: "", files: [] });
+  const [formData, setFormData] = useState({
+    unit: "",
+    information: "",
+    files: [],
+  });
   const [message, setMessage] = useState("");
   const [requests, setRequests] = useState([]);
   const [showAll, setShowAll] = useState(false);
@@ -31,6 +36,8 @@ function ManageMaintenance() {
   useEffect(() => {
     if (token) fetchRequests();
   }, [token]);
+
+  const fileReset = useRef(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -61,6 +68,9 @@ function ManageMaintenance() {
       }
       setMessage("Maintenance request submitted successfully.");
       setFormData({ information: "", files: [] });
+      if (fileReset.current) {
+        fileReset.current.value = null;
+      }
       await fetchRequests();
     } catch (err) {
       console.error("Submission error:", err.message);
@@ -73,6 +83,13 @@ function ManageMaintenance() {
       <div className={styles.maintenance}>
         <h1>Maintenance Requests</h1>
         <div className={styles.content}>
+          <ManageMaintenanceForm
+            formData={formData}
+            setFormData={setFormData}
+            handleSubmit={handleSubmit}
+            message={message}
+            fileReset={fileReset}
+          />
           <ManageRequestList
             requests={requests}
             showAll={showAll}

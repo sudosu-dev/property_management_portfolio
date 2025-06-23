@@ -1,30 +1,32 @@
-import styles from "./Maintenance.module.css";
+import styles from "./ManageMaintenance.module.css";
 
 export default function MaintenanceForm({
   formData,
   setFormData,
   handleSubmit,
   message,
-  user,
   fileReset,
 }) {
   return (
     <section className={styles.newRequests}>
       <h2>Make New Maintenance Request</h2>
       <div className={styles.requestForm}>
-        <div className={styles.info}>
-          <p>
-            <strong>Name:</strong> {`${user.first_name} ${user.last_name}`}
-          </p>
-          <p>
-            <strong>Unit: </strong> {`${user.unit}`}
-          </p>
-          <p>
-            <strong>Email: </strong> {`${user.email}`}
-          </p>
-        </div>
-
         <form onSubmit={handleSubmit}>
+          <label>
+            <strong>Unit: </strong>
+            <input
+              type="number"
+              name="unit"
+              value={formData.unit}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  [e.target.name]: e.target.value,
+                })
+              }
+              required
+            />
+          </label>
           <label>
             <strong>Issue: </strong>
             <br />

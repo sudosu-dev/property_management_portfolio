@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useAuth } from "../../auth/AuthContext";
 import { API } from "../../api/ApiContext";
 import styles from "./Maintenance.module.css";
@@ -32,6 +32,8 @@ function Maintenance() {
   useEffect(() => {
     if (token) fetchRequests();
   }, [token]);
+
+  const fileReset = useRef(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -80,6 +82,7 @@ function Maintenance() {
             setFormData={setFormData}
             handleSubmit={handleSubmit}
             message={message}
+            fileReset={fileReset}
           />
           <RequestList
             requests={requests}
