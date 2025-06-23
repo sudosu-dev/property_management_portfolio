@@ -74,11 +74,6 @@ export async function getMaintenanceRequests(user, filters = {}) {
   return rows;
 }
 
-/**
- * Retrieves a single maintenance request by its ID.
- * @param {number} requestId - The ID of the request to retrieve.
- * @returns {Promise<object|null>} The request object or null if not found.
- */
 export async function getMaintenanceRequestById(requestId) {
   const sql = `
     SELECT

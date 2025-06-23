@@ -66,15 +66,15 @@ export default function App() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="maintenance"
+            element={
+              <ProtectedRoute requireManager={true}>
+                <ManageMaintenance />
+              </ProtectedRoute>
+            }
+          />
         </Route>
-        <Route
-          path="maintenance"
-          element={
-            <ProtectedRoute requireManager={true}>
-              <ManageMaintenance />
-            </ProtectedRoute>
-          }
-        />
         <Route path="/dashboard">
           <Route
             path="resident"

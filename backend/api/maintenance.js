@@ -103,8 +103,6 @@ router.post(
 
 router.get("/", async (req, res) => {
   try {
-    // We pass the logged-in user and any query parameters (e.g., /maintenance?completed=false)
-    // directly to our database function. It will handle all the logic.
     const requests = await getMaintenanceRequests(req.user, req.query);
     res.json(requests);
   } catch (error) {
@@ -120,19 +118,14 @@ router.get("/:id", async (req, res) => {
     const { id } = req.params;
     const request = await getMaintenanceRequestById(id);
 
-    // First, check if a request with that ID even exists.
     if (!request) {
       return res.status(404).json({ error: "Maintenance request not found." });
     }
 
-    // Next, check for permission.
-    // Allow access if the user is a manager OR if the request's user_id matches the logged-in user's id.
     if (!req.user.is_manager && request.user_id !== req.user.id) {
-      // To avoid revealing that the request exists, we send a 404 Not Found instead of a 403 Forbidden.
       return res.status(404).json({ error: "Maintenance request not found." });
     }
 
-    // If all checks pass, send the request.
     res.json(request);
   } catch (error) {
     console.error(error);
@@ -142,11 +135,6 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-/**
- * @route   PUT /maintenance/:id
- * @desc    Update the information text of a maintenance request
- * @access  Private (Owner or Manager only)
- */
 router.put("/:id", requireBody(["information"]), async (req, res) => {
   try {
     const { id } = req.params;
@@ -176,11 +164,6 @@ router.put("/:id", requireBody(["information"]), async (req, res) => {
   }
 });
 
-/**
- * @route   PUT /maintenance/:id/completion
- * @desc    Update the completion status of a maintenance request
- * @access  Private (Manager only)
- */
 router.put("/:id/completion", requireBody(["completed"]), async (req, res) => {
   try {
     if (!req.user.is_manager) {
