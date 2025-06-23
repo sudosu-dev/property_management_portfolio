@@ -1,19 +1,30 @@
+import { useState, useEffect } from "react";
 import useQuery from "../../api/useQuery";
-import "./announcements.css";
+import styles from "./announcements.module.css";
+import TenantSubmissionModal from "./TenantSubmissionModal";
 
 function AnnouncementsCard({ announcement }) {
+  const typeClassMap = {
+    maintenance: styles.typeMaintenance,
+    urgent: styles.typeUrgent,
+    community: styles.typeCommunity,
+  };
+  const typeClass =
+    typeClassMap[announcement.announcement_type.toLowerCase()] || "";
+
   return (
-    <li className="announcements-card">
-      <h3 className="announcements-card-header">
-        {announcement.announcement_type}
-      </h3>
-      <p className="announcements-card-content">{announcement.announcement}</p>
-      <p className="announcements-card-info">
-        Posted by {announcement.first_name} {announcement.last_name}
-        <span>
-          {" "}
-          on {new Date(announcement.publish_at).toLocaleDateString()}
+    <li className={`${styles.announcementsCard} ${typeClass}`}>
+      <div className={styles.announcementsCardHeader}>
+        <h3>{announcement.announcement_type}</h3>
+        <span className={styles.date}>
+          {new Date(announcement.publish_at).toLocaleDateString()}
         </span>
+      </div>
+      <p className={styles.announcementsCardContent}>
+        {announcement.announcement}
+      </p>
+      <p className={styles.announcementsCardInfo}>
+        Posted by {announcement.first_name} {announcement.last_name}
       </p>
     </li>
   );
@@ -26,23 +37,74 @@ export default function Announcements() {
     error,
   } = useQuery("/announcements", "publicAnnouncements");
 
-  if (loading) return <p>Loading announcements...</p>;
-  if (error) return <p>Error loading announcements: {error}</p>;
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [successMessage, setSuccessMessage] = useState("");
+
+  useEffect(() => {
+    if (successMessage) {
+      const timer = setTimeout(() => {
+        setSuccessMessage("");
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [successMessage]);
+
+  const handleSuccess = () => {
+    setSuccessMessage("Your announcement has been submitted for review!");
+  };
+
+  if (loading)
+    return (
+      <div className={styles.pageContainer}>
+        <p>Loading announcements...</p>
+      </div>
+    );
+  if (error)
+    return (
+      <div className={styles.pageContainer}>
+        <p>Error loading announcements: {error}</p>
+      </div>
+    );
 
   return (
-    <div className="announcement-page-container">
-      <h1 className="announcements-header">Announcements</h1>
-      {announcements && announcements.length > 0 ? (
-        <ul className="todays-announcements-card-container">
-          {announcements.map((item) => (
-            <AnnouncementsCard key={item.id} announcement={item} />
-          ))}
-        </ul>
-      ) : (
-        <p className="no-announcements">
-          There are no announcements at this time.
-        </p>
+    <>
+      <div className={styles.pageContainer}>
+        <div className={styles.headerContainer}>
+          <h1 className={styles.announcementsHeader}>Community Board</h1>
+          <button
+            className={styles.primaryButton}
+            onClick={() => setIsModalOpen(true)}
+          >
+            + Suggest a Post
+          </button>
+        </div>
+
+        {successMessage && (
+          <div className={styles.successMessage}>{successMessage}</div>
+        )}
+
+        <div className={styles.listContainer}>
+          {announcements && announcements.length > 0 ? (
+            <ul className={styles.announcementsList}>
+              {announcements.map((item) => (
+                <AnnouncementsCard key={item.id} announcement={item} />
+              ))}
+            </ul>
+          ) : (
+            <p className={styles.noAnnouncements}>
+              There are no announcements at this time.
+            </p>
+          )}
+        </div>
+      </div>
+
+      {isModalOpen && (
+        <TenantSubmissionModal
+          onClose={() => setIsModalOpen(false)}
+          onSuccess={handleSuccess}
+        />
       )}
-    </div>
+    </>
   );
 }
