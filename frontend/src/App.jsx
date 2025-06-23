@@ -25,6 +25,9 @@ import ManageSettings from "./pages/ManageUtilities/ManageSettings";
 import ManageTenantLedger from "./pages/ManagePayments/ManageTenantLedger";
 import AddUnitForm from "./pages/ManageUnits/AddUnitForm";
 import EditUnitForm from "./pages/ManageUnits/EditUnitForm";
+import AddResidentForm from "./pages/ManageResidents/AddResidentForm";
+import EditResidentForm from "./pages/ManageResidents/EditResidentForm";
+import ViewResident from "./pages/ManageResidents/ViewResident";
 import Error404 from "./Error404";
 
 export default function App() {
@@ -49,6 +52,9 @@ export default function App() {
         <Route path="/admin/editproperty/:id" element={<EditPropertyForm />} />
         <Route path="/admin/addunit" element={<AddUnitForm />} />
         <Route path="/admin/editunit/:id" element={<EditUnitForm />} />
+        <Route path="/admin/addresident" element={<AddResidentForm />} />
+        <Route path="/admin/editresident/:id" element={<EditResidentForm />} />
+        <Route path="/admin/viewresident/:id" element={<ViewResident />} />
         <Route path="/admin">
           <Route
             path="settings"
