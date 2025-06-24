@@ -1,13 +1,14 @@
 /* --- ALL NAVBARS --- */
 .links {
+  font-size: 18px;
   text-decoration: none;
-  color: var(--black-200);
+  color: var(--color-white);
 }
 .loginButton {
   padding: 0.5rem 2rem;
-  border: none;
   border-radius: 5px;
 
+  font-size: 18px;
   text-decoration: none;
   color: var(--color-white);
   background-color: var(--primary-color);
@@ -15,12 +16,13 @@
 }
 .logoutButton {
   padding: 0.5rem 2rem;
-  border: none;
+  border: 1px solid var(--grey-100);
   border-radius: 5px;
 
+  font-size: 18px;
   text-decoration: none;
-  color: var(--color-white);
-  background-color: var(--black-200);
+  color: var(--black-200);
+  background-color: var(--color-offwhite);
   cursor: pointer;
 }
 
@@ -35,7 +37,8 @@
   padding: 0 10%;
   height: 10vh;
 
-  background-color: var(--color-offwhite);
+  background-color: rgb(43, 50, 59, 1);
+  background-image: linear-gradient(rgb(50, 58, 68), rgb(27, 31, 37));
 }
 
 /* --- MANAGER NAVBAR --- */
@@ -49,7 +52,7 @@
   padding: 0 10%;
   height: 10vh;
 
-  background-color: var(--color-offwhite);
+  background-color: rgb(43, 50, 59, 1);
 }
 
 /* --- LANDING PAGE NAVBAR --- */
@@ -61,8 +64,6 @@
 
   padding: 0 10%;
   height: 10vh;
-
-  background-color: var(--color-offwhite);
 }
 .landingPageNavLogo {
   font-size: 20px;
@@ -73,4 +74,7 @@
   justify-content: center;
   align-items: center;
   gap: 2rem;
+}
+.landingPageNavLinks .links {
+  color: var(--black-200);
 }
