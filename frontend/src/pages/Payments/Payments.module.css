@@ -21,15 +21,17 @@
 
   padding: 1rem;
 
-  border: 1px solid var(--grey-100);
+  border: 1px solid var(--grey-50);
   border-radius: 5px;
   border-top-width: 10px;
   border-top-color: var(--secondary-color);
-  box-shadow: 1px 1px 5px var(--grey-100);
+  box-shadow: 1px 1px 5px var(--grey-50);
 }
 
 .currentBalance p {
   font-size: 32px;
+  font-weight: 600;
+  color: var(--primary-color);
 }
 .currentBalance button {
   padding: 0.5rem 2rem;
@@ -46,16 +48,16 @@
 .accountLedger {
   padding: 1rem;
 
-  border: 1px solid var(--grey-100);
+  border: 1px solid var(--grey-50);
   border-radius: 5px;
   border-top-width: 10px;
   border-top-color: var(--secondary-color);
-  box-shadow: 1px 1px 5px var(--grey-100);
+  box-shadow: 1px 1px 5px var(--grey-50);
 }
 
 .accountLedger button {
   padding: 0.5rem 2rem;
-  border: 1px solid var(--grey-100);
+  border: 1px solid var(--grey-50);
   border-radius: 5px;
   margin-top: 0.5rem;
 
@@ -68,11 +70,11 @@
 .pastPayments {
   padding: 1rem;
 
-  border: 1px solid var(--grey-100);
+  border: 1px solid var(--grey-50);
   border-radius: 5px;
   border-top-width: 10px;
   border-top-color: var(--secondary-color);
-  box-shadow: 1px 1px 5px var(--grey-100);
+  box-shadow: 1px 1px 5px var(--grey-50);
 }
 
 .paymentsTable {
