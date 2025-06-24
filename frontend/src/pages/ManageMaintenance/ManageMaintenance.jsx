@@ -1,6 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 import { useAuth } from "../../auth/AuthContext";
-import { fetchRequests, createRequest } from "../../api/APIMaintenance";
+import {
+  fetchRequests,
+  createRequest,
+  updateRequest,
+  deleteRequest,
+} from "../../api/APIMaintenance";
 import styles from "./ManageMaintenance.module.css";
 import ManageMaintenanceForm from "./ManageMaintenanceForm";
 import ManageRequestList from "./ManageRequestList";
@@ -64,6 +69,42 @@ function ManageMaintenance() {
     }
   };
 
+  const handleUpdate = async (id, updatedData) => {
+    if (!user || !token) {
+      alert("You must be logged in to submit a request.");
+      return;
+    }
+    try {
+      const updatedRequest = await updateRequest(id, updatedData, token);
+      setMessage("Maintenance request updated successfully.");
+      setTimeout(() => setMessage(""), 5000);
+      await loadRequests();
+      setSelectedRequest(updatedRequest);
+    } catch (err) {
+      console.error("Update error:", err.message);
+      setMessage("Failed to update request");
+    }
+  };
+
+  const handleDelete = async (id) => {
+    if (!user || !token) {
+      alert("You must be logged in to delete a request.");
+      return;
+    }
+    if (!window.confirm("Are you sure you want to cancel this request?")) {
+      return;
+    }
+    try {
+      await deleteRequest(id, token);
+      setMessage("Maintenance request cancelled successfully.");
+      await loadRequests();
+      setSelectedRequest(null);
+    } catch (err) {
+      console.error("Delete error:", err.message);
+      setMessage("Failed to cancel request");
+    }
+  };
+
   return (
     <>
       <div className={styles.maintenance}>
@@ -88,6 +129,8 @@ function ManageMaintenance() {
         <ManageRequestDetails
           request={selectedRequest}
           onClose={() => setSelectedRequest(null)}
+          onUpdate={handleUpdate}
+          onDelete={handleDelete}
         />
       )}
     </>

@@ -69,6 +69,16 @@ export default function RequestDetails({
               />
             </p>
             <p>
+              <strong>Request Date: </strong>
+              {new Date(request.created_at).toLocaleString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+                hour: "numeric",
+                minute: "2-digit",
+              })}
+            </p>
+            <p>
               <strong>Current Photos: </strong>
             </p>
             <div className={styles.photoGrid}>
@@ -105,6 +115,16 @@ export default function RequestDetails({
             <p>
               <strong>Issue: </strong>
               {request.information}
+            </p>
+            <p>
+              <strong>Request Date: </strong>
+              {new Date(request.created_at).toLocaleString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+                hour: "numeric",
+                minute: "2-digit",
+              })}
             </p>
             <p>
               <strong>Status: </strong>

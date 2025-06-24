@@ -1,5 +1,5 @@
 .maintenance h1 {
-  margin: 1rem 2rem;
+  margin: 2rem 3rem;
 }
 
 .maintenance h2 {
@@ -8,17 +8,18 @@
 
 .maintenance button {
   cursor: pointer;
+  border: 1px var(--grey-100) solid;
 }
 
 .content {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  margin: 2rem;
+  margin: 3rem;
 }
 
 .info p,
 .maintenance form label,
-.activeRequests ul li {
+.activeRequests ul li p {
   display: block;
   margin-bottom: 0.5rem;
 }
@@ -41,20 +42,11 @@
   cursor: pointer;
 }
 
-.requestForm input[name="unit"] {
-  padding: 0.25rem;
-  border: 1px solid var(--grey-100);
-  border-radius: 0.2rem;
-  width: 20%;
-}
-
 .requestForm {
   width: 50%;
 }
 
 .textBox {
-  border: 1px solid var(--grey-100);
-  border-radius: 0.2rem;
   width: 100%;
 }
 
@@ -101,14 +93,20 @@
   background-color: var(--color-offwhite);
   padding: 2rem;
   border-radius: 1rem;
-  width: 90%;
   max-width: 600px;
+  max-height: 85vh;
+  overflow-y: auto;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
   position: relative;
+  scrollbar-width: none;
 }
 
 .details h2 {
   margin: 1rem 0;
+}
+
+.defaultDetails p {
+  margin-bottom: 1rem;
 }
 
 .enlargedPhoto {
@@ -123,6 +121,77 @@
   top: 0.5rem;
   right: 1rem;
   border: none;
-  font-size: 1.5rem;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.removePhotoButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.editForm p {
+  display: grid;
+  margin: 1rem 0;
+}
+
+.photoGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.photoItem {
+  position: relative;
+  display: inline-block;
+}
+
+.removePhotoButton {
+  position: absolute;
+  top: 1rem;
+  right: 0.1rem;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: var(--black-200);
+  cursor: pointer;
+}
+
+.editButton {
+  display: block;
+  margin: 0.5rem auto;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  width: 50%;
+  border: 1px var(--grey-100) solid;
+}
+
+.editButton:hover {
+  background-color: var(--primary-color);
+  color: var(--color-white);
+  cursor: pointer;
+}
+
+.editButtons,
+.endButtons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.editButtons button,
+.endButtons button {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  width: 50%;
+  border: 1px var(--grey-100) solid;
+}
+
+.editButtons button:hover,
+.endButtons button:hover {
+  background-color: var(--primary-color);
+  color: var(--color-white);
   cursor: pointer;
 }

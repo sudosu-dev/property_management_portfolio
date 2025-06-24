@@ -20,12 +20,21 @@ export default function RequestList({
                 <strong>Issue: </strong>
                 {req.information}
               </p>
-              
+              <p>
+                <strong>Request Date: </strong>
+                {new Date(req.created_at).toLocaleString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                  hour: "numeric",
+                  minute: "2-digit",
+                })}
+              </p>
               <p>
                 <strong>Status: </strong>
                 {req.completed ? "Completed" : "Pending"}
               </p>
-              
+
               {req.photos && req.photos.length > 0 && (
                 <div className={styles.photos}>
                   {req.photos.map((photo) => {

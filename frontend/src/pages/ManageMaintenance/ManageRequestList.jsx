@@ -20,7 +20,10 @@ export default function ManageRequestList({
                 <strong>Unit: </strong>
                 {req.unit_number}
               </p>
-              <br />
+              <p>
+                <strong>Issue: </strong>
+                {req.information}
+              </p>
               <p>
                 <strong>Request Date: </strong>
                 {new Date(req.created_at).toLocaleString("en-US", {
@@ -31,17 +34,10 @@ export default function ManageRequestList({
                   minute: "2-digit",
                 })}
               </p>
-              <br />
-              <p>
-                <strong>Issue: </strong>
-                {req.information}
-              </p>
-              <br />
               <p>
                 <strong>Status: </strong>
                 {req.completed ? "Completed" : "Pending"}
               </p>
-              <br />
               {req.photos && req.photos.length > 0 && (
                 <div className={styles.photos}>
                   {req.photos.map((photo) => {
