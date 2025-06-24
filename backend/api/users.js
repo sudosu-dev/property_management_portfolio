@@ -11,6 +11,7 @@ import {
   updateUserById,
   deleteUser,
   getAllUsers,
+  getUserWithUnitNumber,
 } from "#db/queries/users";
 import {
   createUtility_information,
@@ -83,6 +84,21 @@ router
       }
     }
   );
+
+router.route("/:id/unit").get(requireUser, async (req, res) => {
+  try {
+    const user = await getUserWithUnitNumber(req.params.id);
+
+    if (!user) {
+      return res.status(400).json({ error: "User not found." });
+    }
+
+    res.json(user);
+  } catch (error) {
+    console.error("Error fetching user with unit:", error);
+    res.status(500).json({ error: "Server error retrieving user info." });
+  }
+});
 
 router
   .route("/:id")

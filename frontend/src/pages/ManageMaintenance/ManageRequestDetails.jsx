@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
-import styles from "./Maintenance.module.css";
+import styles from "./ManageMaintenance.module.css";
 import { API } from "../../api/ApiContext";
 
-export default function RequestDetails({
+export default function ManageRequestDetails({
   request,
   onClose,
   onUpdate,
   onDelete,
+  onComplete,
 }) {
   const [editing, setEditing] = useState(false);
   const [info, setInfo] = useState(request.information);
@@ -60,6 +61,10 @@ export default function RequestDetails({
         {editing ? (
           <div className={styles.editForm}>
             <p>
+              <strong>Unit: </strong>
+              {request.unit_number}
+            </p>
+            <p>
               <strong>Issue: </strong>
               <textarea
                 className={styles.text}
@@ -106,19 +111,16 @@ export default function RequestDetails({
               <input type="file" multiple onChange={fileChange} />
             </p>
             <div className={styles.editButtons}>
-              <button
-                className={styles.secondaryButton}
-                onClick={() => setEditing(false)}
-              >
-                Cancel Edit
-              </button>
-              <button className={styles.primaryButton} onClick={handleSave}>
-                Save
-              </button>
+              <button onClick={handleSave}>Save</button>
+              <button onClick={() => setEditing(false)}>Cancel Edit</button>
             </div>
           </div>
         ) : (
           <div className={styles.defaultDetails}>
+            <p>
+              <strong>Unit: </strong>
+              {request.unit_number}
+            </p>
             <p>
               <strong>Issue: </strong>
               {request.information}
@@ -137,6 +139,18 @@ export default function RequestDetails({
               <strong>Status: </strong>
               {request.completed ? "Completed" : "Pending"}
             </p>
+            {request.completed && request.completed_at && (
+              <p>
+                <strong>Completed On: </strong>
+                {new Date(request.completed_at).toLocaleString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                  hour: "numeric",
+                  minute: "2-digit",
+                })}
+              </p>
+            )}
             {request.photos && request.photos.length > 0 ? (
               request.photos.map((photo) => {
                 const url = `${API}/${photo.photo_url.replace(/\\/g, `/`)}`;
@@ -152,24 +166,29 @@ export default function RequestDetails({
             ) : (
               <p>No photos available</p>
             )}
-            <div className={styles.detailsButtons}>
-              <button
-                className={styles.secondaryButton}
-                onClick={() => setEditing(true)}
-                disabled={request.completed}
-              >
-                Edit
-              </button>
-              <button
-                className={styles.primaryButton}
-                onClick={() => onDelete(request.id)}
-                disabled={request.completed}
-              >
-                Delete Request
-              </button>
-            </div>
+            <button
+              className={styles.editButton}
+              onClick={() => setEditing(true)}
+              disabled={request.completed}
+            >
+              Edit
+            </button>
           </div>
         )}
+        <div className={styles.endButtons}>
+          <button
+            onClick={() => onComplete(request.id)}
+            disabled={request.completed}
+          >
+            Complete
+          </button>
+          <button
+            onClick={() => onDelete(request.id)}
+            disabled={request.completed}
+          >
+            Delete Request
+          </button>
+        </div>
       </div>
     </div>
   );
