@@ -3,11 +3,12 @@
   margin: 0 auto;
 
   height: 90vh;
+
+  background-color: var(--bg-color);
 }
 
 .header {
-  background-color: var(--color-offwhite);
-  padding: 0.5rem 1.5rem;
+  padding: 0.5rem 0;
   border-radius: 5px;
   margin-bottom: 1rem;
 }
@@ -35,12 +36,12 @@
   justify-content: space-between;
 
   padding: 1rem;
-
   border: 1px solid var(--grey-50);
   border-radius: 5px;
   border-top-width: 10px;
   border-top-color: var(--secondary-color);
   box-shadow: 1px 1px 5px var(--grey-50);
+  background-color: var(--color-white);
 }
 
 .balanceAmount {
@@ -61,12 +62,12 @@
   flex-direction: column;
 
   padding: 1rem;
-
   border: 1px solid var(--grey-50);
   border-radius: 5px;
   border-top-width: 10px;
   border-top-color: var(--tertiary-color);
   box-shadow: 1px 1px 5px var(--grey-50);
+  background-color: var(--color-white);
 }
 
 .announcementItem,
@@ -86,12 +87,12 @@
   justify-content: space-between;
 
   padding: 1rem;
-
   border: 1px solid var(--grey-50);
   border-radius: 5px;
   border-top-width: 10px;
   border-top-color: var(--quaternary-color);
   box-shadow: 1px 1px 5px var(--grey-50);
+  background-color: var(--color-white);
 }
 
 .maintenanceItem {
@@ -106,12 +107,12 @@
   justify-content: space-between;
 
   padding: 1rem;
-
   border: 1px solid var(--grey-50);
   border-radius: 5px;
   border-top-width: 10px;
   border-top-color: var(--senary-color);
   box-shadow: 1px 1px 5px var(--grey-50);
+  background-color: var(--color-white);
 }
 
 .actionsGrid {
