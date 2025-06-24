@@ -30,15 +30,18 @@ import EditResidentForm from "./pages/ManageResidents/EditResidentForm";
 import ViewResident from "./pages/ManageResidents/ViewResident";
 import Contact from "./pages/Contact/Contact";
 import Error404 from "./Error404";
+import LandingPageLayout from "./layout/LandingPageLayout";
 
 export default function App() {
   return (
     <Routes>
-      <Route element={<Layout />}>
+      <Route element={<LandingPageLayout />}>
         <Route index element={<LandingPage />} />
         <Route path="/about" element={<About />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+      </Route>
+      <Route element={<Layout />}>
         <Route path="/announcements" element={<Announcements />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/contact" element={<Contact />} />
