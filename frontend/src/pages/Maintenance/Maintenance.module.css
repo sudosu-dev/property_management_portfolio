@@ -91,6 +91,10 @@
   color: var(--color-white);
 }
 
+.maintenance img {
+  width: 20%;
+}
+
 .showMore {
   padding: 0.5rem;
   border-radius: 0.5rem;
@@ -103,7 +107,6 @@
 }
 
 /* --- Request Details --- */
-
 .container {
   position: fixed;
   top: 0;
