@@ -135,34 +135,65 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.put("/:id", requireBody(["information"]), async (req, res) => {
-  try {
-    const { id } = req.params;
-    const request = await getMaintenanceRequestById(id);
-
-    if (!request) {
-      return res.status(404).json({ error: "Maintenance request not found." });
-    }
-
-    if (!req.user.is_manager && request.user_id !== req.user.id) {
-      return res
-        .status(403)
-        .json({ error: "Forbidden: You can only update your own requests." });
-    }
-
-    const updatedRequest = await updateMaintenanceRequestById(
-      id,
-      req.body,
-      req.user
-    );
-    res.json(updatedRequest);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      error: "An error occurred while updating the maintenance request.",
+router.put(
+  "/:id",
+  (req, res, next) => {
+    upload(req, res, function (error) {
+      if (error instanceof multer.MulterError) {
+        return res.status(400).json({ error: error.message });
+      } else if (error) {
+        return res.status(500).json({ error: "Unknown upload error" });
+      }
+      next();
     });
+  },
+  async (req, res) => {
+    try {
+      const { id } = req.params;
+      const request = await getMaintenanceRequestById(id);
+
+      if (!request) {
+        return res
+          .status(404)
+          .json({ error: "Maintenance request not found." });
+      }
+
+      if (!req.user.is_manager && request.user_id !== req.user.id) {
+        return res
+          .status(403)
+          .json({ error: "Forbidden: You can only update your own requests." });
+      }
+
+      const { information, keep_photos } = req.body;
+
+      if (!information) {
+        return res.status(400).json({ error: "Missing 'information' field" });
+      }
+
+      await updateMaintenanceRequestById(id, { information }, req.user);
+
+      if (keep_photos) {
+        const keepPhotoIds = JSON.parse(keep_photos);
+        await deleteUnkeptPhotos(id, keepPhotoIds);
+      }
+
+      if (req.files && req.files.length > 0) {
+        const photoPromises = req.files.map((file) =>
+          addMaintenancePhoto(id, file.path)
+        );
+        await Promise.all(photoPromises);
+      }
+
+      const updatedRequest = await getMaintenanceRequestById(id);
+      res.json(updatedRequest);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({
+        error: "An error occurred while updating the maintenance request.",
+      });
+    }
   }
-});
+);
 
 router.put("/:id/completion", requireBody(["completed"]), async (req, res) => {
   try {
