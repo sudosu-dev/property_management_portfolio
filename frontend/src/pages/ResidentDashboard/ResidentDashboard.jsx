@@ -41,23 +41,21 @@ export default function ResidentDashboard() {
       </header>
 
       <div className={styles.grid}>
-        <div className={styles.card}>
-          <h2 className={styles.cardTitle}>Account Balance</h2>
+        <div className={styles.accountBalance}>
+          <h2>Account Balance</h2>
           <div className={styles.cardContent}>
             <p className={styles.balanceAmount}>{formatCurrency(balance)}</p>
             <p className={styles.balanceSubtext}>
               This is your current outstanding balance.
             </p>
           </div>
-          <div className={styles.cardFooter}>
-            <Link to="/payments" className={styles.primaryButton}>
-              Make Payment
-            </Link>
-          </div>
+          <Link to="/payments" className={styles.primaryButton}>
+            Make Payment
+          </Link>
         </div>
 
-        <div className={styles.card}>
-          <h2 className={styles.cardTitle}>Recent Announcements</h2>
+        <div className={styles.announcements}>
+          <h2>Recent Announcements</h2>
           <div className={styles.cardContent}>
             {announcements && announcements.length > 0 ? (
               announcements.slice(0, 3).map((item) => (
@@ -71,21 +69,23 @@ export default function ResidentDashboard() {
           </div>
         </div>
 
-        <div className={styles.card}>
-          <h2 className={styles.cardTitle}>Maintenance Requests</h2>
-          <div className={styles.cardContent}>
-            {maintenanceRequests && maintenanceRequests.length > 0 ? (
-              maintenanceRequests.slice(0, 2).map((req) => (
-                <div key={req.id} className={styles.maintenanceItem}>
-                  <span className={styles.maintenanceStatus}>
-                    {req.completed ? "✅" : "PENDING"}
-                  </span>
-                  {req.information}
-                </div>
-              ))
-            ) : (
-              <p>No open maintenance requests.</p>
-            )}
+        <div className={styles.maintenanceRequests}>
+          <div>
+            <h2>Maintenance Requests</h2>
+            <div className={styles.cardContent}>
+              {maintenanceRequests && maintenanceRequests.length > 0 ? (
+                maintenanceRequests.slice(0, 2).map((req) => (
+                  <div key={req.id} className={styles.maintenanceItem}>
+                    <span className={styles.maintenanceStatus}>
+                      {req.completed ? "✅" : "PENDING"}
+                    </span>
+                    {req.information}
+                  </div>
+                ))
+              ) : (
+                <p>No open maintenance requests.</p>
+              )}
+            </div>
           </div>
           <div className={styles.cardFooter}>
             <Link to="/maintenance" className={styles.primaryButton}>
@@ -94,8 +94,8 @@ export default function ResidentDashboard() {
           </div>
         </div>
 
-        <div className={styles.card}>
-          <h2 className={styles.cardTitle}>Quick Actions</h2>
+        <div className={styles.quickActions}>
+          <h2>Quick Actions</h2>
           <div className={styles.actionsGrid}>
             <button
               className={styles.actionButton}

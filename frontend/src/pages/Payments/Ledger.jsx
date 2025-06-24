@@ -60,7 +60,12 @@ export default function Ledger() {
             )}
           </tbody>
         </table>
-        <button onClick={() => navigate("/payments")}>Back to Payments</button>
+        <button
+          className={styles.backButton}
+          onClick={() => navigate("/payments")}
+        >
+          Back to Payments
+        </button>
       </div>
     </div>
   );
