@@ -1,37 +1,134 @@
+/* --- Main View --- */
+.page {
+  background-color: var(--bg-color);
+
+  height: 90vh;
+}
 .topBar {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 
-  padding: 3rem 10% 1rem;
+  padding: 3rem 15% 1rem;
   margin: 0 auto;
 }
-.crudButtons {
+.addProperty {
   display: flex;
   flex-direction: row;
   gap: 1rem;
 }
+.addProperty button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--primary-color);
+  color: var(--color-white);
+  font-size: 18px;
+}
 .propertyCards {
-  display: flex;
-  flex-direction: column;
-  gap: 5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  gap: 1rem;
 
-  padding: 0 10%;
+  padding: 0 15%;
   margin: 0 auto;
 }
-
 .propertyCard {
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
 
   border: 1px solid var(--grey-100);
   border-top-width: 10px;
   border-top-color: var(--secondary-color);
+  background-color: var(--color-white);
 }
-
+.propertyCard h2 {
+  font-weight: 600;
+}
+.propertyCard address {
+  font-style: italic;
+  color: var(--grey-100);
+}
 .propertyCard img {
   width: 200px;
+}
+.propertyCardInfo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+.propertyCardButtons {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  width: 100%;
+}
+.editButton {
+  padding: 0.25rem 1.5rem;
+  border: 1px solid var(--grey-100);
+  border-radius: 5px;
+  background-color: var(--color-offwhite);
+  color: var(--black-200);
+  font-size: 16px;
+}
+.deleteButton {
+  padding: 0.25rem 1.5rem;
+  border: 1px solid var(--grey-100);
+  border-radius: 5px;
+  background-color: var(--color-offwhite);
+  color: var(--black-200);
+  font-size: 16px;
+}
+
+/* --- Add Property View --- */
+.formHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  padding: 3rem 15% 1rem;
+  margin: 0 auto;
+}
+.addPropertyForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 30%;
+  padding: 2rem;
+  margin: 0 auto;
+
+  border: 1px solid var(--grey-100);
+  border-top-width: 10px;
+  border-top-color: var(--secondary-color);
+  background-color: var(--color-white);
+}
+.addPropertyButtons {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+.primaryButton,
+.secondaryButton {
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+}
+.primaryButton {
+  background-color: var(--primary-color);
+  color: var(--color-white);
+}
+.secondaryButton {
+  background-color: var(--grey-100);
+  color: var(--color-white);
 }
