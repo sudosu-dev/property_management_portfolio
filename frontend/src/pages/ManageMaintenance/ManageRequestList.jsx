@@ -18,7 +18,7 @@ export default function ManageRequestList({
 
   return (
     <section className={styles.activeRequests}>
-      <h2>All Requests</h2>
+      <h2>Requests</h2>
       <label className={styles.filter}>Filter by Status: </label>
       <select
         className={styles.filterSelect}
