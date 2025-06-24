@@ -18,7 +18,7 @@ function addUnitNumberToRequest(request, units) {
     const unitId = request.unit || request.unit_id;
     const unit = units.find((u) => u.id === unitId);
     if (unit) {
-      return { ...request, unit_number: unit.number };
+      return { ...request, unit_number: unit.unit_number };
     }
   }
   return request;
@@ -76,7 +76,7 @@ function ManageMaintenance() {
     }
     try {
       const form = new FormData();
-      form.append("unit_number", Number(formData.unit_number));
+      form.append("unit_number", formData.unit_number);
       form.append("information", formData.information);
       if (formData.files && formData.files.length > 0) {
         formData.files.forEach((file) => {

@@ -71,25 +71,25 @@ router
     requireBody(["information"]),
     async (req, res) => {
       try {
-        let unitId;
+        let unit_number;
         const { information } = req.body;
         const user = req.user;
 
         if (user.is_manager) {
-          unitId = req.body.unitId;
-          if (!unitId) {
+          unit_number = req.body.unit_number;
+          if (!unit_number) {
             return res
               .status(400)
               .json({ error: "Bad Request: Managers must provide a unit ID" });
           }
         } else {
-          unitId = user.unit;
+          unit_number = user.unit;
         }
 
         const newRequest = await createMaintenanceRequest({
           information,
           userId: user.id,
-          unitId: unitId,
+          unit_number,
         });
 
         if (req.files && req.files.length > 0) {

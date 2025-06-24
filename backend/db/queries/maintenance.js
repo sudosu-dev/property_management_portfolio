@@ -3,14 +3,14 @@ import pool from "#db/client";
 export async function createMaintenanceRequest({
   information,
   userId,
-  unitId,
+  unit_number,
 }) {
   const sql = `
         INSERT INTO maintenance_requests (information, user_id, unit_number)
         VALUES ($1, $2, $3)
         RETURNING *;
     `;
-  const values = [information, userId, unitId];
+  const values = [information, userId, unit_number];
 
   const {
     rows: [newRequest],
