@@ -1,0 +1,22 @@
+.topBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 3rem 10% 1rem;
+  margin: 0 auto;
+}
+.table {
+  margin: 0 auto;
+  width: 80%;
+  border: 1px solid var(--black-200);
+  border-collapse: collapse;
+}
+.table th {
+  border: 1px solid var(--black-200);
+}
+.table td {
+  border: 1px solid var(--black-200);
+  text-align: center;
+}

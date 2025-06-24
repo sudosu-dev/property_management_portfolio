@@ -73,9 +73,6 @@ function PublicNav() {
         <NavLink to="/about" className={styles.links}>
           About
         </NavLink>
-        <NavLink to="/login" className={styles.links}>
-          Property Managers
-        </NavLink>
         <NavLink to="/login" className={styles.loginButton}>
           Resident Login
         </NavLink>

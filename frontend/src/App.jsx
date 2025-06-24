@@ -25,6 +25,10 @@ import ManageSettings from "./pages/ManageUtilities/ManageSettings";
 import ManageTenantLedger from "./pages/ManagePayments/ManageTenantLedger";
 import AddUnitForm from "./pages/ManageUnits/AddUnitForm";
 import EditUnitForm from "./pages/ManageUnits/EditUnitForm";
+import AddResidentForm from "./pages/ManageResidents/AddResidentForm";
+import EditResidentForm from "./pages/ManageResidents/EditResidentForm";
+import ViewResident from "./pages/ManageResidents/ViewResident";
+import Contact from "./pages/Contact/Contact";
 import Error404 from "./Error404";
 import ManageUsers from "./pages/ManageUsers/ManageUsers";
 
@@ -38,6 +42,7 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/announcements" element={<Announcements />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/contact" element={<Contact />} />
         <Route path="/admin/dashboard" element={<ManagerDashboard />} />
         <Route path="/admin/propertyinfo" element={<ManagePropertyInfo />} />
         <Route path="/admin/units" element={<ManageUnits />} />
@@ -45,11 +50,22 @@ export default function App() {
         <Route path="/admin/payments" element={<ManagePayments />} />
         <Route path="/admin/utilities" element={<ManageUtilities />} />
         <Route path="/admin/maintenance" element={<ManageMaintenance />} />
-        <Route path="/admin/announcements" element={<ManageAnnouncements />} />
+        {/* <Route path="/admin/announcements" element={<ManageAnnouncements />} /> */}
+        <Route
+          path="/admin/announcements"
+          element={
+            <ProtectedRoute requireManager={true}>
+              <ManageAnnouncements />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/admin/addproperty" element={<AddPropertyForm />} />
         <Route path="/admin/editproperty/:id" element={<EditPropertyForm />} />
         <Route path="/admin/addunit" element={<AddUnitForm />} />
         <Route path="/admin/editunit/:id" element={<EditUnitForm />} />
+        <Route path="/admin/addresident" element={<AddResidentForm />} />
+        <Route path="/admin/editresident/:id" element={<EditResidentForm />} />
+        <Route path="/admin/viewresident/:id" element={<ViewResident />} />
         <Route path="/admin">
           <Route
             path="settings"
