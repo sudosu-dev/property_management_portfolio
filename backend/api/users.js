@@ -85,7 +85,7 @@ router
     }
   );
 
-router.route("/:id/unit", requireUser, async (req, res) => {
+router.route("/:id/unit").get(requireUser, async (req, res) => {
   try {
     const user = await getUserWithUnitNumber(req.params.id);
 

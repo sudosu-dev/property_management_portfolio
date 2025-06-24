@@ -83,3 +83,18 @@ export async function markRequestComplete(id, token) {
     throw err;
   }
 }
+
+export async function fetchUserWithUnitNumber(id, token) {
+  try {
+    const res = await fetch(`${API}/users/${id}/unit`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!res.ok) throw new Error("Failed to fetch user with unit.");
+    return await res.json();
+  } catch (err) {
+    console.error("Errorfetching user with unit:", err);
+    throw err;
+  }
+}

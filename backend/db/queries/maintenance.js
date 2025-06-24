@@ -61,11 +61,13 @@ export async function getMaintenanceRequests(user, filters = {}) {
   const sql = `
     SELECT
       mr.*,
+      u.unit_number,
       COALESCE(
         (SELECT json_agg(ph) FROM maintenance_photos ph WHERE ph.maintenance_request_id = mr.id),
         '[]'::json
       ) as photos
     FROM maintenance_requests mr
+    JOIN units u ON mr.unit_number = u.id
     ${whereSql}
     ORDER BY mr.created_at DESC;
   `;

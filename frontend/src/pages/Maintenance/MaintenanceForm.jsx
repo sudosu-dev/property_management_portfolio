@@ -1,11 +1,11 @@
 import styles from "./Maintenance.module.css";
 
 export default function MaintenanceForm({
+  user,
   formData,
   setFormData,
   handleSubmit,
   message,
-  user,
   fileReset,
 }) {
   return (
@@ -14,13 +14,13 @@ export default function MaintenanceForm({
       <div className={styles.requestForm}>
         <div className={styles.info}>
           <p>
-            <strong>Name:</strong> {`${user.first_name} ${user.last_name}`}
+            <strong>Name:</strong> {`${user?.first_name} ${user?.last_name}`}
           </p>
           <p>
-            <strong>Unit: </strong> {`${user.unit}`}
+            <strong>Unit: </strong> {`${user?.unit_number}`}
           </p>
           <p>
-            <strong>Email: </strong> {`${user.email}`}
+            <strong>Email: </strong> {`${user?.email}`}
           </p>
         </div>
 

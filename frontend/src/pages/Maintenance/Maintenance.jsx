@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useAuth } from "../../auth/AuthContext";
 import {
   fetchRequests,
+  fetchUserWithUnitNumber,
   createRequest,
   updateRequest,
   deleteRequest,
@@ -13,6 +14,7 @@ import RequestDetails from "./RequestDetails";
 
 function Maintenance() {
   const { user, token } = useAuth();
+  const [fullUser, setFullUser] = useState(null);
   const [formData, setFormData] = useState({ information: "", files: [] });
   const [message, setMessage] = useState("");
   const [requests, setRequests] = useState([]);
@@ -29,6 +31,14 @@ function Maintenance() {
       console.error("Error loading maintenance request:", err);
     }
   };
+
+  useEffect(() => {
+    if (user?.id && token) {
+      fetchUserWithUnitNumber(user.id, token)
+        .then(setFullUser)
+        .catch(console.error);
+    }
+  }, [user, token]);
 
   useEffect(() => {
     if (token) loadRequests();
@@ -106,7 +116,7 @@ function Maintenance() {
         <h1>Maintenance Requests</h1>
         <div className={styles.content}>
           <MaintenanceForm
-            user={user}
+            user={fullUser}
             formData={formData}
             setFormData={setFormData}
             handleSubmit={handleSubmit}
