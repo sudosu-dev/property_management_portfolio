@@ -98,3 +98,18 @@ export async function fetchUserWithUnitNumber(id, token) {
     throw err;
   }
 }
+
+export async function fetchUnits(token) {
+  try {
+    const res = await fetch(`${API}/units`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!res.ok) throw new Error("Failed to fetch units.");
+    return await res.json();
+  } catch (err) {
+    console.error("Errorfetching user with unit:", err);
+    throw err;
+  }
+}

@@ -1,6 +1,7 @@
 import styles from "./ManageMaintenance.module.css";
 
-export default function MaintenanceForm({
+export default function ManageMaintenanceForm({
+  units,
   formData,
   setFormData,
   handleSubmit,
@@ -14,17 +15,23 @@ export default function MaintenanceForm({
         <form onSubmit={handleSubmit}>
           <label>
             <strong>Unit: </strong>
-            <input
-              type="number"
-              name="unit_number"
+            <select
               value={formData.unit_number}
               onChange={(e) =>
                 setFormData({
                   ...formData,
-                  [e.target.name]: e.target.value,
+                  unit_number: Number(e.target.value),
                 })
               }
-            />
+              required
+            >
+              <option value="">--Select a Unit--</option>
+              {units.map((unit) => (
+                <option key={unit.id} value={unit.id}>
+                  {unit.unit_number}
+                </option>
+              ))}
+            </select>
           </label>
           <label>
             <strong>Issue: </strong>

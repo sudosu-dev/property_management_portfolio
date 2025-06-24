@@ -6,6 +6,7 @@ import {
   updateRequest,
   deleteRequest,
   markRequestComplete,
+  fetchUnits,
 } from "../../api/APIMaintenance";
 import styles from "./ManageMaintenance.module.css";
 import ManageMaintenanceForm from "./ManageMaintenanceForm";
@@ -19,6 +20,7 @@ function ManageMaintenance() {
     information: "",
     files: [],
   });
+  const [units, setUnits] = useState([]);
   const [message, setMessage] = useState("");
   const [requests, setRequests] = useState([]);
   const [showAll, setShowAll] = useState(false);
@@ -34,6 +36,18 @@ function ManageMaintenance() {
       console.error("Error loading maintenance request:", err);
     }
   };
+
+  useEffect(() => {
+    const loadUnits = async () => {
+      try {
+        const data = await fetchUnits(token);
+        setUnits(data);
+      } catch (err) {
+        console.error("Failed to fetch units:", err);
+      }
+    };
+    if (token) loadUnits();
+  }, [token]);
 
   useEffect(() => {
     if (token) loadRequests();
@@ -129,6 +143,7 @@ function ManageMaintenance() {
         <h1>Maintenance Requests</h1>
         <div className={styles.content}>
           <ManageMaintenanceForm
+            units={units}
             formData={formData}
             setFormData={setFormData}
             handleSubmit={handleSubmit}
