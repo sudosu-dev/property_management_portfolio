@@ -13,6 +13,17 @@ import ManageMaintenanceForm from "./ManageMaintenanceForm";
 import ManageRequestList from "./ManageRequestList";
 import ManageRequestDetails from "./ManageRequestDetails";
 
+function addUnitNumberToRequest(request, units) {
+  if (!request.unit_number) {
+    const unitId = request.unit || request.unit_id;
+    const unit = units.find((u) => u.id === unitId);
+    if (unit) {
+      return { ...request, unit_number: unit.number };
+    }
+  }
+  return request;
+}
+
 function ManageMaintenance() {
   const { user, token } = useAuth();
   const [formData, setFormData] = useState({
@@ -30,7 +41,8 @@ function ManageMaintenance() {
 
   const loadRequests = async () => {
     try {
-      const data = await fetchRequests(token);
+      let data = await fetchRequests(token);
+      data = data.map((request) => addUnitNumberToRequest(request, units));
       setRequests(data);
     } catch (err) {
       console.error("Error loading maintenance request:", err);
@@ -50,8 +62,10 @@ function ManageMaintenance() {
   }, [token]);
 
   useEffect(() => {
-    if (token) loadRequests();
-  }, [token]);
+    if (token && units.length > 0) {
+      loadRequests();
+    }
+  }, [token, units]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -90,11 +104,15 @@ function ManageMaintenance() {
       return;
     }
     try {
-      const updatedRequest = await updateRequest(id, updatedData, token);
+      await updateRequest(id, updatedData, token);
       setMessage("Maintenance request updated successfully.");
       setTimeout(() => setMessage(""), 5000);
       await loadRequests();
-      setSelectedRequest(updatedRequest);
+
+      const updated = requests.find((r) => r.id === id);
+      if (updated) {
+        setSelectedRequest(addUnitNumberToRequest(updated, units));
+      }
     } catch (err) {
       console.error("Update error:", err.message);
       setMessage("Failed to update request");
@@ -126,7 +144,8 @@ function ManageMaintenance() {
       return;
     }
     try {
-      const updatedRequest = await markRequestComplete(id, token);
+      let updatedRequest = await markRequestComplete(id, token);
+      updatedRequest = addUnitNumberToRequest(updatedRequest, units);
       setMessage("Maintenance request completed.");
       setTimeout(() => setMessage(""), 5000);
       await loadRequests();
