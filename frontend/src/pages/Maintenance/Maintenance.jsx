@@ -70,7 +70,16 @@ function Maintenance() {
       return;
     }
     try {
-      await updateRequest(id, updatedData, token);
+      const form = new FormData();
+      form.append("information", updatedData.information);
+      form.append("keep_photos", JSON.stringify(updatedData.keepPhotos || []));
+
+      if (updatedData.files && updatedData.files.length > 0) {
+        updatedData.files.forEach((file) => {
+          form.append("maintenance_photos", file);
+        });
+      }
+      await updateRequest(id, form, token);
       setMessage("Maintenance request updated successfully.");
       await loadRequests();
       setSelectedRequest(null);

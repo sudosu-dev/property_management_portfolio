@@ -20,12 +20,12 @@ export default function RequestList({
                 <strong>Issue: </strong>
                 {req.information}
               </p>
-              <br />
+              
               <p>
                 <strong>Status: </strong>
                 {req.completed ? "Completed" : "Pending"}
               </p>
-              <br />
+              
               {req.photos && req.photos.length > 0 && (
                 <div className={styles.photos}>
                   {req.photos.map((photo) => {

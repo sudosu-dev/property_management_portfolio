@@ -23,7 +23,7 @@ export default function RequestDetails({
     setNewFiles([...e.target.files]);
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const form = new FormData();
     form.append("information", info);
 
@@ -35,8 +35,9 @@ export default function RequestDetails({
     });
 
     try {
-      onUpdate(request.id, form);
+      await onUpdate(request.id, form);
       setEditing(false);
+      setNewFiles([]);
     } catch (err) {
       console.error("Failed to update request:", err);
     }
@@ -117,6 +118,7 @@ export default function RequestDetails({
             <button
               className={styles.editButton}
               onClick={() => setEditing(true)}
+              disabled={request.completed}
             >
               Edit
             </button>
@@ -126,6 +128,7 @@ export default function RequestDetails({
         <button
           className={styles.deleteButton}
           onClick={() => onDelete(request.id)}
+          disabled={request.completed}
         >
           Delete Request
         </button>

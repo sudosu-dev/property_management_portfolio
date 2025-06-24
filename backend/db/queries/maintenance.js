@@ -189,3 +189,21 @@ export async function deleteUnkeptPhotos(requestId, keepPhotoIds = []) {
   const values = [requestId, ...keepPhotoIds];
   await pool.query(sql, values);
 }
+
+export async function deleteMaintenanceRequestById(requestId, user) {
+  if (!user.is_manager) {
+    const { rows } = await pool.query(
+      `SELECT user_id FROM maintenance_requests WHERE id = $1`,
+      [requestId]
+    );
+    const request = rows[0];
+    if (!request || request.user_id !== user.id) {
+      throw new Error("Unauthorized or request not found");
+    }
+  }
+  const { rowCount } = await pool.query(
+    `DELETE FROM maintenance_requests WHERE id = $1`,
+    [requestId]
+  );
+  return rowCount > 0;
+}
