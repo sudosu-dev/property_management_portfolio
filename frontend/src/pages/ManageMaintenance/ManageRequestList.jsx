@@ -38,6 +38,18 @@ export default function ManageRequestList({
                 <strong>Status: </strong>
                 {req.completed ? "Completed" : "Pending"}
               </p>
+              {req.completed && req.completed_at && (
+                <p>
+                  <strong>Completed On: </strong>
+                  {new Date(req.completed_at).toLocaleString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                    hour: "numeric",
+                    minute: "2-digit",
+                  })}
+                </p>
+              )}
               {req.photos && req.photos.length > 0 && (
                 <div className={styles.photos}>
                   {req.photos.map((photo) => {

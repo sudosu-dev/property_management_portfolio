@@ -7,9 +7,7 @@ export async function fetchRequests(token) {
         Authorization: `Bearer ${token}`,
       },
     });
-    if (!res.ok) {
-      throw new Error("Failed to fetch requests");
-    }
+    if (!res.ok) throw new Error("Failed to fetch requests");
     return await res.json();
   } catch (err) {
     console.error("Error loading request:", err);
@@ -26,9 +24,7 @@ export async function createRequest(formData, token) {
       },
       body: formData,
     });
-    if (!res.ok) {
-      throw new Error("Failed to create request.");
-    }
+    if (!res.ok) throw new Error("Failed to create request.");
     return await res.json();
   } catch (err) {
     console.error("Error creating request:", err);
@@ -46,9 +42,7 @@ export async function updateRequest(id, data, token) {
       body: data,
     });
     const result = await res.json();
-    if (!res.ok) {
-      throw new Error("Failed to update request.");
-    }
+    if (!res.ok) throw new Error("Failed to update request.");
     return result;
   } catch (err) {
     console.error("Error updating request:", err);
@@ -64,12 +58,28 @@ export async function deleteRequest(id, token) {
         Authorization: `Bearer ${token}`,
       },
     });
-    if (!res.ok) {
-      throw new Error("Failed to delete request.");
-    }
+    if (!res.ok) throw new Error("Failed to delete request.");
     return await res.json();
   } catch (err) {
     console.error("Error deleting request:", err);
+    throw err;
+  }
+}
+
+export async function markRequestComplete(id, token) {
+  try {
+    const res = await fetch(`${API}/maintenance/${id}/completion`, {
+      method: "PUT",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ completed: true }),
+    });
+    if (!res.ok) throw new Error("Failed to mark complete.");
+    return await res.json();
+  } catch (err) {
+    console.error("Error marking complete:", err);
     throw err;
   }
 }

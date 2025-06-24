@@ -7,6 +7,7 @@ export default function ManageRequestDetails({
   onClose,
   onUpdate,
   onDelete,
+  onComplete,
 }) {
   const [editing, setEditing] = useState(false);
   const [info, setInfo] = useState(request.information);
@@ -138,6 +139,18 @@ export default function ManageRequestDetails({
               <strong>Status: </strong>
               {request.completed ? "Completed" : "Pending"}
             </p>
+            {request.completed && request.completed_at && (
+              <p>
+                <strong>Completed On: </strong>
+                {new Date(request.completed_at).toLocaleString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                  hour: "numeric",
+                  minute: "2-digit",
+                })}
+              </p>
+            )}
             {request.photos && request.photos.length > 0 ? (
               request.photos.map((photo) => {
                 const url = `${API}/${photo.photo_url.replace(/\\/g, `/`)}`;
@@ -163,7 +176,10 @@ export default function ManageRequestDetails({
           </div>
         )}
         <div className={styles.endButtons}>
-          <button onClick={() => setEditing(true)} disabled={request.completed}>
+          <button
+            onClick={() => onComplete(request.id)}
+            disabled={request.completed}
+          >
             Complete
           </button>
           <button

@@ -5,6 +5,7 @@ import {
   createRequest,
   updateRequest,
   deleteRequest,
+  markRequestComplete,
 } from "../../api/APIMaintenance";
 import styles from "./ManageMaintenance.module.css";
 import ManageMaintenanceForm from "./ManageMaintenanceForm";
@@ -14,7 +15,7 @@ import ManageRequestDetails from "./ManageRequestDetails";
 function ManageMaintenance() {
   const { user, token } = useAuth();
   const [formData, setFormData] = useState({
-    unit: "",
+    unit_number: "",
     information: "",
     files: [],
   });
@@ -47,7 +48,7 @@ function ManageMaintenance() {
     }
     try {
       const form = new FormData();
-      form.append("unit", formData.unit);
+      form.append("unit_number", Number(formData.unit_number));
       form.append("information", formData.information);
       if (formData.files && formData.files.length > 0) {
         formData.files.forEach((file) => {
@@ -58,7 +59,7 @@ function ManageMaintenance() {
       await createRequest(form, token);
 
       setMessage("Maintenance request submitted successfully.");
-      setFormData({ unit: "", information: "", files: [] });
+      setFormData({ unit_number: "", information: "", files: [] });
       if (fileReset.current) {
         fileReset.current.value = null;
       }
@@ -105,6 +106,23 @@ function ManageMaintenance() {
     }
   };
 
+  const handleComplete = async (id) => {
+    if (!user || !token) {
+      alert("You must be logged in to submit a request.");
+      return;
+    }
+    try {
+      const updatedRequest = await markRequestComplete(id, token);
+      setMessage("Maintenance request completed.");
+      setTimeout(() => setMessage(""), 5000);
+      await loadRequests();
+      setSelectedRequest(updatedRequest);
+    } catch (err) {
+      console.error("Complete error:", err.message);
+      setMessage("Failed to mark request at completed.");
+    }
+  };
+
   return (
     <>
       <div className={styles.maintenance}>
@@ -131,6 +149,7 @@ function ManageMaintenance() {
           onClose={() => setSelectedRequest(null)}
           onUpdate={handleUpdate}
           onDelete={handleDelete}
+          onComplete={handleComplete}
         />
       )}
     </>

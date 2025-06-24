@@ -16,15 +16,14 @@ export default function MaintenanceForm({
             <strong>Unit: </strong>
             <input
               type="number"
-              name="unit"
-              value={formData.unit}
+              name="unit_number"
+              value={formData.unit_number}
               onChange={(e) =>
                 setFormData({
                   ...formData,
                   [e.target.name]: e.target.value,
                 })
               }
-              required
             />
           </label>
           <label>
