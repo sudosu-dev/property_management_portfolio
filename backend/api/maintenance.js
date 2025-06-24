@@ -1,5 +1,7 @@
 import express from "express";
 import multer from "multer";
+import { v2 as cloudinary } from "cloudinary";
+import { CloudinaryStorage } from "cloudinary";
 import path from "path";
 import requireUser from "#middleware/requireUser";
 import requireBody from "#middleware/requireBody";
@@ -17,20 +19,21 @@ import { imageFileFilter } from "#utilities/fileFilters";
 
 const router = express.Router();
 
-const MAX_PHOTO_COUNT = 5;
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "uploads/");
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    cb(
-      null,
-      file.fieldname + "-" + uniqueSuffix + path.extname(file.originalname)
-    );
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: "property-management-capstone",
+    allowed_formats: ["jpeg", "png", "jpg", "gif"],
   },
 });
+
+const MAX_PHOTO_COUNT = 5;
 
 const upload = multer({
   storage: storage,
