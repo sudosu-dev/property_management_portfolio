@@ -106,18 +106,22 @@ export default function ManagePropertyInfo() {
                 <address>{property.address}</address>
                 <p>Contact: {formatPhoneNumber(property.phone_number)}</p>
                 <p>Total Units: {property.total_units}</p>
-                <button
-                  onClick={() => navigate(`/admin/editproperty/${property.id}`)}
-                  className={styles.editButton}
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => handleDelete(property.id)}
-                  className={styles.deleteButton}
-                >
-                  Delete
-                </button>
+                <div className={styles.propertyCardButtons}>
+                  <button
+                    onClick={() =>
+                      navigate(`/admin/editproperty/${property.id}`)
+                    }
+                    className={styles.editButton}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDelete(property.id)}
+                    className={styles.deleteButton}
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
             </div>
           </li>
