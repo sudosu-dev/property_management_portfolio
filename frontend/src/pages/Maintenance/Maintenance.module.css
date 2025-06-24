@@ -1,30 +1,55 @@
-.maintenance h1 {
-  margin: 2rem 3rem;
-}
-
-.maintenance h2 {
-  margin: 1rem 0;
-}
-
-.maintenance button {
-  cursor: pointer;
+/* --- Main view --- */
+.page {
+  padding: 2rem 10%;
+  margin: 0 auto;
 }
 
 .content {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  margin: 3rem;
+  gap: 1rem;
 }
 
-.info p,
-.maintenance form label,
-.activeRequests ul li {
-  display: block;
-  margin-bottom: 0.5rem;
+.maintenanceForm {
+  padding: 1rem;
+
+  border: 1px solid var(--grey-50);
+  border-radius: 5px;
+  border-top-width: 10px;
+  border-top-color: var(--quaternary-color);
+  box-shadow: 1px 1px 5px var(--grey-50);
 }
 
-.activeRequests ul {
-  list-style: none;
+.requestList {
+  padding: 1rem;
+
+  border: 1px solid var(--grey-50);
+  border-radius: 5px;
+  border-top-width: 10px;
+  border-top-color: var(--quaternary-color);
+  box-shadow: 1px 1px 5px var(--grey-50);
+}
+
+/* --- Maintenance Form --- */
+.newRequests {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.requestForm {
+  width: 65%;
+}
+
+.requestForm button {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  width: 50%;
+}
+
+.requestForm button:hover {
+  background-color: var(--primary-color);
+  color: var(--color-white);
 }
 
 .requestForm,
@@ -36,32 +61,31 @@
   cursor: pointer;
 }
 
-.activeRequests ul li:hover {
-  background-color: var(--primary-color);
-  color: var(--color-white);
-}
-
-.requestForm {
-  width: 65%;
+.info p,
+.maintenance form label,
+.activeRequests ul li {
+  display: block;
+  margin-bottom: 0.5rem;
 }
 
 .textBox {
   width: 50%;
 }
 
-.newRequests button {
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  width: 50%;
+/* --- Request List --- */
+.activeRequests {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
-.newRequests button:hover {
+.activeRequests ul {
+  list-style: none;
+}
+
+.activeRequests ul li:hover {
   background-color: var(--primary-color);
   color: var(--color-white);
-}
-
-.maintenance img {
-  width: 20%;
 }
 
 .showMore {
@@ -74,6 +98,8 @@
   background-color: var(--primary-color);
   color: var(--color-white);
 }
+
+/* --- Request Details --- */
 
 .container {
   position: fixed;
@@ -102,13 +128,6 @@
   margin: 1rem 0;
 }
 
-.enlargedPhoto {
-  width: 100%;
-  max-height: 300px;
-  object-fit: contain;
-  margin-top: 1rem;
-}
-
 .closeButton {
   position: absolute;
   top: 0.5rem;
@@ -116,4 +135,11 @@
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
+}
+
+.enlargedPhoto {
+  width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+  margin-top: 1rem;
 }
