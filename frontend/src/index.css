@@ -15,4 +15,18 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: normal;
+  font-style: normal;
+}
+h1,
+h2 {
+  font-family: "Slabo 27px", serif;
+}
+h1 {
+  font-size: 76px;
+}
+p {
+  font-size: 18px;
 }

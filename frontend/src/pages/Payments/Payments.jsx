@@ -97,20 +97,22 @@ export default function Payments() {
         </section>
         <section className={styles.pastPayments}>
           <p>Recent Activity</p>
-          <table>
+          <table className={styles.paymentsTable}>
             <tbody>
               {transactions && transactions.length > 0 ? (
                 transactions.slice(0, 5).map((tx) => (
                   <tr key={tx.id}>
-                    <td style={{ color: tx.amount < 0 ? "green" : "red" }}>
-                      ●
-                    </td>
-                    <td>
-                      <p>{tx.description}</p>
-                      <p style={{ fontSize: "0.8em", color: "#666" }}>
-                        {new Date(tx.created_at).toLocaleDateString()}
-                      </p>
-                    </td>
+                    <div>
+                      <td style={{ color: tx.amount < 0 ? "green" : "red" }}>
+                        ●
+                      </td>
+                      <td>
+                        <p>{tx.description}</p>
+                        <p style={{ fontSize: "0.8em", color: "#666" }}>
+                          {new Date(tx.created_at).toLocaleDateString()}
+                        </p>
+                      </td>
+                    </div>
                     <td>{formatCurrency(tx.amount)}</td>
                   </tr>
                 ))
