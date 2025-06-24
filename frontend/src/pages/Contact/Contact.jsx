@@ -1,5 +1,6 @@
 import useQuery from "../../api/useQuery";
 import styles from "./Contact.module.css";
+import StaffImage from "../../assets/oakwood-staff.png";
 
 export default function Contact() {
   const {
@@ -28,21 +29,18 @@ export default function Contact() {
       {properties && properties.length > 0 ? (
         properties.map((prop) => (
           <div key={prop.id} className={styles.contactCard}>
-            <div className={styles.mapPlaceholder}>Map Placeholder</div>
+            <img
+              src={StaffImage}
+              alt="Oakwood Staff"
+              className={styles.staffImage}
+            />
             <div className={styles.info}>
               <h2>{prop.property_name}</h2>
-              <p>
-                <span role="img" aria-label="address">
-                  📍
-                </span>
-                {prop.address}
-              </p>
-              <p>
-                <span role="img" aria-label="phone">
-                  📞
-                </span>
-                {prop.phone_number}
-              </p>
+              {prop.address && <p>{prop.address}</p>}
+              {prop.phone_number && <p>{prop.phone_number}</p>}
+              {!prop.address && !prop.phone_number && (
+                <p>Contact information is not currently available.</p>
+              )}
             </div>
           </div>
         ))

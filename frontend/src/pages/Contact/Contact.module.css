@@ -15,23 +15,18 @@
   background-color: var(--color-offwhite);
   border-radius: 8px;
   padding: 2rem;
-  border-left: 10px solid var(--primary-color);
+  border-top: 10px solid var(--secondary-color);
   display: grid;
   grid-template-columns: 1fr 2fr;
   gap: 2rem;
   align-items: center;
 }
 
-.mapPlaceholder {
-  background-color: #e0e0e0;
-  border-radius: 8px;
+.staffImage {
   width: 100%;
-  height: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 500;
-  color: var(--grey-100);
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
 }
 
 .info h2 {

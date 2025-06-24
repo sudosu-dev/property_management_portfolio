@@ -7,11 +7,23 @@ import pool from "./client.js";
 const BCRYPT_SALT_ROUNDS = 10;
 
 async function createProperties() {
+  // Also adding address and total_units since your schema requires them
+  const propertyData = {
+    name: "Oakwood Apartments",
+    address: "123 Oakwood Lane, Flower Mound, TX 75028",
+    phone: "(972) 555-1234",
+    units: 10,
+  };
   const {
     rows: [property],
   } = await pool.query(
     `INSERT INTO properties(property_name, address, phone_number, total_units) VALUES($1, $2, $3, $4) RETURNING *`,
-    ["Oakwood Apartments", "101 Oakwood Dr, Portland, OR", 1010101010, 25]
+    [
+      propertyData.name,
+      propertyData.address,
+      propertyData.phone,
+      propertyData.units,
+    ]
   );
   return property;
 }
