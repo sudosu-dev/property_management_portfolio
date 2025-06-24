@@ -106,8 +106,15 @@ export default function RequestDetails({
               <input type="file" multiple onChange={fileChange} />
             </p>
             <div className={styles.editButtons}>
-              <button onClick={handleSave}>Save</button>
-              <button onClick={() => setEditing(false)}>Cancel Edit</button>
+              <button
+                className={styles.secondaryButton}
+                onClick={() => setEditing(false)}
+              >
+                Cancel Edit
+              </button>
+              <button className={styles.primaryButton} onClick={handleSave}>
+                Save
+              </button>
             </div>
           </div>
         ) : (
@@ -145,23 +152,24 @@ export default function RequestDetails({
             ) : (
               <p>No photos available</p>
             )}
-            <button
-              className={styles.editButton}
-              onClick={() => setEditing(true)}
-              disabled={request.completed}
-            >
-              Edit
-            </button>
+            <div className={styles.detailsButtons}>
+              <button
+                className={styles.secondaryButton}
+                onClick={() => setEditing(true)}
+                disabled={request.completed}
+              >
+                Edit
+              </button>
+              <button
+                className={styles.primaryButton}
+                onClick={() => onDelete(request.id)}
+                disabled={request.completed}
+              >
+                Delete Request
+              </button>
+            </div>
           </div>
         )}
-
-        <button
-          className={styles.deleteButton}
-          onClick={() => onDelete(request.id)}
-          disabled={request.completed}
-        >
-          Delete Request
-        </button>
       </div>
     </div>
   );

@@ -1,14 +1,17 @@
 .pageContainer {
-  max-width: 900px;
-  margin: auto;
-  padding: 2rem;
+  padding: 2rem 20%;
+  margin: 0 auto;
+
+  height: 90vh;
+
+  background-color: var(--bg-color);
 }
 
 .headerContainer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px solid var(--secondary-color);
+  border-bottom: 2px solid var(--tertiary-color);
   padding-bottom: 1rem;
   margin-bottom: 1.5rem;
 }
@@ -21,8 +24,10 @@
 .listContainer {
   padding: 2rem;
   border: 1px solid #e0e0e0;
-  border-top: 10px solid var(--secondary-color);
+  border-top: 10px solid var(--tertiary-color);
   border-radius: 8px;
+
+  background-color: var(--color-white);
 }
 
 .announcementsList {
@@ -108,7 +113,6 @@
   border-radius: 8px;
   width: 100%;
   max-width: 500px;
-  border-top: 10px solid var(--secondary-color);
 }
 .formGroup {
   margin-bottom: 1.5rem;
@@ -148,11 +152,11 @@
 }
 .primaryButton {
   background-color: var(--primary-color);
-  color: white;
+  color: var(--color-white);
 }
 .secondaryButton {
-  background-color: #6c757d;
-  color: white;
+  background-color: var(--grey-100);
+  color: var(--color-white);
 }
 
 .successMessage {
