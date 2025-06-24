@@ -56,16 +56,25 @@
   justify-content: center;
   align-items: center;
 }
+.featuresCard h3 {
+  font-weight: 600;
+
+  padding-bottom: 0.25rem;
+  margin-bottom: 0.25rem;
+  border-bottom: 1px solid var(--grey-50);
+}
 .featuresImage {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
+  margin: auto;
+  margin-right: 0;
+
+  width: 500px;
+  height: 500px;
 }
 .featuresImage img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
+  border-radius: 20px;
 }
 
 /* --- REVIEWS SECTION --- */
