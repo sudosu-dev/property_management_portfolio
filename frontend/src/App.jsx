@@ -28,6 +28,7 @@ import EditUnitForm from "./pages/ManageUnits/EditUnitForm";
 import AddResidentForm from "./pages/ManageResidents/AddResidentForm";
 import EditResidentForm from "./pages/ManageResidents/EditResidentForm";
 import ViewResident from "./pages/ManageResidents/ViewResident";
+import Contact from "./pages/Contact/Contact";
 import Error404 from "./Error404";
 
 export default function App() {
@@ -40,6 +41,7 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/announcements" element={<Announcements />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/contact" element={<Contact />} />
         <Route path="/admin/dashboard" element={<ManagerDashboard />} />
         <Route path="/admin/propertyinfo" element={<ManagePropertyInfo />} />
         <Route path="/admin/units" element={<ManageUnits />} />
