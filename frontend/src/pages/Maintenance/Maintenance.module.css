@@ -8,6 +8,7 @@
 
 .maintenance button {
   cursor: pointer;
+  border: 1px var(--grey-100) solid;
 }
 
 .content {
@@ -18,7 +19,7 @@
 
 .info p,
 .maintenance form label,
-.activeRequests ul li {
+.activeRequests ul li p {
   display: block;
   margin-bottom: 0.5rem;
 }
@@ -33,26 +34,26 @@
   border-radius: 1rem;
   padding: 1rem;
   background-color: var(--color-offwhite);
-  cursor: pointer;
 }
 
 .activeRequests ul li:hover {
   background-color: var(--primary-color);
   color: var(--color-white);
+  cursor: pointer;
 }
 
 .requestForm {
-  width: 65%;
+  width: 50%;
 }
 
 .textBox {
-  width: 50%;
+  width: 100%;
 }
 
 .newRequests button {
   padding: 0.5rem;
   border-radius: 0.5rem;
-  width: 50%;
+  width: 100%;
 }
 
 .newRequests button:hover {
@@ -92,14 +93,20 @@
   background-color: var(--color-offwhite);
   padding: 2rem;
   border-radius: 1rem;
-  width: 90%;
   max-width: 600px;
+  max-height: 85vh;
+  overflow-y: auto;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
   position: relative;
+  scrollbar-width: none;
 }
 
 .details h2 {
   margin: 1rem 0;
+}
+
+.defaultDetails p {
+  margin-bottom: 1rem;
 }
 
 .enlargedPhoto {
@@ -114,6 +121,76 @@
   top: 0.5rem;
   right: 1rem;
   border: none;
-  font-size: 1.5rem;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.removePhotoButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.editForm p {
+  display: grid;
+  margin: 1rem 0;
+}
+
+.photoGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.photoItem {
+  position: relative;
+  display: inline-block;
+}
+
+.removePhotoButton {
+  position: absolute;
+  top: 1rem;
+  right: 0.1rem;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: var(--black-200);
+  cursor: pointer;
+}
+
+.editButton,
+.deleteButton {
+  display: block;
+  margin: 0.5rem auto;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  width: 50%;
+  border: 1px var(--grey-100) solid;
+}
+
+.editButton:hover,
+.deleteButton:hover {
+  background-color: var(--primary-color);
+  color: var(--color-white);
+  cursor: pointer;
+}
+
+.editButtons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.editButtons button {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  width: 50%;
+  border: 1px var(--grey-100) solid;
+}
+
+.editButtons button:hover {
+  background-color: var(--primary-color);
+  color: var(--color-white);
   cursor: pointer;
 }

@@ -224,3 +224,25 @@ export async function getAllUsers(requestingUser) {
   const { rows } = await pool.query(sql);
   return rows;
 }
+
+export async function getUserWithUnitNumber(userId) {
+  const sql = `
+  SELECT
+  users.id,
+  users.first_name,
+  users.last_name,
+  users.email,
+  users.unit AS unit_id,
+  users.is_manager,
+  users.created_at,
+  units.unit_number
+  FROM users
+  JOIN units ON users.unit = units.id
+  WHERE users.id = $1
+  `;
+
+  const {
+    rows: [user],
+  } = await pool.query(sql, [userId]);
+  return user;
+}

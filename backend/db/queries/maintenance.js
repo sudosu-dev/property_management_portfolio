@@ -3,14 +3,14 @@ import pool from "#db/client";
 export async function createMaintenanceRequest({
   information,
   userId,
-  unitId,
+  unit_number,
 }) {
   const sql = `
         INSERT INTO maintenance_requests (information, user_id, unit_number)
         VALUES ($1, $2, $3)
         RETURNING *;
     `;
-  const values = [information, userId, unitId];
+  const values = [information, userId, unit_number];
 
   const {
     rows: [newRequest],
@@ -61,11 +61,13 @@ export async function getMaintenanceRequests(user, filters = {}) {
   const sql = `
     SELECT
       mr.*,
+      u.unit_number,
       COALESCE(
         (SELECT json_agg(ph) FROM maintenance_photos ph WHERE ph.maintenance_request_id = mr.id),
         '[]'::json
       ) as photos
     FROM maintenance_requests mr
+    JOIN units u ON mr.unit_number = u.id
     ${whereSql}
     ORDER BY mr.created_at DESC;
   `;
@@ -166,4 +168,44 @@ export async function updateMaintenanceRequestById(requestId, updates, user) {
     rows: [updatedRequest],
   } = await pool.query(sql, values);
   return updatedRequest;
+}
+
+export async function deleteUnkeptPhotos(requestId, keepPhotoIds = []) {
+  if (!Array.isArray(keepPhotoIds)) {
+    throw new Error("keepPhotoIds must be an array");
+  }
+
+  if (keepPhotoIds.length === 0) {
+    const deleteAll = `
+    DELETE FROM maintenance_photos
+    WHERE maintenance_request_id = $1`;
+    await pool.query(deleteAll, [requestId]);
+    return;
+  }
+
+  const sql = `
+  DELETE FROM maintenance_photos
+  WHERE maintenance_request_id = $1
+  AND id NOT IN (${keepPhotoIds.map((_, i) => `$${i + 2}`).join(", ")})
+  `;
+  const values = [requestId, ...keepPhotoIds];
+  await pool.query(sql, values);
+}
+
+export async function deleteMaintenanceRequestById(requestId, user) {
+  if (!user.is_manager) {
+    const { rows } = await pool.query(
+      `SELECT user_id FROM maintenance_requests WHERE id = $1`,
+      [requestId]
+    );
+    const request = rows[0];
+    if (!request || request.user_id !== user.id) {
+      throw new Error("Unauthorized or request not found");
+    }
+  }
+  const { rowCount } = await pool.query(
+    `DELETE FROM maintenance_requests WHERE id = $1`,
+    [requestId]
+  );
+  return rowCount > 0;
 }

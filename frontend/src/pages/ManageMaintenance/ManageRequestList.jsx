@@ -1,7 +1,7 @@
 import styles from "./ManageMaintenance.module.css";
 import { API } from "../../api/ApiContext";
 
-export default function RequestList({
+export default function ManageRequestList({
   requests,
   showAll,
   setShowAll,
@@ -20,7 +20,10 @@ export default function RequestList({
                 <strong>Unit: </strong>
                 {req.unit_number}
               </p>
-              <br />
+              <p>
+                <strong>Issue: </strong>
+                {req.information}
+              </p>
               <p>
                 <strong>Request Date: </strong>
                 {new Date(req.created_at).toLocaleString("en-US", {
@@ -31,17 +34,22 @@ export default function RequestList({
                   minute: "2-digit",
                 })}
               </p>
-              <br />
-              <p>
-                <strong>Issue: </strong>
-                {req.information}
-              </p>
-              <br />
               <p>
                 <strong>Status: </strong>
                 {req.completed ? "Completed" : "Pending"}
               </p>
-              <br />
+              {req.completed && req.completed_at && (
+                <p>
+                  <strong>Completed On: </strong>
+                  {new Date(req.completed_at).toLocaleString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                    hour: "numeric",
+                    minute: "2-digit",
+                  })}
+                </p>
+              )}
               {req.photos && req.photos.length > 0 && (
                 <div className={styles.photos}>
                   {req.photos.map((photo) => {
