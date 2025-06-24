@@ -1,0 +1,54 @@
+.pageContainer {
+  max-width: 900px;
+  margin: auto;
+  padding: 2rem;
+}
+
+.header {
+  font-size: 2.25rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid var(--secondary-color);
+  padding-bottom: 1rem;
+}
+
+.contactCard {
+  background-color: var(--color-offwhite);
+  border-radius: 8px;
+  padding: 2rem;
+  border-left: 10px solid var(--primary-color);
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+.mapPlaceholder {
+  background-color: #e0e0e0;
+  border-radius: 8px;
+  width: 100%;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  color: var(--grey-100);
+}
+
+.info h2 {
+  margin: 0 0 1rem 0;
+  font-weight: 600;
+}
+
+.info p {
+  margin: 0.75rem 0;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.info span {
+  font-size: 1.5rem;
+  color: var(--primary-color);
+}
