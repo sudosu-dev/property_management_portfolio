@@ -5,24 +5,31 @@ import { useAuth } from "../auth/AuthContext";
 function ResidentNav({ logout }) {
   return (
     <div className={styles.residentNav}>
-      <NavLink to="/dashboard/resident" className={styles.links}>
-        Dashboard
-      </NavLink>
-      <NavLink to="/payments" className={styles.links}>
-        Payments
-      </NavLink>
-      <NavLink to="/maintenance" className={styles.links}>
-        Maintenance
-      </NavLink>
-      <NavLink to="/announcements" className={styles.links}>
-        Announcements
-      </NavLink>
-      <NavLink to="/profile" className={styles.links}>
-        Profile
-      </NavLink>
-      <button onClick={logout} className={styles.logoutButton}>
-        Logout
-      </button>
+      <div className={styles.residentNavLogo}>
+        <NavLink className={styles.landingPageNavLogo} to="/">
+          <p>Logo Placeholder</p>
+        </NavLink>
+      </div>
+      <div className={styles.residentNavLinks}>
+        <NavLink to="/dashboard/resident" className={styles.links}>
+          Dashboard
+        </NavLink>
+        <NavLink to="/payments" className={styles.links}>
+          Payments
+        </NavLink>
+        <NavLink to="/maintenance" className={styles.links}>
+          Maintenance
+        </NavLink>
+        <NavLink to="/announcements" className={styles.links}>
+          Announcements
+        </NavLink>
+        <NavLink to="/profile" className={styles.links}>
+          Profile
+        </NavLink>
+        <button onClick={logout} className={styles.logoutButton}>
+          Logout
+        </button>
+      </div>
     </div>
   );
 }
@@ -30,33 +37,40 @@ function ResidentNav({ logout }) {
 function ManagerNav({ logout }) {
   return (
     <div className={styles.managerNav}>
-      <NavLink to="/admin/dashboard" className={styles.links}>
-        Dashboard
-      </NavLink>
-      <NavLink to="/admin/propertyinfo" className={styles.links}>
-        Property Info
-      </NavLink>
-      <NavLink to="/admin/units" className={styles.links}>
-        Units
-      </NavLink>
-      <NavLink to="/admin/residents" className={styles.links}>
-        Residents
-      </NavLink>
-      <NavLink to="/admin/payments" className={styles.links}>
-        Payments
-      </NavLink>
-      <NavLink to="/admin/utilities" className={styles.links}>
-        Utilities
-      </NavLink>
-      <NavLink to="/admin/maintenance" className={styles.links}>
-        Maintenance
-      </NavLink>
-      <NavLink to="/admin/announcements" className={styles.links}>
-        Announcements
-      </NavLink>
-      <button onClick={logout} className={styles.logoutButton}>
-        Logout
-      </button>
+      <div className={styles.managerNavLogo}>
+        <NavLink className={styles.landingPageNavLogo} to="/">
+          <p>Logo Placeholder</p>
+        </NavLink>
+      </div>
+      <div className={styles.managerNavLinks}>
+        <NavLink to="/admin/dashboard" className={styles.links}>
+          Dashboard
+        </NavLink>
+        <NavLink to="/admin/propertyinfo" className={styles.links}>
+          Property Info
+        </NavLink>
+        <NavLink to="/admin/units" className={styles.links}>
+          Units
+        </NavLink>
+        <NavLink to="/admin/residents" className={styles.links}>
+          Residents
+        </NavLink>
+        <NavLink to="/admin/payments" className={styles.links}>
+          Payments
+        </NavLink>
+        <NavLink to="/admin/utilities" className={styles.links}>
+          Utilities
+        </NavLink>
+        <NavLink to="/admin/maintenance" className={styles.links}>
+          Maintenance
+        </NavLink>
+        <NavLink to="/admin/announcements" className={styles.links}>
+          Announcements
+        </NavLink>
+        <button onClick={logout} className={styles.logoutButton}>
+          Logout
+        </button>
+      </div>
     </div>
   );
 }

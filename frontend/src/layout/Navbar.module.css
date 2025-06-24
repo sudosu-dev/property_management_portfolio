@@ -27,32 +27,52 @@
 }
 
 /* --- RESIDENT NAVBAR --- */
+
 .residentNav {
   display: flex;
   flex-direction: row;
-  justify-content: end;
+  justify-content: space-between;
   align-items: center;
-  gap: 2rem;
 
   padding: 0 10%;
   height: 10vh;
 
   background-color: rgb(43, 50, 59, 1);
-  background-image: linear-gradient(rgb(47, 55, 65), rgb(43, 50, 59, 1));
+  background-image: linear-gradient(rgb(43, 50, 59, 1), rgb(43, 50, 59, 1));
+}
+.residentNavLogo {
+  font-size: 20px;
+}
+.residentNavLinks {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
 }
 
 /* --- MANAGER NAVBAR --- */
 .managerNav {
   display: flex;
   flex-direction: row;
-  justify-content: end;
+  justify-content: space-between;
   align-items: center;
-  gap: 2rem;
 
   padding: 0 10%;
   height: 10vh;
 
   background-color: rgb(43, 50, 59, 1);
+  background-image: linear-gradient(rgb(43, 50, 59, 1), rgb(43, 50, 59, 1));
+}
+.managerNavLogo {
+  font-size: 20px;
+}
+.managerNavLinks {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
 }
 
 /* --- LANDING PAGE NAVBAR --- */
