@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../../auth/AuthContext";
 import { API } from "../../api/ApiContext";
 import "./profile.css";
+// import styles from "./test.module.css";
 
 export default function Profile() {
   const { user, token, setUser } = useAuth();
@@ -95,31 +96,181 @@ export default function Profile() {
     console.log("viewProfile rendering with user:", user); // remove this
     return (
       <div
-        style={{ width: "1041px", height: "660px", border: "1px solid #ccc" }}
+        style={{
+          border: "5px solid orange",
+          width: "90vw",
+          margin: "0 auto",
+        }}
       >
         <h2>Account Profile</h2>
-        <table>
-          <tr>
-            <td>First Name:</td>
-            <td>{user.first_name || "(not set)"}</td>
-          </tr>
-          <tr>
-            <td>Last Name:</td>
-            <td>{user.last_name || "(not set)"}</td>
-          </tr>
-          <tr>
-            <td>Email:</td>
-            <td>{user.email || "(not set)"}</td>
-          </tr>
-          <tr>
-            <td>Username:</td>
-            <td>{user.username || "(not set)"} </td>
-          </tr>
-          <tr>
-            <td>Unit:</td>
-            <td>{user.unit || "(not set)"}</td>
-          </tr>
-        </table>
+        {/* NEW VERSION */}
+        <br />
+        <br />
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            // alignItems: "center",
+            maxWidth: "800px",
+            border: "1px solid green",
+            padding: "2em",
+            margin: "0 auto",
+          }}
+        >
+          <div
+            style={{
+              display: "inline-block",
+              padding: "1em",
+              // border: "1px solid #ccc",
+            }}
+          >
+            <span
+              style={{
+                display: "block",
+              }}
+            >
+              First Name
+            </span>
+            <div
+              style={{
+                display: "inline-block",
+                padding: "1em",
+                width: "300px",
+                border: "1px solid #ccc",
+                borderRadius: "5px",
+              }}
+            >
+              {user.first_name || "(not set)"}
+            </div>
+          </div>
+          <br />
+          <br />
+          <div
+            style={{
+              display: "inline-block",
+              padding: "1em",
+              // border: "1px solid #ccc",
+            }}
+          >
+            <span
+              style={{
+                display: "block",
+              }}
+            >
+              Last Name
+            </span>
+            <div
+              style={{
+                display: "inline-block",
+                padding: "1em",
+                width: "300px",
+                border: "1px solid #ccc",
+                borderRadius: "5px",
+              }}
+            >
+              {user.last_name || "(not set)"}
+            </div>
+          </div>
+          <br />
+          <br />
+          <div
+            style={{
+              display: "inline-block",
+              padding: "1em",
+              // border: "1px solid #ccc",
+            }}
+          >
+            <span
+              style={{
+                display: "block",
+              }}
+            >
+              Email
+            </span>
+            <div
+              style={{
+                display: "inline-block",
+                padding: "1em",
+                width: "300px",
+                border: "1px solid #ccc",
+                borderRadius: "5px",
+              }}
+            >
+              {user.email || "(not set)"}
+            </div>
+          </div>
+          <br />
+          <br />
+          <div
+            style={{
+              display: "inline-block",
+              padding: "1em",
+              // border: "1px solid #ccc",
+            }}
+          >
+            <span
+              style={{
+                display: "block",
+              }}
+            >
+              Username
+            </span>
+            <div
+              style={{
+                display: "inline-block",
+                padding: "1em",
+                width: "300px",
+                border: "1px solid #ccc",
+                borderRadius: "5px",
+              }}
+            >
+              {user.username || "(not set)"}
+            </div>
+          </div>
+          <br />
+          <br />
+          <div
+            style={{
+              display: "inline-block",
+              padding: "1em",
+              // border: "1px solid #ccc",
+            }}
+          >
+            <span
+              style={{
+                display: "block",
+              }}
+            >
+              Unit
+            </span>
+            <div
+              style={{
+                display: "inline-block",
+                padding: "1em",
+                width: "300px",
+                border: "1px solid #ccc",
+                borderRadius: "5px",
+              }}
+            >
+              {user.unit || "(not set)"}
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <button
+            className="btn btn-primary btn-small"
+            onClick={() => setCurrentView("edit")}
+            style={{
+              float: "right",
+            }}
+          >
+            Edit Profile 2
+          </button>
+        </div>
+        <br /><br />
+        {/* END */}
+
         <div>
           <button
             className="btn btn-primary btn-small"
@@ -193,7 +344,7 @@ export default function Profile() {
       <div
         style={{ width: "1041px", height: "660px", border: "1px solid #ccc" }}
       >
-        <h2>Account Profile</h2>
+        {/* <h2>Account Profile</h2> */}
         <table>
           <tr>
             <td>First Name:</td>
