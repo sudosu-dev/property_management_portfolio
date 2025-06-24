@@ -1,7 +1,7 @@
-import styles from "./Maintenance.module.css";
+import styles from "./ManageMaintenance.module.css";
 
-export default function MaintenanceForm({
-  user,
+export default function ManageMaintenanceForm({
+  units,
   formData,
   setFormData,
   handleSubmit,
@@ -12,21 +12,30 @@ export default function MaintenanceForm({
     <section className={styles.newRequests}>
       <h2>Make New Maintenance Request</h2>
       <div className={styles.requestForm}>
-        <div className={styles.info}>
-          <p>
-            <strong>Name:</strong> {`${user?.first_name} ${user?.last_name}`}
-          </p>
-          <p>
-            <strong>Unit: </strong> {`${user?.unit_number}`}
-          </p>
-          <p>
-            <strong>Email: </strong> {`${user?.email}`}
-          </p>
-        </div>
-
         <form onSubmit={handleSubmit}>
           <label>
+            <strong>Unit: </strong>
+            <select
+              value={formData.unit_number}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  unit_number: Number(e.target.value),
+                })
+              }
+              required
+            >
+              <option value="">--Select a Unit--</option>
+              {units.map((unit) => (
+                <option key={unit.id} value={unit.id}>
+                  {unit.unit_number}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label>
             <strong>Issue: </strong>
+            <br />
             <textarea
               className={styles.textBox}
               value={formData.information}
@@ -43,6 +52,7 @@ export default function MaintenanceForm({
               rows={4}
             />
           </label>
+          <br />
           <label>
             <strong>Photos: </strong>
             <br />
@@ -59,6 +69,7 @@ export default function MaintenanceForm({
               }
             />
           </label>
+          <br />
           <button type="submit">Submit Request</button>
         </form>
 

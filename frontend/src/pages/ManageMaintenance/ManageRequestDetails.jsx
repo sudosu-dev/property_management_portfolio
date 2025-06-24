@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
-import styles from "./Maintenance.module.css";
+import styles from "./ManageMaintenance.module.css";
 import { API } from "../../api/ApiContext";
 
-export default function RequestDetails({
+export default function ManageRequestDetails({
   request,
   onClose,
   onUpdate,
   onDelete,
+  onComplete,
 }) {
   const [editing, setEditing] = useState(false);
   const [info, setInfo] = useState(request.information);
@@ -59,6 +60,10 @@ export default function RequestDetails({
         <h2>Request Details</h2>
         {editing ? (
           <div className={styles.editForm}>
+            <p>
+              <strong>Unit: </strong>
+              {request.unit_number}
+            </p>
             <p>
               <strong>Issue: </strong>
               <textarea
@@ -113,6 +118,10 @@ export default function RequestDetails({
         ) : (
           <div className={styles.defaultDetails}>
             <p>
+              <strong>Unit: </strong>
+              {request.unit_number}
+            </p>
+            <p>
               <strong>Issue: </strong>
               {request.information}
             </p>
@@ -130,6 +139,18 @@ export default function RequestDetails({
               <strong>Status: </strong>
               {request.completed ? "Completed" : "Pending"}
             </p>
+            {request.completed && request.completed_at && (
+              <p>
+                <strong>Completed On: </strong>
+                {new Date(request.completed_at).toLocaleString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                  hour: "numeric",
+                  minute: "2-digit",
+                })}
+              </p>
+            )}
             {request.photos && request.photos.length > 0 ? (
               request.photos.map((photo) => {
                 const url = `${API}/${photo.photo_url.replace(/\\/g, `/`)}`;
@@ -154,14 +175,20 @@ export default function RequestDetails({
             </button>
           </div>
         )}
-
-        <button
-          className={styles.deleteButton}
-          onClick={() => onDelete(request.id)}
-          disabled={request.completed}
-        >
-          Delete Request
-        </button>
+        <div className={styles.endButtons}>
+          <button
+            onClick={() => onComplete(request.id)}
+            disabled={request.completed}
+          >
+            Complete
+          </button>
+          <button
+            onClick={() => onDelete(request.id)}
+            disabled={request.completed}
+          >
+            Delete Request
+          </button>
+        </div>
       </div>
     </div>
   );
