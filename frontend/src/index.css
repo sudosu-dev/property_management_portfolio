@@ -1,10 +1,15 @@
 :root {
   /* color variables used throughout the site */
   --primary-color: #1c7ed6;
+
   --secondary-color: #04aa6d;
+  --tertiary-color: #bd0633;
+  --quaternary-color: #d37a06;
+  --senary-color: #2711ca;
 
   --black-200: #020202;
   --grey-100: #888888;
+  --grey-50: #e2e2e2;
 
   --color-white: #fff;
   --color-offwhite: #f0f0f0;
@@ -15,4 +20,18 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: normal;
+  font-style: normal;
+}
+h1,
+h2 {
+  font-family: "Slabo 27px", serif;
+}
+h1 {
+  font-size: 76px;
+}
+p {
+  font-size: 18px;
 }

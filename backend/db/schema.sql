@@ -10,7 +10,10 @@ DROP TABLE IF EXISTS properties CASCADE;
 
 CREATE TABLE properties(
     id SERIAL PRIMARY KEY,
-    property_name VARCHAR(255)
+    property_name VARCHAR(255) NOT NULL,
+    address VARCHAR(255) NOT NULL,
+    phone_number VARCHAR(15) NOT NULL,
+    total_units INTEGER NOT NULL
 );
 
 CREATE TABLE units(
@@ -40,7 +43,9 @@ CREATE TABLE announcements(
     date DATE NOT NULL,
     announcement TEXT NOT NULL,
     user_id INTEGER REFERENCES users(id) NOT NULL,
-    announcement_type VARCHAR(255) NOT NULL
+    announcement_type VARCHAR(255) NOT NULL,
+    status VARCHAR(50) NOT NULL DEFAULT 'approved',
+    publish_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE transactions (

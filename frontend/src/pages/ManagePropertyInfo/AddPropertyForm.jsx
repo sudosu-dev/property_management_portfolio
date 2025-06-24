@@ -7,6 +7,7 @@ import { useAuth } from "../../auth/AuthContext";
 export default function AddPropertyForm() {
   const [propertyName, setPropertyName] = useState("");
   const [address, setAddress] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [totalUnits, setTotalUnits] = useState("");
 
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ export default function AddPropertyForm() {
         {
           propertyName,
           address,
+          phoneNumber,
           totalUnits,
         },
         {
@@ -34,6 +36,7 @@ export default function AddPropertyForm() {
       console.log("Form submitted successfully:", response.data);
       setPropertyName("");
       setAddress("");
+      setPhoneNumber("");
       setTotalUnits("");
 
       navigate("/admin/propertyinfo");
@@ -59,6 +62,14 @@ export default function AddPropertyForm() {
             type="text"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
+          />
+          <br />
+
+          <label>Phone Number</label>
+          <input
+            type="tel"
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
           />
           <br />
 

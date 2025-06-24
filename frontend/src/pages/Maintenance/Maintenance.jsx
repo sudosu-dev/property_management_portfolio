@@ -112,24 +112,35 @@ function Maintenance() {
 
   return (
     <>
-      <div className={styles.maintenance}>
-        <h1>Maintenance Requests</h1>
-        <div className={styles.content}>
-          <MaintenanceForm
-            user={fullUser}
-            formData={formData}
-            setFormData={setFormData}
-            handleSubmit={handleSubmit}
-            message={message}
-            fileReset={fileReset}
-          />
-          <RequestList
-            requests={requests}
-            showAll={showAll}
-            setShowAll={setShowAll}
-            setSelectedRequest={setSelectedRequest}
-          />
+      <div className={styles.page}>
+        <div className={styles.maintenance}>
+          <h1>Maintenance Requests</h1>
+          <div className={styles.content}>
+            <div className={styles.maintenanceForm}>
+              <MaintenanceForm
+                user={user}
+                formData={formData}
+                setFormData={setFormData}
+                handleSubmit={handleSubmit}
+                message={message}
+              />
+            </div>
+            <div className={styles.requestList}>
+              <RequestList
+                requests={requests}
+                showAll={showAll}
+                setShowAll={setShowAll}
+                setSelectedRequest={setSelectedRequest}
+              />
+            </div>
+          </div>
         </div>
+        {selectedRequest && (
+          <RequestDetails
+            request={selectedRequest}
+            onClose={() => setSelectedRequest(null)}
+          />
+        )}
       </div>
       {selectedRequest && (
         <RequestDetails

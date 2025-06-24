@@ -25,30 +25,28 @@ export default function LandingPage() {
             <div className={styles.featuresCard}>
               <h3>Seamless transactions</h3>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam
-                repellat, doloremque libero eaque quas, reiciendis veritatis
-                adipisci nostrum atque porro quasi corporis voluptatem, nihil
-                maxime. Repudiandae voluptatum commodi impedit doloremque.
+                With our platform, paying rent, utilities, or other fees is
+                fast, secure, and effortless. Set up recurring payments, receive
+                instant confirmations, and manage your account from anywhere,
+                anytime.
               </p>
             </div>
             <div className={styles.featuresCard}>
               <h3>Hassle free maintenance requests</h3>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Perspiciatis necessitatibus aspernatur eveniet repellendus
-                laborum voluptatum doloribus quaerat quas officiis! Quae
-                repellat earum quisquam ad asperiores accusantium corrupti,
-                expedita modi nemo.
+                Submit requests online in seconds, upload photos or
+                descriptions, and track progress in real time. Our streamlined
+                system ensures that issues are addressed quickly and
+                efficiently.
               </p>
             </div>
             <div className={styles.featuresCard}>
               <h3>Community engagement</h3>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Accusantium rem illo magni cupiditate consequatur. Eligendi,
-                debitis quidem corporis est dignissimos officia repudiandae
-                nobis corrupti? Asperiores perspiciatis animi odio labore
-                dolores?
+                Stay informed with community announcements, connect with
+                neighbors, and participate in building a welcoming, vibrant
+                living environment. Whether it's a neighborhood event or an
+                important update, you're always in the loop.
               </p>
             </div>
           </div>
@@ -65,8 +63,8 @@ export default function LandingPage() {
             <div className={styles.reviewCardProfile}>
               <img src={personCircleOutline} alt="user icon" />
               <div>
-                <p>name</p>
-                <p>description</p>
+                <p>Bobby</p>
+                <p>Resident at Oakmont</p>
               </div>
             </div>
           </div>
@@ -75,8 +73,8 @@ export default function LandingPage() {
             <div className={styles.reviewCardProfile}>
               <img src={personCircleOutline} alt="user icon" />
               <div>
-                <p>name</p>
-                <p>description</p>
+                <p>Richard</p>
+                <p>Resident at Pepperridge</p>
               </div>
             </div>
           </div>
@@ -85,8 +83,8 @@ export default function LandingPage() {
             <div className={styles.reviewCardProfile}>
               <img src={personCircleOutline} alt="user icon" />
               <div>
-                <p>name</p>
-                <p>description</p>
+                <p>Lenora</p>
+                <p>Resident at Marina Towers</p>
               </div>
             </div>
           </div>
