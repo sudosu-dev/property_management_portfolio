@@ -102,6 +102,10 @@
   margin: 1rem 0;
 }
 
+.defaultDetails p {
+  margin-bottom: 1rem;
+}
+
 .enlargedPhoto {
   width: 100%;
   max-height: 300px;

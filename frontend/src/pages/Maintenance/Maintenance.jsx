@@ -70,19 +70,11 @@ function Maintenance() {
       return;
     }
     try {
-      const form = new FormData();
-      form.append("information", updatedData.information);
-      form.append("keep_photos", JSON.stringify(updatedData.keepPhotos || []));
-
-      if (updatedData.files && updatedData.files.length > 0) {
-        updatedData.files.forEach((file) => {
-          form.append("maintenance_photos", file);
-        });
-      }
-      await updateRequest(id, form, token);
+      const updatedRequest = await updateRequest(id, updatedData, token);
       setMessage("Maintenance request updated successfully.");
+      setTimeout(() => setMessage(""), 5000);
       await loadRequests();
-      setSelectedRequest(null);
+      setSelectedRequest(updatedRequest);
     } catch (err) {
       console.error("Update error:", err.message);
       setMessage("Failed to update request");

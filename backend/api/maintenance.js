@@ -10,6 +10,7 @@ import {
   getMaintenanceRequestById,
   updateMaintenanceRequestById,
   updateMaintenanceRequestCompletion,
+  deleteUnkeptPhotos,
   deleteMaintenanceRequestById,
 } from "#db/queries/maintenance";
 import { imageFileFilter } from "#utilities/fileFilters";
@@ -140,7 +141,7 @@ router
     }
   })
   .put(
-    async (req, res, next) => {
+    (req, res, next) => {
       upload(req, res, function (error) {
         if (error instanceof multer.MulterError) {
           return res.status(400).json({ error: error.message });

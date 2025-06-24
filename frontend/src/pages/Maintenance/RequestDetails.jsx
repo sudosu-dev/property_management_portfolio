@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./Maintenance.module.css";
 import { API } from "../../api/ApiContext";
 
@@ -12,6 +12,13 @@ export default function RequestDetails({
   const [info, setInfo] = useState(request.information);
   const [photos, setPhotos] = useState(request.photos);
   const [newFiles, setNewFiles] = useState([]);
+
+  useEffect(() => {
+    setInfo(request.information);
+    setPhotos(request.photos || []);
+    setEditing(false);
+    setNewFiles([]);
+  }, [request]);
 
   if (!request) return null;
 
@@ -58,7 +65,7 @@ export default function RequestDetails({
                 className={styles.text}
                 value={info}
                 onChange={(e) => setInfo(e.target.value)}
-                rows={4}
+                rows={2}
               />
             </p>
             <p>
@@ -84,7 +91,6 @@ export default function RequestDetails({
                 );
               })}
             </div>
-
             <p>
               <strong>Add New Photos: </strong>
               <input type="file" multiple onChange={fileChange} />
@@ -95,7 +101,7 @@ export default function RequestDetails({
             </div>
           </div>
         ) : (
-          <>
+          <div className={styles.defaultDetails}>
             <p>
               <strong>Issue: </strong>
               {request.information}
@@ -104,17 +110,21 @@ export default function RequestDetails({
               <strong>Status: </strong>
               {request.completed ? "Completed" : "Pending"}
             </p>
-            {request.photos.map((photo) => {
-              const url = `${API}/${photo.photo_url.replace(/\\/g, `/`)}`;
-              return (
-                <img
-                  key={photo.id}
-                  src={url}
-                  alt={`Photo for request ${request.id}`}
-                  className={styles.enlargedPhoto}
-                />
-              );
-            })}
+            {request.photos && request.photos.length > 0 ? (
+              request.photos.map((photo) => {
+                const url = `${API}/${photo.photo_url.replace(/\\/g, `/`)}`;
+                return (
+                  <img
+                    key={photo.id}
+                    src={url}
+                    alt={`Photo for request ${request.id}`}
+                    className={styles.enlargedPhoto}
+                  />
+                );
+              })
+            ) : (
+              <p>No photos available</p>
+            )}
             <button
               className={styles.editButton}
               onClick={() => setEditing(true)}
@@ -122,7 +132,7 @@ export default function RequestDetails({
             >
               Edit
             </button>
-          </>
+          </div>
         )}
 
         <button

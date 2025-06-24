@@ -45,10 +45,11 @@ export async function updateRequest(id, data, token) {
       },
       body: data,
     });
+    const result = await res.json();
     if (!res.ok) {
       throw new Error("Failed to update request.");
     }
-    return await res.json();
+    return result;
   } catch (err) {
     console.error("Error updating request:", err);
     throw err;
