@@ -27,7 +27,6 @@ export default function MaintenanceForm({
         <form onSubmit={handleSubmit}>
           <label>
             <strong>Issue: </strong>
-            <br />
             <textarea
               className={styles.textBox}
               value={formData.information}
@@ -44,7 +43,6 @@ export default function MaintenanceForm({
               rows={4}
             />
           </label>
-          <br />
           <label>
             <strong>Photos: </strong>
             <br />
@@ -61,7 +59,6 @@ export default function MaintenanceForm({
               }
             />
           </label>
-          <br />
           <button type="submit">Submit Request</button>
         </form>
 

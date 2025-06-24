@@ -41,10 +41,9 @@ export async function updateRequest(id, data, token) {
     const res = await fetch(`${API}/maintenance/${id}`, {
       method: "PUT",
       headers: {
-        "Content-type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(data),
+      body: data,
     });
     if (!res.ok) {
       throw new Error("Failed to update request.");
