@@ -50,7 +50,7 @@
 .requestForm button {
   padding: 0.5rem;
   border-radius: 0.5rem;
-  width: 50%;
+  width: 100%;
 }
 
 .requestForm button:hover {
@@ -74,7 +74,7 @@
 }
 
 .requestForm {
-  width: 50%;
+  width: 100%;
 }
 
 .textBox {

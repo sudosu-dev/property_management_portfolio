@@ -118,7 +118,7 @@ function Maintenance() {
           <div className={styles.content}>
             <div className={styles.maintenanceForm}>
               <MaintenanceForm
-                user={user}
+                user={fullUser}
                 formData={formData}
                 setFormData={setFormData}
                 handleSubmit={handleSubmit}
