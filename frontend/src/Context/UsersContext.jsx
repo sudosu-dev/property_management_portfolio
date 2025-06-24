@@ -31,9 +31,9 @@ export default function UsersProvider({ children }) {
       });
   }
 
-  async function postUsers(userObj) {
+  async function putUser(userObj) {
     const result = axios
-      .post(usersAPI, userObj, {
+      .put(usersAPI + "/" + userObj.id, userObj, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -54,7 +54,7 @@ export default function UsersProvider({ children }) {
     loading,
     error,
     getUsers,
-    postUsers,
+    putUser,
   };
   return (
     <UsersContext.Provider value={value}>{children}</UsersContext.Provider>

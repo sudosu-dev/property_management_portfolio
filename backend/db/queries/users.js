@@ -115,10 +115,12 @@ export async function getUserByIdSecure(userId, requestingUser) {
 // updateUser
 export async function updateUserById(userId, updates, requestingUser) {
   if (!requestingUser) {
+    console.log("Authentication required.");
     throw new Error("Authentication required.");
   }
 
   if (!requestingUser.is_manager && requestingUser.id !== parseInt(userId)) {
+    console.log("Access denied - you can only update your own profile");
     throw new Error("Access denied - you can only update your own profile");
   }
 
@@ -126,6 +128,7 @@ export async function updateUserById(userId, updates, requestingUser) {
   const managerAllowedFields = [
     "firstName",
     "lastName",
+    "username",
     "email",
     "phone",
     "unit",
@@ -141,8 +144,12 @@ export async function updateUserById(userId, updates, requestingUser) {
     const mapping = {
       firstName: "first_name",
       lastName: "last_name",
+      email: "email",
+      phone: "phone",
+      unit: "unit",
       isManager: "is_manager",
       isCurrentUser: "is_current_user",
+      username: "username",
     };
     return mapping[key] || key;
   };
@@ -161,20 +168,17 @@ export async function updateUserById(userId, updates, requestingUser) {
       }
     }
   }
-
   if (fields.length === 0) {
     throw new Error("No valid fields to update.");
   }
 
   values.push(userId);
-
   const sql = `
     UPDATE users
     SET ${fields.join(", ")}
     WHERE id = $${counter}
     RETURNING id, username, first_name, last_name, email, unit, is_manager, created_at
     `;
-
   const {
     rows: [user],
   } = await pool.query(sql, values);

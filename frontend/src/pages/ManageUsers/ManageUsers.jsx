@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { useUsers } from "../../Context/UsersContext";
 import { useApi } from "../../api/ApiContext";
 import EditUserForm from "./EditUserForm";
+import styles from "./ManageUsers.module.css";
 
 export default function ManageUsers() {
-  const { users, loading, getUsers, postUsers } = useUsers();
+  const { users, loading, getUsers } = useUsers();
   const { request } = useApi();
 
   const [searchFilter, setSearchFilter] = useState("first_name");
@@ -12,6 +13,11 @@ export default function ManageUsers() {
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [units, setUnits] = useState({});
   const [properties, setProperties] = useState({});
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedUnit, setSelectedUnit] = useState(null);
+  const [selectedPropery, setSelectedProperty] = useState(null);
+  const [renderEdit, setRenderEdit] = useState(true);
+  const [pageLoading, setPageLoading] = useState(true);
 
   useEffect(() => {
     async function awaitUsers() {
@@ -37,6 +43,7 @@ export default function ManageUsers() {
   }, [searchFilter, searchQuery, users]);
 
   useEffect(() => {
+    setPageLoading(true);
     const getUnitsAndProperties = async () => {
       const unitIds = [
         ...new Set(users.map((user) => user.unit).filter(Boolean)),
@@ -70,79 +77,119 @@ export default function ManageUsers() {
     };
 
     getUnitsAndProperties();
+    setPageLoading(false);
   }, [users, request]);
 
   if (loading) return <p>Loading page...</p>;
+  if (pageLoading) return <p>Loading page...</p>;
+  if (!users || users.length === 0) return <p>Fetching user information...</p>;
 
   return (
     <>
-      <input
-        type="text"
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        placeholder={`Search by ${searchFilter}`}
-      />
-      <select
-        value={searchFilter}
-        onChange={(event) => setSearchFilter(event.target.value)}
-      >
-        <option value="first_name">First Name</option>
-        <option value="last_name">Last Name</option>
-        <option value="username">Username</option>
-        <option value="unit">Unit</option>
-        <option value="email">Email</option>
-      </select>
-      {filteredUsers.slice(0, 19).map((user, i) => (
-        <UserCard
-          key={i}
-          user={user}
-          unit={units[user.unit]}
-          property={
-            units[user.unit]?.property_id
-              ? properties[units[user.unit].property_id]
-              : undefined
-          }
+      <h1>Manage Users</h1>
+      <div className={styles.search}>
+        <input
+          className={styles.searchBar}
+          type="text"
+          name="search"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder={`Search by ${searchFilter}`}
         />
-      ))}
-      <EditUserForm user={users[1]} />
+        <select
+          className={styles.searchDropDown}
+          name="search-drop-down"
+          value={searchFilter}
+          onChange={(event) => setSearchFilter(event.target.value)}
+        >
+          <option value="first_name">First Name</option>
+          <option value="last_name">Last Name</option>
+          <option value="username">Username</option>
+          <option value="unit">Unit</option>
+          <option value="email">Email</option>
+        </select>
+        <ul className={styles.cardContainer}>
+          <li className={styles.rows}>
+            <h3>Name</h3>
+            <p>Username</p>
+            <p>Property, Unit</p>
+            <p>Email</p>
+            <p>
+              Joined on <span className={styles.dateInf}>(DD-MM-YYYY)</span>
+            </p>
+            <p>Edit</p>
+          </li>
+          {filteredUsers.slice(0, 49).map((user, i) => (
+            <UserCard
+              key={i}
+              user={user}
+              unit={units[user.unit]}
+              property={
+                units[user.unit]?.property_id
+                  ? properties[units[user.unit].property_id]
+                  : undefined
+              }
+              onEdit={() => {
+                setSelectedUser(user);
+                setSelectedUnit(units[user.unit]);
+                setSelectedProperty(
+                  units[user.unit]?.property_id
+                    ? properties[units[user.unit].property_id]
+                    : undefined
+                );
+                setRenderEdit(true);
+              }}
+            />
+          ))}
+        </ul>
+      </div>
+      {renderEdit && (
+        <EditUserForm
+          user={selectedUser}
+          unit={selectedUnit}
+          units={units}
+          properties={properties}
+          property={selectedPropery}
+          onCancel={() => setRenderEdit(false)}
+          onEdit={() => setRenderEdit(true)}
+        />
+      )}
     </>
   );
 }
 
-export function UserCard({ user, unit, property }) {
+export function UserCard({ user, unit, property, onEdit }) {
   if (!user.is_current_user) return null;
 
   return (
-    <li>
+    <li className={styles.card}>
       <h3>
         {user.first_name} {user.last_name}
       </h3>
-      <p>Username: {user.username}</p>
+      <p>{user.username}</p>
       <p>
-        Property: {property?.property_name ?? "Loading..."} Unit:{" "}
+        {property?.property_name ?? "Loading..."},{" "}
         {unit?.unit_number ?? "Loading..."}
       </p>
-      <p>Email: {user.email}</p>
+      <p>{user.email}</p>
       {user.is_manager && (
-        <p>
-          <span>
-            {" "}
-            User since:{" "}
+        <>
+          <span className={styles.joinDate}>
             {(() => {
               const [year, month, day] = user.created_at
                 .slice(0, 10)
                 .split("-");
               return `${day}-${month}-${year}`;
             })()}
-          </span>{" "}
-          Manager
-        </p>
+          </span>
+          <p>Manager</p>
+        </>
       )}
+
       {!user.is_manager && (
         <>
-          <span>
+          <span className={styles.joinDate}>
             {" "}
-            User since:{" "}
             {(() => {
               const [year, month, day] = user.created_at
                 .slice(0, 10)
@@ -150,7 +197,7 @@ export function UserCard({ user, unit, property }) {
               return `${day}-${month}-${year}`;
             })()}
           </span>{" "}
-          <button>edit</button>
+          <button onClick={() => onEdit()}>edit</button>
         </>
       )}
     </li>

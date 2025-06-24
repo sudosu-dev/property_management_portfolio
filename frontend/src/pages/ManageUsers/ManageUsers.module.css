@@ -1,0 +1,23 @@
+.cardContainer {
+  list-style: none;
+}
+
+.card,
+.rows {
+  display: grid;
+  grid-template-columns: 0.8fr 0.75fr 1.25fr 1.5fr 0.9fr 0.33fr;
+  width: 60vw;
+}
+
+.card p,
+.card h3,
+.joinDate,
+.rows {
+  font-size: 0.9rem;
+  height: 40px;
+}
+
+.dateInf {
+  font-size: 0.63rem;
+  opacity: 50%;
+}
