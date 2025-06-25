@@ -11,6 +11,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding-top: 1rem;
+  background-color: var(--bg-color);
 }
 
 .mainH1 {
@@ -20,7 +22,7 @@
 }
 
 .mainH2 {
-  margin: 1rem 23.75rem 1rem 0vw;
+  margin: 1rem 22.5rem 1rem 0vw;
   font-size: 1.75rem;
   font-weight: 600;
 }
@@ -30,7 +32,14 @@
 }
 
 .cardContainer {
+  margin: 1rem 0 0 1rem;
   list-style: none;
+  border: 1px solid var(--grey-100);
+  border-top-width: 10px;
+  border-top-color: var(--secondary-color);
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: var(--color-white);
 }
 
 .card,
@@ -96,9 +105,14 @@
   grid-template-columns: max-content 1fr;
   gap: 1rem 2rem;
   padding: 0.5rem;
-  margin: 2rem 0 0 1.75vw;
-  border-radius: 6px;
+  margin: 2.25rem 0 0 1.75vw;
   background-color: var(--grey-50);
+  border: 1px solid var(--grey-100);
+  border-top-width: 10px;
+  border-top-color: var(--secondary-color);
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: var(--color-white);
 }
 
 .row {
@@ -120,6 +134,7 @@
   align-self: center;
   justify-self: start;
   max-width: 400px;
+  background-color: var(--grey-25);
 }
 
 .editForm input {
@@ -141,18 +156,19 @@
 
 .createButtonDiv {
   display: flex;
-  height: 21px;
+  height: 45px;
 }
 
 .createButton {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  margin-left: 0.25rem;
-  padding: 0.6rem 1.2rem;
-  border-radius: 0.5rem;
-  border: 1px solid var(--grey-100);
+  margin-right: 40rem;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  background-color: var(--primary-color);
+  color: var(--color-white);
 }
 
 .createButton:hover {
@@ -185,6 +201,5 @@
 
 .submitButton:hover,
 .cancelButton:hover {
-  background-color: var(--grey-50);
   cursor: pointer;
 }
