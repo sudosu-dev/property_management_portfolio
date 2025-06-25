@@ -90,12 +90,6 @@ router
     requireManager,
     requireBody(["announcement", "announcement_type"]),
     async (req, res) => {
-      if (req.announcement.user_id !== req.user.id) {
-        return res
-          .status(403)
-          .send("Unauthorized to update this announcement!");
-      }
-
       const { announcement, announcement_type, publish_at } = req.body;
       const displayDate = publish_at
         ? new Date(publish_at)
