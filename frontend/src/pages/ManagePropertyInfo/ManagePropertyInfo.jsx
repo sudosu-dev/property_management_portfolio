@@ -84,36 +84,45 @@ export default function ManagePropertyInfo() {
   }
 
   return (
-    <div>
+    <div className={styles.page}>
       <div className={styles.topBar}>
         <h1>Properties</h1>
-        <div className={styles.crudButtons}>
-          <button onClick={toAddPropertyForm}>Add new property</button>
+        <div className={styles.addProperty}>
+          <button onClick={toAddPropertyForm}>+ Add new property</button>
         </div>
       </div>
       <ul className={styles.propertyCards}>
         {properties.map((property) => (
           <li key={property.id} className={styles.propertyCard}>
-            <div>
-              <img src={propertyPlaceholder} alt="Property placeholder image" />
-            </div>
-            <div>
-              <h2>{property.property_name}</h2>
-              <address>{property.address}</address>
-              <p>Call at: {formatPhoneNumber(property.phone_number)}</p>
-              <p>Unit Count: {property.total_units}</p>
-              <button
-                onClick={() => navigate(`/admin/editproperty/${property.id}`)}
-                className={styles.editButton}
-              >
-                Edit
-              </button>
-              <button
-                onClick={() => handleDelete(property.id)}
-                className={styles.deleteButton}
-              >
-                Delete
-              </button>
+            <div className={styles.propertyCardInfo}>
+              <div className={styles.propertyCardImage}>
+                <img
+                  src={propertyPlaceholder}
+                  alt="Property placeholder image"
+                />
+              </div>
+              <div className={styles.propertyCardText}>
+                <h2>{property.property_name}</h2>
+                <address>{property.address}</address>
+                <p>Contact: {formatPhoneNumber(property.phone_number)}</p>
+                <p>Total Units: {property.total_units}</p>
+                <div className={styles.propertyCardButtons}>
+                  <button
+                    onClick={() =>
+                      navigate(`/admin/editproperty/${property.id}`)
+                    }
+                    className={styles.editDeleteButton}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDelete(property.id)}
+                    className={styles.editDeleteButton}
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
             </div>
           </li>
         ))}

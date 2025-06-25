@@ -14,19 +14,19 @@ export default function MaintenanceForm({
       <div className={styles.requestForm}>
         <div className={styles.info}>
           <p>
-            <strong>Name:</strong> {`${user?.first_name} ${user?.last_name}`}
+            <span>Name:</span> {`${user?.first_name} ${user?.last_name}`}
           </p>
           <p>
-            <strong>Unit: </strong> {`${user?.unit_number}`}
+            <span>Unit: </span> {`${user?.unit_number}`}
           </p>
           <p>
-            <strong>Email: </strong> {`${user?.email}`}
+            <span>Email: </span> {`${user?.email}`}
           </p>
         </div>
 
         <form onSubmit={handleSubmit}>
           <label>
-            <strong>Issue: </strong>
+            <span>Issue: </span>
             <textarea
               className={styles.textBox}
               value={formData.information}
@@ -44,8 +44,7 @@ export default function MaintenanceForm({
             />
           </label>
           <label>
-            <strong>Photos: </strong>
-            <br />
+            <span>Photos: </span>
             <input
               type="file"
               name="maintenance_photos"

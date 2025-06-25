@@ -2,9 +2,8 @@
   padding: 2rem 10%;
   margin: 0 auto;
 
-  height: 90vh;
-
   background-color: var(--bg-color);
+  min-height: 90vh;
 }
 
 .header {

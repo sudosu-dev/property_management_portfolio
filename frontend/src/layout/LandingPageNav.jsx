@@ -1,21 +1,23 @@
 import styles from "./LandingPageNavbar.module.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
+import rentaLogo from "../assets/renta-logo.png";
 
 function PublicNav() {
   return (
     <div className={styles.Nav}>
       <div className={styles.NavLogo}>
         <NavLink to="/">
-          <p>Logo Placeholder</p>
+          <img width={"45px"} src={rentaLogo} alt="logo" />
         </NavLink>
       </div>
       <div className={styles.NavLinks}>
         <NavLink to="/about" className={styles.links}>
+          <ion-icon name="information-circle-outline"></ion-icon>
           About
         </NavLink>
         <NavLink to="/login" className={styles.loginButton}>
-          Resident Login
+          Login
         </NavLink>
       </div>
     </div>
@@ -27,14 +29,16 @@ function ResidentNav({ logout }) {
     <div className={styles.Nav}>
       <div className={styles.NavLogo}>
         <NavLink to="/">
-          <p>Logo Placeholder</p>
+          <img width={"45px"} src={rentaLogo} alt="logo" />
         </NavLink>
       </div>
       <div className={styles.NavLinks}>
         <NavLink to="/about" className={styles.links}>
+          <ion-icon name="information-circle-outline"></ion-icon>
           About
         </NavLink>
         <NavLink to="/dashboard/resident" className={styles.links}>
+          <ion-icon name="apps-outline"></ion-icon>
           Dashboard
         </NavLink>
         <button onClick={logout} className={styles.logoutButton}>
@@ -50,14 +54,16 @@ function ManagerNav({ logout }) {
     <div className={styles.Nav}>
       <div className={styles.NavLogo}>
         <NavLink to="/">
-          <p>Logo Placeholder</p>
+          <img width={"45px"} src={rentaLogo} alt="logo" />
         </NavLink>
       </div>
       <div className={styles.NavLinks}>
         <NavLink to="/about" className={styles.links}>
+          <ion-icon name="information-circle-outline"></ion-icon>
           About
         </NavLink>
         <NavLink to="/admin/dashboard" className={styles.links}>
+          <ion-icon name="apps-outline"></ion-icon>
           Dashboard
         </NavLink>
         <button onClick={logout} className={styles.logoutButton}>

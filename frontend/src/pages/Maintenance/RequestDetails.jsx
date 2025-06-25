@@ -60,7 +60,7 @@ export default function RequestDetails({
         {editing ? (
           <div className={styles.editForm}>
             <p>
-              <strong>Issue: </strong>
+              <span>Issue: </span>
               <textarea
                 className={styles.text}
                 value={info}
@@ -69,7 +69,7 @@ export default function RequestDetails({
               />
             </p>
             <p>
-              <strong>Request Date: </strong>
+              <span>Request Date: </span>
               {new Date(request.created_at).toLocaleString("en-US", {
                 year: "numeric",
                 month: "long",
@@ -79,7 +79,7 @@ export default function RequestDetails({
               })}
             </p>
             <p>
-              <strong>Current Photos: </strong>
+              <span>Current Photos: </span>
             </p>
             <div className={styles.photoGrid}>
               {photos.map((photo) => {
@@ -102,7 +102,7 @@ export default function RequestDetails({
               })}
             </div>
             <p>
-              <strong>Add New Photos: </strong>
+              <span>Add New Photos: </span>
               <input type="file" multiple onChange={fileChange} />
             </p>
             <div className={styles.editButtons}>
@@ -120,11 +120,11 @@ export default function RequestDetails({
         ) : (
           <div className={styles.defaultDetails}>
             <p>
-              <strong>Issue: </strong>
+              <span>Issue: </span>
               {request.information}
             </p>
             <p>
-              <strong>Request Date: </strong>
+              <span>Request Date: </span>
               {new Date(request.created_at).toLocaleString("en-US", {
                 year: "numeric",
                 month: "long",
@@ -134,7 +134,7 @@ export default function RequestDetails({
               })}
             </p>
             <p>
-              <strong>Status: </strong>
+              <span>Status: </span>
               {request.completed ? "Completed" : "Pending"}
             </p>
             {request.photos && request.photos.length > 0 ? (

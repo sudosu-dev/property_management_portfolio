@@ -8,7 +8,7 @@ export default function RequestList({
   setShowAll,
   setSelectedRequest,
 }) {
-  const [filter, setFilter] = useState("All");
+  const [filter, setFilter] = useState("Pending");
   const filteredRequests = requests.filter((req) => {
     if (filter === "All") return true;
     if (filter === "Pending") return !req.completed;
@@ -38,11 +38,11 @@ export default function RequestList({
             (req) => (
               <li key={req.id} onClick={() => setSelectedRequest(req)}>
                 <p>
-                  <strong>Issue: </strong>
+                  <span>Issue: </span>
                   {req.information}
                 </p>
                 <p>
-                  <strong>Request Date: </strong>
+                  <span>Request Date: </span>
                   {new Date(req.created_at).toLocaleString("en-US", {
                     year: "numeric",
                     month: "long",
@@ -52,7 +52,7 @@ export default function RequestList({
                   })}
                 </p>
                 <p>
-                  <strong>Status: </strong>
+                  <span>Status: </span>
                   {req.completed ? "Completed" : "Pending"}
                 </p>
 

@@ -72,53 +72,57 @@ export default function ManageUnits() {
   };
 
   return (
-    <div>
+    <div className={styles.page}>
       <div className={styles.topBar}>
         <h1>Units</h1>
-        <div className={styles.crudButtons}>
-          <button onClick={toAddUnitForm}>Add new unit</button>
+        <button className={styles.primaryButton} onClick={toAddUnitForm}>
+          + Add new unit
+        </button>
+      </div>
+      <div className={styles.content}>
+        <div className={styles.tableContainer}>
+          <table className={styles.table}>
+            <thead>
+              <tr>
+                <th>Property ID</th>
+                <th>Unit Number</th>
+                <th>Rent Amount</th>
+                <th>Notes</th>
+                <th>Tenants</th>
+                <th>Edit</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              {units.map((unit) => (
+                <tr key={unit.id}>
+                  <td>{unit.property_id}</td>
+                  <td>{unit.unit_number}</td>
+                  <td>{unit.rent_amount}</td>
+                  <td>{unit.notes}</td>
+                  <td>{unit.tenants}</td>
+                  <td className={styles.button}>
+                    <button
+                      onClick={() => navigate(`/admin/editunit/${unit.id}`)}
+                      className={styles.editDeleteButton}
+                    >
+                      Edit
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      onClick={() => handleDelete(unit.id)}
+                      className={styles.editDeleteButton}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
-      <table className={styles.table}>
-        <thead>
-          <tr>
-            <th>Property ID</th>
-            <th>Unit Number</th>
-            <th>Rent Amount</th>
-            <th>Notes</th>
-            <th>Tenants</th>
-            <th>Edit</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          {units.map((unit) => (
-            <tr key={unit.id}>
-              <td>{unit.property_id}</td>
-              <td>{unit.unit_number}</td>
-              <td>{unit.rent_amount}</td>
-              <td>{unit.notes}</td>
-              <td>{unit.tenants}</td>
-              <td className={styles.button}>
-                <button
-                  onClick={() => navigate(`/admin/editunit/${unit.id}`)}
-                  className={styles.editButton}
-                >
-                  Edit
-                </button>
-              </td>
-              <td>
-                <button
-                  onClick={() => handleDelete(unit.id)}
-                  className={styles.deleteButton}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
     </div>
   );
 }

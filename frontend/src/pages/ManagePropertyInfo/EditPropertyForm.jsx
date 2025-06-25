@@ -1,3 +1,4 @@
+import styles from "./ManagePropertyInfo.module.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { API } from "../../api/ApiContext";
@@ -70,9 +71,11 @@ export default function EditPropertyForm() {
 
   return (
     <>
-      <div>
-        <h2>Edit Property</h2>
-        <form onSubmit={handleSubmit}>
+      <div className={styles.page}>
+        <div className={styles.formHeader}>
+          <h2>Edit Property</h2>
+        </div>
+        <form onSubmit={handleSubmit} className={styles.addPropertyForm}>
           <label>Property Name</label>
           <input
             type="text"
@@ -105,11 +108,21 @@ export default function EditPropertyForm() {
           />
           <br />
 
-          <input type="submit" value="Save Changes" />
+          <div className={styles.addPropertyButtons}>
+            <button
+              className={styles.secondaryButton}
+              onClick={() => navigate("/admin/propertyinfo")}
+            >
+              Back
+            </button>
+            <input
+              className={styles.primaryButton}
+              type="submit"
+              value="Save Changes"
+            />
+          </div>
         </form>
       </div>
-
-      <button onClick={() => navigate("/admin/propertyinfo")}>Back</button>
     </>
   );
 }
