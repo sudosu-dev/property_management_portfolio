@@ -11,7 +11,7 @@ export default function ManageRequestDetails({
 }) {
   const [editing, setEditing] = useState(false);
   const [info, setInfo] = useState(request.information);
-  const [photos, setPhotos] = useState(request.photos);
+  const [photos, setPhotos] = useState(request.photos || []);
   const [newFiles, setNewFiles] = useState([]);
 
   useEffect(() => {
@@ -52,27 +52,30 @@ export default function ManageRequestDetails({
   };
 
   return (
-    <div className={styles.container} onClick={onClose}>
-      <div className={styles.details} onClick={(e) => e.stopPropagation()}>
+    <div className={styles.modalOverlay} onClick={onClose}>
+      <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
         <button className={styles.closeButton} onClick={onClose}>
           &times;
         </button>
         <h2>Request Details</h2>
+
         {editing ? (
-          <div className={styles.editForm}>
+          <>
             <p>
               <strong>Unit: </strong>
               {request.unit_number}
             </p>
-            <p>
-              <strong>Issue: </strong>
-              <textarea
-                className={styles.text}
-                value={info}
-                onChange={(e) => setInfo(e.target.value)}
-                rows={2}
-              />
-            </p>
+            <div className={styles.formGroup}>
+              <label>
+                <strong>Issue: </strong>
+                <textarea
+                  value={info}
+                  onChange={(e) => setInfo(e.target.value)}
+                  rows={3}
+                />
+              </label>
+            </div>
+
             <p>
               <strong>Request Date: </strong>
               {new Date(request.created_at).toLocaleString("en-US", {
@@ -83,9 +86,11 @@ export default function ManageRequestDetails({
                 minute: "2-digit",
               })}
             </p>
+
             <p>
               <strong>Current Photos: </strong>
             </p>
+
             <div className={styles.photoGrid}>
               {photos.map((photo) => {
                 const url = `${API}/${photo.photo_url.replace(/\\/g, `/`)}`;
@@ -99,6 +104,7 @@ export default function ManageRequestDetails({
                     <button
                       className={styles.removePhotoButton}
                       onClick={() => removePhoto(photo.id)}
+                      aria-label="Remove Photo"
                     >
                       &times;
                     </button>
@@ -106,17 +112,28 @@ export default function ManageRequestDetails({
                 );
               })}
             </div>
-            <p>
-              <strong>Add New Photos: </strong>
-              <input type="file" multiple onChange={fileChange} />
-            </p>
-            <div className={styles.editButtons}>
-              <button onClick={handleSave}>Save</button>
-              <button onClick={() => setEditing(false)}>Cancel Edit</button>
+
+            <div className={styles.formGroup}>
+              <label>
+                <strong>Add New Photos: </strong>
+                <input type="file" multiple onChange={fileChange} />
+              </label>
             </div>
-          </div>
+
+            <div className={styles.modalActions}>
+              <button className={styles.primaryButton} onClick={handleSave}>
+                Save
+              </button>
+              <button
+                className={styles.secondaryButton}
+                onClick={() => setEditing(false)}
+              >
+                Cancel Edit
+              </button>
+            </div>
+          </>
         ) : (
-          <div className={styles.defaultDetails}>
+          <>
             <p>
               <strong>Unit: </strong>
               {request.unit_number}
@@ -151,38 +168,46 @@ export default function ManageRequestDetails({
                 })}
               </p>
             )}
-            {request.photos && request.photos.length > 0 ? (
-              request.photos.map((photo) => {
-                const url = `${API}/${photo.photo_url.replace(/\\/g, `/`)}`;
-                return (
-                  <img
-                    key={photo.id}
-                    src={url}
-                    alt={`Photo for request ${request.id}`}
-                    className={styles.enlargedPhoto}
-                  />
-                );
-              })
+
+            {request?.photos.length > 0 ? (
+              <div className={styles.photoGrid}>
+                {request.photos.map((photo) => {
+                  const url = `${API}/${photo.photo_url.replace(/\\/g, `/`)}`;
+                  return (
+                    <img
+                      key={photo.id}
+                      src={url}
+                      alt={`Photo for request ${request.id}`}
+                      className={styles.enlargedPhoto}
+                    />
+                  );
+                })}
+              </div>
             ) : (
               <p>No photos available</p>
             )}
-            <button
-              className={styles.editButton}
-              onClick={() => setEditing(true)}
-              disabled={request.completed}
-            >
-              Edit
-            </button>
-          </div>
+            <div className={styles.modalActions}>
+              <button
+                className={styles.primaryButton}
+                onClick={() => setEditing(true)}
+                disabled={request.completed}
+              >
+                Edit
+              </button>
+            </div>
+          </>
         )}
-        <div className={styles.endButtons}>
+
+        <div className={styles.modalActions}>
           <button
+            className={styles.primaryButton}
             onClick={() => onComplete(request.id)}
             disabled={request.completed}
           >
             Complete
           </button>
           <button
+            className={styles.secondaryButton}
             onClick={() => onDelete(request.id)}
             disabled={request.completed}
           >
