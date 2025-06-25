@@ -65,7 +65,7 @@
   background-color: var(--color-white);
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  border-top: 10px solid var(--secondary-color);
+  border-top: 10px solid var(--quaternary-color);
   padding: 1.5rem;
 }
 
