@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import useQuery from "../../api/useQuery";
-import styles from "./announcements.module.css";
+import styles from "./Announcements.module.css";
 import TenantSubmissionModal from "./TenantSubmissionModal";
 
 function AnnouncementsCard({ announcement }) {
