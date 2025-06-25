@@ -6,7 +6,7 @@ import Register from "./auth/Register";
 import Announcements from "./pages/Announcements/Announcements";
 import Payments from "./pages/Payments/Payments";
 import Ledger from "./pages/Payments/Ledger";
-import Profile from "./pages/profile/profile";
+import Profile from "./pages/profile/Profile";
 import Maintenance from "./pages/Maintenance/Maintenance";
 import ResidentDashboard from "./pages/ResidentDashboard/ResidentDashboard";
 import LandingPage from "./pages/LandingPage/LandingPage";
