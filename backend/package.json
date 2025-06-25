@@ -10,7 +10,8 @@
     "test": "vitest",
     "db:schema": "psql -d property_manager -f db/schema.sql",
     "db:seed": "node --env-file=.env db/seed.js",
-    "db:reset": "npm run db:schema && npm run db:seed"
+    "db:reset": "npm run db:schema && npm run db:seed",
+    "db:render": "psql -d property_management_database -f db/schema.sql && node db/seed.js"
   },
   "engines": {
     "node": ">=22.0.0"
