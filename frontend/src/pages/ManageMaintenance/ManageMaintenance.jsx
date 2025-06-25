@@ -123,7 +123,6 @@ function ManageMaintenance() {
       setTimeout(() => setMessage(""), 5000);
       await loadRequests();
       setSelectedRequest(null);
-
     } catch (err) {
       console.error("Update error:", err.message);
       setMessage("Failed to update request");
@@ -176,51 +175,53 @@ function ManageMaintenance() {
   return (
     <>
       <div className={styles.page}>
-        <header className={styles.header}>
-          <h1>Manage Maintenance Requests</h1>
-          <p>
-            View, update, delete, and mark maintenance requests as complete from
-            tenants and staff.
-          </p>
-        </header>
-        <div className={styles.controls}>
-          <button
-            className={styles.primaryButton}
-            onClick={() => setIsModalOpen(true)}
-          >
-            + Submit Maintenance Request
-          </button>
-        </div>
+        <div className={styles.content}>
+          <header className={styles.header}>
+            <h1>Manage Maintenance Requests</h1>
+            <p>
+              View, update, delete, and mark maintenance requests as complete
+              from tenants and staff.
+            </p>
+          </header>
+          <div className={styles.controls}>
+            <button
+              className={styles.primaryButton}
+              onClick={() => setIsModalOpen(true)}
+            >
+              + Submit Maintenance Request
+            </button>
+          </div>
 
-        <div className={styles.mainContent}>
-          <aside className={styles.filters}>
-            <FilterButton
-              status=""
-              label="All"
-              currentFilter={filter}
-              setFilter={setFilter}
-            />
-            <FilterButton
-              status="Pending"
-              label="Pending"
-              currentFilter={filter}
-              setFilter={setFilter}
-            />
-            <FilterButton
-              status="Completed"
-              label="Completed"
-              currentFilter={filter}
-              setFilter={setFilter}
-            />
-          </aside>
+          <div className={styles.mainContent}>
+            <aside className={styles.filters}>
+              <FilterButton
+                status=""
+                label="All"
+                currentFilter={filter}
+                setFilter={setFilter}
+              />
+              <FilterButton
+                status="Pending"
+                label="Pending"
+                currentFilter={filter}
+                setFilter={setFilter}
+              />
+              <FilterButton
+                status="Completed"
+                label="Completed"
+                currentFilter={filter}
+                setFilter={setFilter}
+              />
+            </aside>
 
-          <main className={styles.maintenanceList}>
-            <ManageRequestList
-              requests={filteredRequests}
-              setSelectedRequest={setSelectedRequest}
-              filter={filter}
-            />
-          </main>
+            <main className={styles.maintenanceList}>
+              <ManageRequestList
+                requests={filteredRequests}
+                setSelectedRequest={setSelectedRequest}
+                filter={filter}
+              />
+            </main>
+          </div>
         </div>
       </div>
       {isModalOpen && (

@@ -1,4 +1,9 @@
 .page {
+  background-color: var(--bg-color);
+  height: 90vh;
+}
+
+.content {
   padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
@@ -14,6 +19,7 @@
   border: 1px solid var(--grey-100);
   border-top-width: 10px;
   border-top-color: var(--secondary-color);
+  background-color: var(--color-white);
 }
 
 .ratesDisplay {
