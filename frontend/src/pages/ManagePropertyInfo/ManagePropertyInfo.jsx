@@ -111,13 +111,13 @@ export default function ManagePropertyInfo() {
                     onClick={() =>
                       navigate(`/admin/editproperty/${property.id}`)
                     }
-                    className={styles.editButton}
+                    className={styles.editDeleteButton}
                   >
                     Edit
                   </button>
                   <button
                     onClick={() => handleDelete(property.id)}
-                    className={styles.deleteButton}
+                    className={styles.editDeleteButton}
                   >
                     Delete
                   </button>
