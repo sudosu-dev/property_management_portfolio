@@ -1,81 +1,89 @@
 import styles from "./Navbar.module.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
+import rentaLogo from "../assets/renta-logo.png";
 
 function ResidentNav({ logout }) {
   return (
-    <div className={styles.residentNav}>
-      <NavLink to="/dashboard/resident" className={styles.links}>
-        Dashboard
-      </NavLink>
-      <NavLink to="/payments" className={styles.links}>
-        Payments
-      </NavLink>
-      <NavLink to="/maintenance" className={styles.links}>
-        Maintenance
-      </NavLink>
-      <NavLink to="/announcements" className={styles.links}>
-        Announcements
-      </NavLink>
-      <NavLink to="/profile" className={styles.links}>
-        Profile
-      </NavLink>
-      <button onClick={logout} className={styles.logoutButton}>
-        Logout
-      </button>
+    <div className={styles.Nav}>
+      <div className={styles.NavLogo}>
+        <NavLink to="/">
+          <img width={"45px"} src={rentaLogo} alt="logo" />
+        </NavLink>
+      </div>
+      <div className={styles.NavLinks}>
+        <NavLink to="/dashboard/resident" className={styles.links}>
+          <ion-icon name="apps-outline"></ion-icon>
+          Dashboard
+        </NavLink>
+        <NavLink to="/payments" className={styles.links}>
+          <ion-icon name="card-outline"></ion-icon>
+          Payments
+        </NavLink>
+        <NavLink to="/maintenance" className={styles.links}>
+          <ion-icon name="build-outline"></ion-icon>
+          Maintenance
+        </NavLink>
+        <NavLink to="/announcements" className={styles.links}>
+          <ion-icon name="megaphone-outline"></ion-icon>
+          Announcements
+        </NavLink>
+        <NavLink to="/profile" className={styles.links}>
+          <ion-icon name="person-outline"></ion-icon>
+          Profile
+        </NavLink>
+        <button onClick={logout} className={styles.logoutButton}>
+          Logout
+        </button>
+      </div>
     </div>
   );
 }
 
 function ManagerNav({ logout }) {
   return (
-    <div className={styles.managerNav}>
-      <NavLink to="/admin/dashboard" className={styles.links}>
-        Dashboard
-      </NavLink>
-      <NavLink to="/admin/propertyinfo" className={styles.links}>
-        Property Info
-      </NavLink>
-      <NavLink to="/admin/units" className={styles.links}>
-        Units
-      </NavLink>
-      <NavLink to="/admin/manage-users" className={styles.links}>
-        Manage Users
-      </NavLink>
-      <NavLink to="/admin/payments" className={styles.links}>
-        Payments
-      </NavLink>
-      <NavLink to="/admin/utilities" className={styles.links}>
-        Utilities
-      </NavLink>
-      <NavLink to="/admin/maintenance" className={styles.links}>
-        Maintenance
-      </NavLink>
-      <NavLink to="/admin/announcements" className={styles.links}>
-        Announcements
-      </NavLink>
-      <button onClick={logout} className={styles.logoutButton}>
-        Logout
-      </button>
-    </div>
-  );
-}
-
-function PublicNav() {
-  return (
-    <div className={styles.landingPageNav}>
-      <div>
-        <NavLink className={styles.landingPageNavLogo} to="/">
-          <p>Logo Placeholder</p>
+    <div className={styles.Nav}>
+      <div className={styles.NavLogo}>
+        <NavLink to="/">
+          <img width={"45px"} src={rentaLogo} alt="logo" />
         </NavLink>
       </div>
-      <div className={styles.landingPageNavLinks}>
-        <NavLink to="/about" className={styles.links}>
-          About
+      <div className={styles.NavLinks}>
+        <NavLink to="/admin/dashboard" className={styles.links}>
+          <ion-icon name="apps-outline"></ion-icon>
+          Dashboard
         </NavLink>
-        <NavLink to="/login" className={styles.loginButton}>
-          Resident Login
+        <NavLink to="/admin/propertyinfo" className={styles.links}>
+          <ion-icon name="business-outline"></ion-icon>
+          Property Info
         </NavLink>
+        <NavLink to="/admin/units" className={styles.links}>
+          <ion-icon name="bed-outline"></ion-icon>
+          Units
+        </NavLink>
+        <NavLink to="/admin/residents" className={styles.links}>
+          <ion-icon name="people-outline"></ion-icon>
+          Residents
+        </NavLink>
+        <NavLink to="/admin/payments" className={styles.links}>
+          <ion-icon name="card-outline"></ion-icon>
+          Payments
+        </NavLink>
+        <NavLink to="/admin/utilities" className={styles.links}>
+          <ion-icon name="bulb-outline"></ion-icon>
+          Utilities
+        </NavLink>
+        <NavLink to="/admin/maintenance" className={styles.links}>
+          <ion-icon name="build-outline"></ion-icon>
+          Maintenance
+        </NavLink>
+        <NavLink to="/admin/announcements" className={styles.links}>
+          <ion-icon name="megaphone-outline"></ion-icon>
+          Announcements
+        </NavLink>
+        <button onClick={logout} className={styles.logoutButton}>
+          Logout
+        </button>
       </div>
     </div>
   );
@@ -93,9 +101,7 @@ export default function Navbar() {
   return (
     <header>
       <nav>
-        {!token ? (
-          <PublicNav />
-        ) : user?.is_manager ? (
+        {user?.is_manager ? (
           <ManagerNav logout={handleLogout} />
         ) : (
           <ResidentNav logout={handleLogout} />

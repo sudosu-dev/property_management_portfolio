@@ -15,7 +15,12 @@ export default function LandingPage() {
             The Online Portal is an easy, fast, and secure way to pay charges
             online, view payment history, and submit maintenance requests.
           </p>
-          <button onClick={() => navigate("/login")}>Login</button>
+          <button
+            className={styles.loginButton}
+            onClick={() => navigate("/login")}
+          >
+            Login
+          </button>
         </div>
       </div>
       <div className={styles.features}>

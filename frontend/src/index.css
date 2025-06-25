@@ -1,8 +1,8 @@
 :root {
   /* color variables used throughout the site */
   --primary-color: #1c7ed6;
-  --secondary-color: #04aa6d;
 
+  --secondary-color: #04aa6d;
   --tertiary-color: #bd0633;
   --quaternary-color: #d37a06;
   --senary-color: #2711ca;
@@ -14,6 +14,8 @@
 
   --color-white: #fff;
   --color-offwhite: #f0f0f0;
+
+  --bg-color: #f7f3f4;
 }
 
 /* --- GLOBAL STYLES --- */
@@ -21,6 +23,7 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+
   font-family: "Inter", sans-serif;
   font-optical-sizing: auto;
   font-weight: normal;
@@ -31,7 +34,7 @@ h2 {
   font-family: "Slabo 27px", serif;
 }
 h1 {
-  font-size: 76px;
+  font-size: 53px;
 }
 p {
   font-size: 18px;

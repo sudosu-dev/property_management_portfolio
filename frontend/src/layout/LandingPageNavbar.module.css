@@ -7,8 +7,7 @@
   padding: 0 10%;
   height: 10vh;
 
-  background-color: rgb(43, 50, 59, 1);
-  background-image: linear-gradient(rgb(43, 50, 59, 1), rgb(43, 50, 59, 1));
+  background-color: var(--bg-color);
 }
 .NavLinks {
   display: flex;
@@ -25,7 +24,7 @@
 
   font-size: 16px;
   text-decoration: none;
-  color: var(--color-white);
+  color: var(--black-200);
 }
 .loginButton {
   padding: 0.5rem 2rem;
@@ -44,7 +43,10 @@
 
   font-size: 16px;
   text-decoration: none;
-  color: var(--black-200);
-  background-color: var(--color-offwhite);
+  color: var(--color-white);
+  background-color: var(--black-200);
   cursor: pointer;
+}
+ion-icon {
+  font-size: 24px;
 }

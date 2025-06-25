@@ -1,3 +1,4 @@
+import styles from "./ManagePropertyInfo.module.css";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { API } from "../../api/ApiContext";
@@ -47,8 +48,11 @@ export default function AddPropertyForm() {
 
   return (
     <>
-      <div>
-        <form onSubmit={handleSubmit}>
+      <div className={styles.page}>
+        <div className={styles.formHeader}>
+          <h2>Add New Property</h2>
+        </div>
+        <form onSubmit={handleSubmit} className={styles.addPropertyForm}>
           <label>Property Name</label>
           <input
             type="text"
@@ -80,12 +84,21 @@ export default function AddPropertyForm() {
             onChange={(e) => setTotalUnits(e.target.value)}
           />
           <br />
-
-          <input type="submit" value="Submit" />
+          <div className={styles.addPropertyButtons}>
+            <button
+              className={styles.secondaryButton}
+              onClick={() => navigate("/admin/propertyinfo")}
+            >
+              Back
+            </button>
+            <input
+              className={styles.primaryButton}
+              type="submit"
+              value="Submit"
+            />
+          </div>
         </form>
       </div>
-
-      <button onClick={() => navigate("/admin/propertyinfo")}>Back</button>
     </>
   );
 }

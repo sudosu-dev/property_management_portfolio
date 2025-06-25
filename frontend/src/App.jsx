@@ -30,76 +30,19 @@ import EditResidentForm from "./pages/ManageResidents/EditResidentForm";
 import ViewResident from "./pages/ManageResidents/ViewResident";
 import Contact from "./pages/Contact/Contact";
 import Error404 from "./Error404";
+import LandingPageLayout from "./layout/LandingPageLayout";
 import ManageUsers from "./pages/ManageUsers/ManageUsers";
 
 export default function App() {
   return (
     <Routes>
-      <Route element={<Layout />}>
+      <Route element={<LandingPageLayout />}>
         <Route index element={<LandingPage />} />
         <Route path="/about" element={<About />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/announcements" element={<Announcements />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/admin/dashboard" element={<ManagerDashboard />} />
-        <Route path="/admin/propertyinfo" element={<ManagePropertyInfo />} />
-        <Route path="/admin/units" element={<ManageUnits />} />
-        <Route path="/admin/residents" element={<ManageResidents />} />
-        <Route path="/admin/payments" element={<ManagePayments />} />
-        <Route path="/admin/utilities" element={<ManageUtilities />} />
-        <Route path="/admin/maintenance" element={<ManageMaintenance />} />
-        {/* <Route path="/admin/announcements" element={<ManageAnnouncements />} /> */}
-        <Route
-          path="/admin/announcements"
-          element={
-            <ProtectedRoute requireManager={true}>
-              <ManageAnnouncements />
-            </ProtectedRoute>
-          }
-        />
-        <Route path="/admin/addproperty" element={<AddPropertyForm />} />
-        <Route path="/admin/editproperty/:id" element={<EditPropertyForm />} />
-        <Route path="/admin/addunit" element={<AddUnitForm />} />
-        <Route path="/admin/editunit/:id" element={<EditUnitForm />} />
-        <Route path="/admin/addresident" element={<AddResidentForm />} />
-        <Route path="/admin/editresident/:id" element={<EditResidentForm />} />
-        <Route path="/admin/viewresident/:id" element={<ViewResident />} />
-        <Route path="/admin">
-          <Route
-            path="settings"
-            element={
-              <ProtectedRoute requireManager={true}>
-                <ManageSettings />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="ledger/:userId"
-            element={
-              <ProtectedRoute requireManager={true}>
-                <ManageTenantLedger />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="maintenance"
-            element={
-              <ProtectedRoute requireManager={true}>
-                <ManageMaintenance />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="manage-users"
-            element={
-              <ProtectedRoute requireManager={true}>
-                <ManageUsers />
-              </ProtectedRoute>
-            }
-          />
-        </Route>
+      </Route>
+      <Route element={<Layout />}>
         <Route path="/dashboard">
           <Route
             path="resident"
@@ -127,6 +70,22 @@ export default function App() {
           }
         />
         <Route
+          path="/maintenance"
+          element={
+            <ProtectedRoute>
+              <Maintenance />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/announcements"
+          element={
+            <ProtectedRoute>
+              <Announcements />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/profile"
           element={
             <ProtectedRoute>
@@ -135,13 +94,159 @@ export default function App() {
           }
         />
         <Route
-          path="/maintenance"
+          path="/contact"
           element={
             <ProtectedRoute>
-              <Maintenance />
+              <Contact />
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/admin/dashboard"
+          element={
+            <ProtectedRoute requireManager={true}>
+              <ManagerDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/propertyinfo"
+          element={
+            <ProtectedRoute requireManager={true}>
+              <ManagePropertyInfo />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/addproperty"
+          element={
+            <ProtectedRoute requireManager={true}>
+              <AddPropertyForm />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/editproperty/:id"
+          element={
+            <ProtectedRoute requireManager={true}>
+              <EditPropertyForm />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/units"
+          element={
+            <ProtectedRoute requireManager={true}>
+              <ManageUnits />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/addunit"
+          element={
+            <ProtectedRoute requireManager={true}>
+              <AddUnitForm />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/editunit/:id"
+          element={
+            <ProtectedRoute requireManager={true}>
+              <EditUnitForm />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/residents"
+          element={
+            <ProtectedRoute requireManager={true}>
+              <ManageResidents />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/addresident"
+          element={
+            <ProtectedRoute requireManager={true}>
+              <AddResidentForm />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/editresident/:id"
+          element={
+            <ProtectedRoute requireManager={true}>
+              <EditResidentForm />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/viewresident/:id"
+          element={
+            <ProtectedRoute requireManager={true}>
+              <ViewResident />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/payments"
+          element={
+            <ProtectedRoute requireManager={true}>
+              <ManagePayments />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/utilities"
+          element={
+            <ProtectedRoute requireManager={true}>
+              <ManageUtilities />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/maintenance"
+          element={
+            <ProtectedRoute requireManager={true}>
+              <ManageMaintenance />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/announcements"
+          element={
+            <ProtectedRoute requireManager={true}>
+              <ManageAnnouncements />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/admin">
+          <Route
+            path="settings"
+            element={
+              <ProtectedRoute requireManager={true}>
+                <ManageSettings />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="ledger/:userId"
+            element={
+              <ProtectedRoute requireManager={true}>
+                <ManageTenantLedger />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="maintenance"
+            element={
+              <ProtectedRoute requireManager={true}>
+                <ManageMaintenance />
+              </ProtectedRoute>
+            }
+          />
+        </Route>
         <Route path="*" element={<Error404 />} />
       </Route>
     </Routes>
