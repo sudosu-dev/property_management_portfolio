@@ -106,7 +106,6 @@ router
       }
       res.json(user);
     } catch (error) {
-      console.log(error);
       res.status(403).json({ error: error.message });
     }
   })
