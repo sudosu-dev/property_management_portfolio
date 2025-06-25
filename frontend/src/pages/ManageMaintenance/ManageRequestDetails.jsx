@@ -93,7 +93,7 @@ export default function ManageRequestDetails({
 
             <div className={styles.photoGrid}>
               {photos.map((photo) => {
-                const url = `${API}/${photo.photo_url.replace(/\\/g, `/`)}`;
+                const url = photo.photo_url;
                 return (
                   <div key={photo.id} className={styles.photoItem}>
                     <img
@@ -172,7 +172,7 @@ export default function ManageRequestDetails({
             {request?.photos.length > 0 ? (
               <div className={styles.photoGrid}>
                 {request.photos.map((photo) => {
-                  const url = `${API}/${photo.photo_url.replace(/\\/g, `/`)}`;
+                  const url = photo.photo_url;
                   return (
                     <img
                       key={photo.id}

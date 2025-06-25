@@ -72,7 +72,7 @@ export default function ManageRequestList({
               {req.photos?.length > 0 && (
                 <div className={styles.photos}>
                   {req.photos.map((photo) => {
-                    const url = `${API}/${photo.photo_url.replace(/\\/g, `/`)}`;
+                    const url = photo.photo_url;
                     return (
                       <img
                         key={photo.id}
