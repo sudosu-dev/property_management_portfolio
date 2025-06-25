@@ -16,8 +16,9 @@ export default function ManageUsers() {
   const [selectedUser, setSelectedUser] = useState(null);
   const [selectedUnit, setSelectedUnit] = useState(null);
   const [selectedPropery, setSelectedProperty] = useState(null);
-  const [renderEdit, setRenderEdit] = useState(true);
+  const [renderEdit, setRenderEdit] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
+  const [isNewUser, setIsNewUser] = useState(false);
 
   useEffect(() => {
     async function awaitUsers() {
@@ -86,74 +87,98 @@ export default function ManageUsers() {
 
   return (
     <>
-      <h1>Manage Users</h1>
-      <div className={styles.search}>
-        <input
-          className={styles.searchBar}
-          type="text"
-          name="search"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder={`Search by ${searchFilter}`}
-        />
-        <select
-          className={styles.searchDropDown}
-          name="search-drop-down"
-          value={searchFilter}
-          onChange={(event) => setSearchFilter(event.target.value)}
-        >
-          <option value="first_name">First Name</option>
-          <option value="last_name">Last Name</option>
-          <option value="username">Username</option>
-          <option value="unit">Unit</option>
-          <option value="email">Email</option>
-        </select>
-        <ul className={styles.cardContainer}>
-          <li className={styles.rows}>
-            <h3>Name</h3>
-            <p>Username</p>
-            <p>Property, Unit</p>
-            <p>Email</p>
-            <p>
-              Joined on <span className={styles.dateInf}>(DD-MM-YYYY)</span>
-            </p>
-            <p>Edit</p>
-          </li>
-          {filteredUsers.slice(0, 49).map((user, i) => (
-            <UserCard
-              key={i}
-              user={user}
-              unit={units[user.unit]}
-              property={
-                units[user.unit]?.property_id
-                  ? properties[units[user.unit].property_id]
-                  : undefined
-              }
-              onEdit={() => {
-                setSelectedUser(user);
-                setSelectedUnit(units[user.unit]);
-                setSelectedProperty(
+      <div className={styles.mainHeader}>
+        <h1 className={styles.mainH1}>Manage Users</h1>
+        <h2 className={styles.mainH2}>Edit User Information</h2>
+      </div>
+      <div className={styles.body}>
+        <div>
+          <div className={styles.search}>
+            <input
+              className={styles.searchBar}
+              type="text"
+              name="search"
+              value={searchQuery}
+              onChange={(event) => setSearchQuery(event.target.value)}
+              placeholder={`Search by ${searchFilter}`}
+            />
+            <select
+              className={styles.searchDropDown}
+              name="search-drop-down"
+              value={searchFilter}
+              onChange={(event) => setSearchFilter(event.target.value)}
+            >
+              <option value="first_name">First Name</option>
+              <option value="last_name">Last Name</option>
+              <option value="username">Username</option>
+              <option value="unit">Unit</option>
+              <option value="email">Email</option>
+            </select>
+          </div>
+          <ul className={styles.cardContainer}>
+            <li className={styles.rows}>
+              <h3>Name</h3>
+              <p>Username</p>
+              <p>Property, Unit</p>
+              <p>Email</p>
+              <p>Date Created</p>
+              <p>Edit</p>
+            </li>
+            {filteredUsers.slice(0, 49).map((user, i) => (
+              <UserCard
+                key={i}
+                user={user}
+                unit={units[user.unit]}
+                property={
                   units[user.unit]?.property_id
                     ? properties[units[user.unit].property_id]
                     : undefined
-                );
+                }
+                onEdit={() => {
+                  setSelectedUser(user);
+                  setSelectedUnit(units[user.unit]);
+                  setSelectedProperty(
+                    units[user.unit]?.property_id
+                      ? properties[units[user.unit].property_id]
+                      : undefined
+                  );
+                  setRenderEdit(true);
+                }}
+              />
+            ))}
+          </ul>
+        </div>
+        {!renderEdit && (
+          <div className={styles.createButtonDiv}>
+            <p className={styles.selectUserEdit}>Create new user </p>
+            <button
+              className={styles.createButton}
+              onClick={() => {
+                console.log("clicked");
+                setIsNewUser(true);
                 setRenderEdit(true);
               }}
-            />
-          ))}
-        </ul>
+            >
+              create
+            </button>
+          </div>
+        )}
+        {renderEdit && (
+          <EditUserForm
+            user={selectedUser}
+            unit={selectedUnit}
+            units={units}
+            properties={properties}
+            property={selectedPropery}
+            onCancel={() => {
+              setRenderEdit(false);
+              setIsNewUser(false);
+            }}
+            onEdit={() => setRenderEdit(true)}
+            isNewUser={isNewUser}
+          />
+        )}
       </div>
-      {renderEdit && (
-        <EditUserForm
-          user={selectedUser}
-          unit={selectedUnit}
-          units={units}
-          properties={properties}
-          property={selectedPropery}
-          onCancel={() => setRenderEdit(false)}
-          onEdit={() => setRenderEdit(true)}
-        />
-      )}
     </>
   );
 }
@@ -197,7 +222,11 @@ export function UserCard({ user, unit, property, onEdit }) {
               return `${day}-${month}-${year}`;
             })()}
           </span>{" "}
-          <button onClick={() => onEdit()}>edit</button>
+          <div className={styles.buttonContainer}>
+            <button className={styles.editButton} onClick={() => onEdit()}>
+              edit
+            </button>
+          </div>
         </>
       )}
     </li>

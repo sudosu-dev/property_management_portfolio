@@ -39,8 +39,8 @@ function ManagerNav({ logout }) {
       <NavLink to="/admin/units" className={styles.links}>
         Units
       </NavLink>
-      <NavLink to="/admin/residents" className={styles.links}>
-        Residents
+      <NavLink to="/admin/manage-users" className={styles.links}>
+        Manage Users
       </NavLink>
       <NavLink to="/admin/payments" className={styles.links}>
         Payments

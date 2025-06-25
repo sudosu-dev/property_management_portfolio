@@ -2,6 +2,7 @@
 import axios from "axios";
 import { createContext, useContext, useState } from "react";
 import { useAuth } from "../auth/AuthContext";
+import { API } from "../api/ApiContext";
 
 const UsersContext = createContext();
 
@@ -49,12 +50,23 @@ export default function UsersProvider({ children }) {
     return result;
   }
 
+  const registerUser = async (credentials) => {
+    const response = await fetch(API + "/users/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(credentials),
+    });
+    const result = await response.json();
+    if (!response.ok) throw Error(result.error || "Registration Failed.");
+  };
+
   const value = {
     users,
     loading,
     error,
     getUsers,
     putUser,
+    registerUser,
   };
   return (
     <UsersContext.Provider value={value}>{children}</UsersContext.Provider>
