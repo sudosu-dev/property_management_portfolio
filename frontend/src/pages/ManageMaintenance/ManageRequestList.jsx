@@ -8,7 +8,7 @@ export default function ManageRequestList({
   setShowAll,
   setSelectedRequest,
 }) {
-  const [filter, setFilter] = useState("All");
+  const [filter, setFilter] = useState("Pending");
   const filteredRequests = requests.filter((req) => {
     if (filter === "All") return true;
     if (filter === "Pending") return !req.completed;
