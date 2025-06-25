@@ -1,4 +1,9 @@
 .page {
+  background-color: var(--bg-color);
+  min-height: 90vh;
+}
+
+.content {
   padding: 2rem;
   max-width: 1200px;
   margin: auto;

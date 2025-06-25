@@ -103,112 +103,114 @@ export default function ManagerUtilities() {
 
   return (
     <div className={styles.page}>
-      <header className={styles.header}>
-        <h1>Enter Monthly Utility Readings</h1>
-      </header>
+      <div className={styles.content}>
+        <header className={styles.header}>
+          <h1>Enter Monthly Utility Readings</h1>
+        </header>
 
-      <section className={styles.section}>
-        <div className={styles.ratesDisplay}>
-          <p>
-            Current Rates:
-            <span> Water: ${utilityRates.water}/gal</span> |
-            <span> Electric: ${utilityRates.electric}/kWh</span> |
-            <span> Gas: ${utilityRates.gas}/therm</span>
-          </p>
-          <button
-            className={styles.secondaryButton}
-            onClick={() => navigate("/admin/settings")}
-          >
-            Manage Rates
-          </button>
-        </div>
-
-        <form onSubmit={handleSubmit}>
-          <div className={styles.tableContainer}>
-            <table className={styles.table}>
-              <thead>
-                <tr>
-                  <th>Unit #</th>
-                  <th>Tenant</th>
-                  <th>Water Usage (gallons)</th>
-                  <th>Electric Usage (kWh)</th>
-                  <th>Gas Usage (therms)</th>
-                </tr>
-              </thead>
-              <tbody>
-                {loadingUnits ? (
-                  <tr>
-                    <td colSpan="5">Loading units...</td>
-                  </tr>
-                ) : (
-                  units
-                    ?.filter((unit) => unit.tenant_info?.id)
-                    .map((unit) => (
-                      <tr key={unit.id}>
-                        <td>{unit.unit_number}</td>
-                        <td>{`${unit.tenant_info.first_name} ${unit.tenant_info.last_name}`}</td>
-                        <td>
-                          <input
-                            type="number"
-                            className={styles.usageInput}
-                            value={utilityData[unit.id]?.water_usage || ""}
-                            onChange={(e) =>
-                              handleInputChange(
-                                unit.id,
-                                "water_usage",
-                                e.target.value
-                              )
-                            }
-                            placeholder="e.g., 1500"
-                          />
-                        </td>
-                        <td>
-                          <input
-                            type="number"
-                            className={styles.usageInput}
-                            value={utilityData[unit.id]?.electric_usage || ""}
-                            onChange={(e) =>
-                              handleInputChange(
-                                unit.id,
-                                "electric_usage",
-                                e.target.value
-                              )
-                            }
-                            placeholder="e.g., 650"
-                          />
-                        </td>
-                        <td>
-                          <input
-                            type="number"
-                            className={styles.usageInput}
-                            value={utilityData[unit.id]?.gas_usage || ""}
-                            onChange={(e) =>
-                              handleInputChange(
-                                unit.id,
-                                "gas_usage",
-                                e.target.value
-                              )
-                            }
-                            placeholder="e.g., 25"
-                          />
-                        </td>
-                      </tr>
-                    ))
-                )}
-              </tbody>
-            </table>
-          </div>
-          <div className={styles.submitContainer}>
+        <section className={styles.section}>
+          <div className={styles.ratesDisplay}>
+            <p>
+              Current Rates:
+              <span> Water: ${utilityRates.water}/gal</span> |
+              <span> Electric: ${utilityRates.electric}/kWh</span> |
+              <span> Gas: ${utilityRates.gas}/therm</span>
+            </p>
             <button
-              type="submit"
-              className={styles.primaryButton}
-              disabled={isSubmitting}
+              className={styles.secondaryButton}
+              onClick={() => navigate("/admin/settings")}
             >
-              {isSubmitting ? "Submitting..." : "Review & Post Bills"}
+              Manage Rates
             </button>
           </div>
-        </form>
-      </section>
+
+          <form onSubmit={handleSubmit}>
+            <div className={styles.tableContainer}>
+              <table className={styles.table}>
+                <thead>
+                  <tr>
+                    <th>Unit #</th>
+                    <th>Tenant</th>
+                    <th>Water Usage (gallons)</th>
+                    <th>Electric Usage (kWh)</th>
+                    <th>Gas Usage (therms)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {loadingUnits ? (
+                    <tr>
+                      <td colSpan="5">Loading units...</td>
+                    </tr>
+                  ) : (
+                    units
+                      ?.filter((unit) => unit.tenant_info?.id)
+                      .map((unit) => (
+                        <tr key={unit.id}>
+                          <td>{unit.unit_number}</td>
+                          <td>{`${unit.tenant_info.first_name} ${unit.tenant_info.last_name}`}</td>
+                          <td>
+                            <input
+                              type="number"
+                              className={styles.usageInput}
+                              value={utilityData[unit.id]?.water_usage || ""}
+                              onChange={(e) =>
+                                handleInputChange(
+                                  unit.id,
+                                  "water_usage",
+                                  e.target.value
+                                )
+                              }
+                              placeholder="e.g., 1500"
+                            />
+                          </td>
+                          <td>
+                            <input
+                              type="number"
+                              className={styles.usageInput}
+                              value={utilityData[unit.id]?.electric_usage || ""}
+                              onChange={(e) =>
+                                handleInputChange(
+                                  unit.id,
+                                  "electric_usage",
+                                  e.target.value
+                                )
+                              }
+                              placeholder="e.g., 650"
+                            />
+                          </td>
+                          <td>
+                            <input
+                              type="number"
+                              className={styles.usageInput}
+                              value={utilityData[unit.id]?.gas_usage || ""}
+                              onChange={(e) =>
+                                handleInputChange(
+                                  unit.id,
+                                  "gas_usage",
+                                  e.target.value
+                                )
+                              }
+                              placeholder="e.g., 25"
+                            />
+                          </td>
+                        </tr>
+                      ))
+                  )}
+                </tbody>
+              </table>
+            </div>
+            <div className={styles.submitContainer}>
+              <button
+                type="submit"
+                className={styles.primaryButton}
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Submitting..." : "Review & Post Bills"}
+              </button>
+            </div>
+          </form>
+        </section>
+      </div>
     </div>
   );
 }

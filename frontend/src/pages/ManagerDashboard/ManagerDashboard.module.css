@@ -1,6 +1,6 @@
 .page {
   padding: 2rem;
-  background-color: var(--color-offwhite);
+  background-color: var(--bg-color);
   min-height: calc(100vh - 70px);
 }
 

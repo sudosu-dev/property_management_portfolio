@@ -1,4 +1,9 @@
 .page {
+  background-color: var(--bg-color);
+  height: 90vh;
+}
+
+.content {
   padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
@@ -48,6 +53,10 @@
 
 .table th {
   background-color: var(--color-offwhite);
+}
+
+.table td {
+  background-color: var(--color-white);
 }
 
 .table tbody tr:last-child td {
