@@ -1,13 +1,17 @@
 .page {
   padding: 2rem 10%;
   margin: 0 auto;
+
+  background-color: var(--bg-color);
+  min-height: 90vh;
 }
 
 .table {
-  border-collapse: collapse;
   width: 100%;
-
   margin-bottom: 1rem;
+  border-collapse: collapse;
+
+  background-color: var(--color-white);
 }
 
 .table td,
