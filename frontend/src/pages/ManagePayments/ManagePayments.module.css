@@ -1,6 +1,6 @@
 .page {
   background-color: var(--bg-color);
-  height: 90vh;
+  min-height: 90vh;
 }
 
 .content {
