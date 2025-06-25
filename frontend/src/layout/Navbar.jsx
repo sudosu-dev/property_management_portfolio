@@ -1,13 +1,14 @@
 import styles from "./Navbar.module.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
+import rentaLogo from "../assets/renta-logo.png";
 
 function ResidentNav({ logout }) {
   return (
     <div className={styles.Nav}>
       <div className={styles.NavLogo}>
         <NavLink to="/">
-          <p>Logo Placeholder</p>
+          <img width={"45px"} src={rentaLogo} alt="logo" />
         </NavLink>
       </div>
       <div className={styles.NavLinks}>
@@ -44,7 +45,7 @@ function ManagerNav({ logout }) {
     <div className={styles.Nav}>
       <div className={styles.NavLogo}>
         <NavLink to="/">
-          <p>Logo Placeholder</p>
+          <img width={"45px"} src={rentaLogo} alt="logo" />
         </NavLink>
       </div>
       <div className={styles.NavLinks}>
