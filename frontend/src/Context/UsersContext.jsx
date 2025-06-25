@@ -6,7 +6,7 @@ import { API } from "../api/ApiContext";
 
 const UsersContext = createContext();
 
-export const usersAPI = "http://localhost:8000/users";
+export const usersAPI = API + "/users";
 
 export default function UsersProvider({ children }) {
   const [users, setUsers] = useState([]);
