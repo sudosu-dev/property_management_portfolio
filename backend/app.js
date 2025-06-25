@@ -21,7 +21,12 @@ import limiter from "#middleware/rateLimiter";
 
 import cors from "cors";
 
-app.use(cors());
+const corsOptions = {
+  origin: process.env.CORS_ORIGIN || "http://localhost:5173",
+  optionsSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
 
 // The Stripe router is mounted BEFORE express.json() to allow the webhook
 // to receive the raw request body for signature verification.
