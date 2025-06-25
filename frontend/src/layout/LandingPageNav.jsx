@@ -15,7 +15,7 @@ function PublicNav() {
           About
         </NavLink>
         <NavLink to="/login" className={styles.loginButton}>
-          Resident Login
+          Login
         </NavLink>
       </div>
     </div>
