@@ -18,7 +18,7 @@ export async function createAnnouncements(
     announcement,
     user_id,
     announcement_type,
-    publish_at,
+    date,
   ]);
   return newAnnouncement;
 }
