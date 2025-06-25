@@ -5,7 +5,7 @@
     "#*": "./*.js"
   },
   "scripts": {
-    "start": "node --env-file=.env server.js",
+    "start": "node server.js",
     "dev": "node --watch --env-file=.env server.js",
     "test": "vitest",
     "db:schema": "psql -d property_manager -f db/schema.sql",
