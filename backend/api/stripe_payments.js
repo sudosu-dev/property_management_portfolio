@@ -38,6 +38,14 @@ router.use(requireUser);
 router.post("/create-payment", async (req, res) => {
   try {
     const balance = await getUserBalance(req.user.id);
+    //DEBUGGING
+    console.log(
+      "Creating payment intent for user:",
+      req.user.id,
+      "with a calculated balance of:",
+      balance
+    );
+
     if (balance > 0) {
       const paymentIntent = await stripe.paymentIntents.create({
         amount: Math.round(balance * 100),
