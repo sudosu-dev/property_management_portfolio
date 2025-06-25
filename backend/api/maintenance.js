@@ -1,8 +1,7 @@
 import express from "express";
 import multer from "multer";
 import { v2 as cloudinary } from "cloudinary";
-import { CloudinaryStorage } from "cloudinary";
-import path from "path";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
 import requireUser from "#middleware/requireUser";
 import requireBody from "#middleware/requireBody";
 import {
@@ -15,7 +14,6 @@ import {
   deleteUnkeptPhotos,
   deleteMaintenanceRequestById,
 } from "#db/queries/maintenance";
-import { imageFileFilter } from "#utilities/fileFilters";
 
 const router = express.Router();
 
@@ -38,7 +36,6 @@ const MAX_PHOTO_COUNT = 5;
 const upload = multer({
   storage: storage,
   limits: { fileSize: 10 * 1024 * 1024 },
-  fileFilter: imageFileFilter,
 }).array("maintenance_photos", MAX_PHOTO_COUNT);
 
 router.use(requireUser);
@@ -57,16 +54,12 @@ router
     }
   })
   .post(
-    async (req, res, next) => {
+    (req, res, next) => {
       upload(req, res, function (error) {
-        if (error instanceof multer.MulterError) {
-          return res.status(400).json({
-            error: `File upload error: ${error.message} Max ${MAX_PHOTO_COUNT} photos allowed.`,
-          });
-        } else if (error) {
+        if (error) {
           return res
-            .status(500)
-            .json({ error: "An unknown error occured during file upload." });
+            .status(400)
+            .json({ error: `File upload error: ${error.message}` });
         }
         next();
       });
@@ -105,7 +98,6 @@ router
         const completedNewRequest = await getMaintenanceRequestById(
           newRequest.id
         );
-
         res.status(201).json(completedNewRequest);
       } catch (error) {
         console.error(error);
@@ -122,19 +114,16 @@ router
     try {
       const { id } = req.params;
       const request = await getMaintenanceRequestById(id);
-
       if (!request) {
         return res
           .status(404)
           .json({ error: "Maintenance request not found." });
       }
-
       if (!req.user.is_manager && request.user_id !== req.user.id) {
         return res
           .status(404)
           .json({ error: "Maintenance request not found." });
       }
-
       res.json(request);
     } catch (error) {
       console.error(error);
@@ -146,10 +135,8 @@ router
   .put(
     (req, res, next) => {
       upload(req, res, function (error) {
-        if (error instanceof multer.MulterError) {
+        if (error) {
           return res.status(400).json({ error: error.message });
-        } else if (error) {
-          return res.status(500).json({ error: "Unknown upload error" });
         }
         next();
       });
@@ -158,13 +145,11 @@ router
       try {
         const { id } = req.params;
         const request = await getMaintenanceRequestById(id);
-
         if (!request) {
           return res
             .status(404)
             .json({ error: "Maintenance request not found." });
         }
-
         if (!req.user.is_manager && request.user_id !== req.user.id) {
           return res.status(403).json({
             error: "Forbidden: You can only update your own requests.",
@@ -172,11 +157,9 @@ router
         }
 
         const { information, keep_photos } = req.body;
-
         if (!information) {
           return res.status(400).json({ error: "Missing 'information' field" });
         }
-
         await updateMaintenanceRequestById(id, { information }, req.user);
 
         if (keep_photos) {
@@ -229,10 +212,8 @@ router.put("/:id/completion", requireBody(["completed"]), async (req, res) => {
         .status(403)
         .json({ error: "Forbidden: Only managers can update request status." });
     }
-
     const { id } = req.params;
     const { completed } = req.body;
-
     if (typeof completed !== "boolean") {
       return res
         .status(400)
@@ -241,11 +222,9 @@ router.put("/:id/completion", requireBody(["completed"]), async (req, res) => {
     const updatedRequest = await updateMaintenanceRequestCompletion(id, {
       completed,
     });
-
     if (!updatedRequest) {
       return res.status(404).json({ error: "Maintenance request not found." });
     }
-
     res.json(updatedRequest);
   } catch (error) {
     console.error(error);
