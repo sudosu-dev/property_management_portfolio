@@ -1,3 +1,4 @@
+import styles from "./ManageUnits.module.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { API } from "../../api/ApiContext";
@@ -73,9 +74,11 @@ export default function EditUnitForm() {
 
   return (
     <>
-      <div>
-        <h2>Edit Unit</h2>
-        <form onSubmit={handleSubmit}>
+      <div className={styles.page}>
+        <div className={styles.formHeader}>
+          <h2>Edit Unit</h2>
+        </div>
+        <form onSubmit={handleSubmit} className={styles.addUnitForm}>
           <label>Property Id</label>
           <input
             type="number"
@@ -115,12 +118,21 @@ export default function EditUnitForm() {
             onChange={(e) => setTenants(e.target.value)}
           />
           <br />
-
-          <input type="submit" value="Save Changes" />
+          <div className={styles.addUnitButtons}>
+            <button
+              className={styles.secondaryButton}
+              onClick={() => navigate("/admin/units")}
+            >
+              Back
+            </button>
+            <input
+              className={styles.primaryButton}
+              type="submit"
+              value="Save Changes"
+            />
+          </div>
         </form>
       </div>
-
-      <button onClick={() => navigate("/admin/units")}>Back</button>
     </>
   );
 }

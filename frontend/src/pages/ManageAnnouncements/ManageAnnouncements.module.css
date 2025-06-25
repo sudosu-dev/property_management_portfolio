@@ -1,8 +1,13 @@
 .page {
+  background-color: var(--bg-color);
+  min-height: 90vh;
+}
+
+.content {
   padding: 2rem;
   max-width: 1200px;
   margin: auto;
-  min-height: calc(100vh - 70px); /* 70px is nav height */
+  min-height: calc(100vh - 70px);
 }
 
 .header {

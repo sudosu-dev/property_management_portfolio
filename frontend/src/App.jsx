@@ -6,7 +6,7 @@ import Register from "./auth/Register";
 import Announcements from "./pages/Announcements/Announcements";
 import Payments from "./pages/Payments/Payments";
 import Ledger from "./pages/Payments/Ledger";
-import Profile from "./pages/profile/profile";
+import Profile from "./pages/Profile/Profile";
 import Maintenance from "./pages/Maintenance/Maintenance";
 import ResidentDashboard from "./pages/ResidentDashboard/ResidentDashboard";
 import LandingPage from "./pages/LandingPage/LandingPage";
@@ -31,6 +31,7 @@ import ViewResident from "./pages/ManageResidents/ViewResident";
 import Contact from "./pages/Contact/Contact";
 import Error404 from "./Error404";
 import LandingPageLayout from "./layout/LandingPageLayout";
+import ManageUsers from "./pages/ManageUsers/ManageUsers";
 
 export default function App() {
   return (
@@ -157,34 +158,10 @@ export default function App() {
           }
         />
         <Route
-          path="/admin/residents"
+          path="/admin/manage-users"
           element={
             <ProtectedRoute requireManager={true}>
-              <ManageResidents />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/admin/addresident"
-          element={
-            <ProtectedRoute requireManager={true}>
-              <AddResidentForm />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/admin/editresident/:id"
-          element={
-            <ProtectedRoute requireManager={true}>
-              <EditResidentForm />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/admin/viewresident/:id"
-          element={
-            <ProtectedRoute requireManager={true}>
-              <ViewResident />
+              <ManageUsers />
             </ProtectedRoute>
           }
         />

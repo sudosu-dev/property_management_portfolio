@@ -1,8 +1,8 @@
 .page {
-  padding: 2rem;
-  max-width: 1200px;
-  margin: auto;
-  min-height: calc(100vh - 70px);
+  padding: 2rem 10%;
+  margin: 0 auto;
+  min-height: 90vh;
+  background-color: var(--bg-color);
 }
 
 .header {
