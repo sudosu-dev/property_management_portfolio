@@ -1,5 +1,4 @@
 import styles from "./Maintenance.module.css";
-import { API } from "../../api/ApiContext";
 
 export default function RequestList({ requests, setSelectedRequest, filter }) {
   const filteredRequests = requests.filter((req) => {
@@ -63,7 +62,7 @@ export default function RequestList({ requests, setSelectedRequest, filter }) {
               {req.photos?.length > 0 && (
                 <div className={styles.photos}>
                   {req.photos.map((photo) => {
-                    const url = `${API}/${photo.photo_url.replace(/\\/g, `/`)}`;
+                    const url = photo.photo_url;
                     return (
                       <img
                         key={photo.id}

@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import styles from "./ManageMaintenance.module.css";
-import { API } from "../../api/ApiContext";
 
 export default function ManageRequestDetails({
   request,

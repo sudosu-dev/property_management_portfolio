@@ -30,7 +30,6 @@ function Maintenance() {
   const [message, setMessage] = useState("");
   const [requests, setRequests] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // const [showAll, setShowAll] = useState(false);
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [filter, setFilter] = useState("");
 

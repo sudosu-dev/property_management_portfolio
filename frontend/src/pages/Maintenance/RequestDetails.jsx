@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import styles from "./Maintenance.module.css";
-import { API } from "../../api/ApiContext";
 
 export default function RequestDetails({
   request,
@@ -88,7 +87,7 @@ export default function RequestDetails({
 
             <div className={styles.photoGrid}>
               {photos.map((photo) => {
-                const url = `${API}/${photo.photo_url.replace(/\\/g, `/`)}`;
+                const url = photo.photo_url;
                 return (
                   <div key={photo.id} className={styles.photoItem}>
                     <img
@@ -163,7 +162,7 @@ export default function RequestDetails({
             {request?.photos.length > 0 ? (
               <div className={styles.photoGrid}>
                 {request.photos.map((photo) => {
-                  const url = `${API}/${photo.photo_url.replace(/\\/g, `/`)}`;
+                  const url = photo.photo_url;
                   return (
                     <img
                       key={photo.id}
@@ -175,7 +174,9 @@ export default function RequestDetails({
                 })}
               </div>
             ) : (
-              <p>No photos available</p>
+              <p>
+                <span>Photos: </span>No photos available
+              </p>
             )}
             <div className={styles.modalActions}>
               <button
