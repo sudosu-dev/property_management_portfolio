@@ -123,7 +123,6 @@ function ManageMaintenance() {
       setTimeout(() => setMessage(""), 5000);
       await loadRequests();
       setSelectedRequest(null);
-
     } catch (err) {
       console.error("Update error:", err.message);
       setMessage("Failed to update request");
@@ -141,6 +140,7 @@ function ManageMaintenance() {
     try {
       await deleteRequest(id, token);
       setMessage("Maintenance request cancelled successfully.");
+      setTimeout(() => setMessage(""), 5000);
       await loadRequests();
       setSelectedRequest(null);
     } catch (err) {
@@ -155,8 +155,7 @@ function ManageMaintenance() {
       return;
     }
     try {
-      let updatedRequest = await markRequestComplete(id, token);
-      updatedRequest = addUnitNumberToRequest(updatedRequest, units);
+      await markRequestComplete(id, token);
       setMessage("Maintenance request completed.");
       setTimeout(() => setMessage(""), 5000);
       await loadRequests();
