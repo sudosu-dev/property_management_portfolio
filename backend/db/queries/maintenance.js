@@ -131,7 +131,7 @@ export async function updateMaintenanceRequestById(requestId, updates, user) {
   let counter = 1;
 
   const residentAllowedFields = ["information"];
-  const managerAllowedFields = ["information", "unitNumber"];
+  const managerAllowedFields = ["information", "unit_number"];
   const allowedFields = user.is_manager
     ? managerAllowedFields
     : residentAllowedFields;
