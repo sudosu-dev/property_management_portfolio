@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../../auth/AuthContext";
 import { API } from "../../api/ApiContext";
 import "./profile.css";
-// import styles from "./test.module.css";
+import styles from "./Profile.module.css";
 
 export default function Profile() {
   const { user, token, setUser } = useAuth();
@@ -95,165 +95,33 @@ export default function Profile() {
   function viewProfile() {
     console.log("viewProfile rendering with user:", user); // remove this
     return (
-      <div
-        style={{
-          border: "5px solid orange",
-          width: "90vw",
-          margin: "0 auto",
-        }}
-      >
+      <div className={styles.form}>
         <h2>Account Profile</h2>
-        {/* NEW VERSION */}
-        <br />
-        <br />
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            // alignItems: "center",
-            maxWidth: "800px",
-            border: "1px solid green",
-            padding: "2em",
-            margin: "0 auto",
-          }}
-        >
-          <div
-            style={{
-              display: "inline-block",
-              padding: "1em",
-              // border: "1px solid #ccc",
-            }}
-          >
-            <span
-              style={{
-                display: "block",
-              }}
-            >
-              First Name
-            </span>
-            <div
-              style={{
-                display: "inline-block",
-                padding: "1em",
-                width: "300px",
-                border: "1px solid #ccc",
-                borderRadius: "5px",
-              }}
-            >
-              {user.first_name || "(not set)"}
-            </div>
+
+        <div className={styles.content}>
+          <div className={styles.field}>
+            <span className={styles.label}>First Name</span>
+            <div className={styles.info}>{user.first_name || "(not set)"}</div>
           </div>
-          <br />
-          <br />
-          <div
-            style={{
-              display: "inline-block",
-              padding: "1em",
-              // border: "1px solid #ccc",
-            }}
-          >
-            <span
-              style={{
-                display: "block",
-              }}
-            >
-              Last Name
-            </span>
-            <div
-              style={{
-                display: "inline-block",
-                padding: "1em",
-                width: "300px",
-                border: "1px solid #ccc",
-                borderRadius: "5px",
-              }}
-            >
-              {user.last_name || "(not set)"}
-            </div>
+
+          <div className={styles.field}>
+            <span className={styles.label}>Last Name</span>
+            <div className={styles.info}>{user.last_name || "(not set)"}</div>
           </div>
-          <br />
-          <br />
-          <div
-            style={{
-              display: "inline-block",
-              padding: "1em",
-              // border: "1px solid #ccc",
-            }}
-          >
-            <span
-              style={{
-                display: "block",
-              }}
-            >
-              Email
-            </span>
-            <div
-              style={{
-                display: "inline-block",
-                padding: "1em",
-                width: "300px",
-                border: "1px solid #ccc",
-                borderRadius: "5px",
-              }}
-            >
-              {user.email || "(not set)"}
-            </div>
+
+          <div className={styles.field}>
+            <span className={styles.label}>Email</span>
+            <div className={styles.info}>{user.email || "(not set)"}</div>
           </div>
-          <br />
-          <br />
-          <div
-            style={{
-              display: "inline-block",
-              padding: "1em",
-              // border: "1px solid #ccc",
-            }}
-          >
-            <span
-              style={{
-                display: "block",
-              }}
-            >
-              Username
-            </span>
-            <div
-              style={{
-                display: "inline-block",
-                padding: "1em",
-                width: "300px",
-                border: "1px solid #ccc",
-                borderRadius: "5px",
-              }}
-            >
-              {user.username || "(not set)"}
-            </div>
+
+          <div className={styles.field}>
+            <span className={styles.label}>Username</span>
+            <div className={styles.info}>{user.username || "(not set)"}</div>
           </div>
-          <br />
-          <br />
-          <div
-            style={{
-              display: "inline-block",
-              padding: "1em",
-              // border: "1px solid #ccc",
-            }}
-          >
-            <span
-              style={{
-                display: "block",
-              }}
-            >
-              Unit
-            </span>
-            <div
-              style={{
-                display: "inline-block",
-                padding: "1em",
-                width: "300px",
-                border: "1px solid #ccc",
-                borderRadius: "5px",
-              }}
-            >
-              {user.unit || "(not set)"}
-            </div>
+
+          <div className={styles.field}>
+            <span className={styles.label}>Unit</span>
+            <div className={styles.info}>{user.unit || "(not set)"}</div>
           </div>
         </div>
 
@@ -261,20 +129,7 @@ export default function Profile() {
           <button
             className="btn btn-primary btn-small"
             onClick={() => setCurrentView("edit")}
-            style={{
-              float: "right",
-            }}
-          >
-            Edit Profile 2
-          </button>
-        </div>
-        <br /><br />
-        {/* END */}
-
-        <div>
-          <button
-            className="btn btn-primary btn-small"
-            onClick={() => setCurrentView("edit")}
+            style={{ marginLeft: "80%" }}
           >
             Edit Profile
           </button>
@@ -284,23 +139,26 @@ export default function Profile() {
   }
   function editProfile() {
     return (
-      <div>
-        <div
-          style={{ width: "1041px", height: "660px", border: "1px solid #ccc" }}
-        >
-          <h2>Edit Profile</h2>
-          <form>
-            <div>
-              <label>First Name</label>
+      <div className={styles.form}>
+        <h2>Edit Profile</h2>
+        <form>
+          <div className={styles.content}>
+            <div className={styles.field}>
+              <label className={styles.label}>First Name</label>
               <input
+                className={styles.info}
                 type="text"
                 value={formData.firstName}
                 onChange={(e) =>
                   setFormData({ ...formData, firstName: e.target.value })
                 }
               />
-              <label>Last Name</label>
+            </div>
+
+            <div className={styles.field}>
+              <label className={styles.label}>Last Name</label>
               <input
+                className={styles.info}
                 type="text"
                 value={formData.lastName}
                 onChange={(e) =>
@@ -308,9 +166,11 @@ export default function Profile() {
                 }
               />
             </div>
-            <div>
-              <label>Email</label>
+
+            <div className={styles.field}>
+              <label className={styles.label}>Email</label>
               <input
+                className={styles.info}
                 type="email"
                 value={formData.email}
                 onChange={(e) =>
@@ -318,33 +178,41 @@ export default function Profile() {
                 }
               />
             </div>
-            <div>
-              <label>Username</label>
-              <input type="text" value={formData.username} readOnly />
+
+            <div className={styles.field}>
+              <label className={styles.label}>Username</label>
+              <input
+                className={styles.info}
+                type="text"
+                value={formData.username}
+                readOnly
+              />
             </div>
-            <div>
-              <label>Unit</label>
-              <input type="text" value={formData.unit} readOnly />
+
+            <div className={styles.field}>
+              <label className={styles.label}>Unit</label>
+              <input
+                className={styles.info}
+                type="text"
+                value={formData.unit}
+                readOnly
+              />
             </div>
-            <div>
-              <button
-                className="btn btn-primary btn-small"
-                onClick={stageProfileChanges}
-              >
-                Next
-              </button>
-            </div>
-          </form>
-        </div>
+          </div>
+          <button
+            className="btn btn-primary btn-small"
+            onClick={stageProfileChanges}
+            style={{ marginLeft: "80%" }}
+          >
+            Next
+          </button>
+        </form>
       </div>
     );
   }
   function confirmProfile() {
     return (
-      <div
-        style={{ width: "1041px", height: "660px", border: "1px solid #ccc" }}
-      >
-        {/* <h2>Account Profile</h2> */}
+      <div className={styles.form}>
         <table>
           <tr>
             <td>First Name:</td>
@@ -388,7 +256,7 @@ export default function Profile() {
     );
   }
   return (
-    <div>
+    <div className={styles.page}>
       <h1>Account Profile</h1>
       {currentView === "view" && viewProfile()}
       {currentView === "edit" && editProfile()}
