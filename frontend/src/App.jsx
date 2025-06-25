@@ -158,34 +158,10 @@ export default function App() {
           }
         />
         <Route
-          path="/admin/residents"
+          path="/admin/manage-users"
           element={
             <ProtectedRoute requireManager={true}>
-              <ManageResidents />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/admin/addresident"
-          element={
-            <ProtectedRoute requireManager={true}>
-              <AddResidentForm />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/admin/editresident/:id"
-          element={
-            <ProtectedRoute requireManager={true}>
-              <EditResidentForm />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/admin/viewresident/:id"
-          element={
-            <ProtectedRoute requireManager={true}>
-              <ViewResident />
+              <ManageUsers />
             </ProtectedRoute>
           }
         />

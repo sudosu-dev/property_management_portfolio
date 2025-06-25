@@ -61,9 +61,9 @@ function ManagerNav({ logout }) {
           <ion-icon name="bed-outline"></ion-icon>
           Units
         </NavLink>
-        <NavLink to="/admin/residents" className={styles.links}>
+        <NavLink to="/admin/manage-users" className={styles.links}>
           <ion-icon name="people-outline"></ion-icon>
-          Residents
+          Manage Users
         </NavLink>
         <NavLink to="/admin/payments" className={styles.links}>
           <ion-icon name="card-outline"></ion-icon>
@@ -90,7 +90,7 @@ function ManagerNav({ logout }) {
 }
 
 export default function Navbar() {
-  const { token, logout, user } = useAuth();
+  const { logout, user } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
