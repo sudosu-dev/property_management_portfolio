@@ -17,7 +17,12 @@
   gap: 2rem;
 }
 .links {
-  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+
+  font-size: 16px;
   text-decoration: none;
   color: var(--black-200);
 }
@@ -25,7 +30,7 @@
   padding: 0.5rem 2rem;
   border-radius: 5px;
 
-  font-size: 18px;
+  font-size: 16px;
   text-decoration: none;
   color: var(--color-white);
   background-color: var(--primary-color);
@@ -36,9 +41,12 @@
   border: 1px solid var(--grey-100);
   border-radius: 5px;
 
-  font-size: 18px;
+  font-size: 16px;
   text-decoration: none;
   color: var(--color-white);
   background-color: var(--black-200);
   cursor: pointer;
+}
+ion-icon {
+  font-size: 24px;
 }
