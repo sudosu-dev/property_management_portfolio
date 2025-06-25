@@ -12,6 +12,7 @@ function PublicNav() {
       </div>
       <div className={styles.NavLinks}>
         <NavLink to="/about" className={styles.links}>
+          <ion-icon name="information-circle-outline"></ion-icon>
           About
         </NavLink>
         <NavLink to="/login" className={styles.loginButton}>
@@ -32,9 +33,11 @@ function ResidentNav({ logout }) {
       </div>
       <div className={styles.NavLinks}>
         <NavLink to="/about" className={styles.links}>
+          <ion-icon name="information-circle-outline"></ion-icon>
           About
         </NavLink>
         <NavLink to="/dashboard/resident" className={styles.links}>
+          <ion-icon name="apps-outline"></ion-icon>
           Dashboard
         </NavLink>
         <button onClick={logout} className={styles.logoutButton}>
@@ -55,9 +58,11 @@ function ManagerNav({ logout }) {
       </div>
       <div className={styles.NavLinks}>
         <NavLink to="/about" className={styles.links}>
+          <ion-icon name="information-circle-outline"></ion-icon>
           About
         </NavLink>
         <NavLink to="/admin/dashboard" className={styles.links}>
+          <ion-icon name="apps-outline"></ion-icon>
           Dashboard
         </NavLink>
         <button onClick={logout} className={styles.logoutButton}>
