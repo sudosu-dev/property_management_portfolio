@@ -90,7 +90,20 @@ export default function ManageUsers() {
       <div className={styles.page}>
         <div className={styles.mainHeader}>
           <h1 className={styles.mainH1}>Manage Users</h1>
-          <h2 className={styles.mainH2}>Edit User Information</h2>
+          {!renderEdit && (
+            <div className={styles.createButtonDiv}>
+              <button
+                className={styles.createButton}
+                onClick={() => {
+                  console.log("clicked");
+                  setIsNewUser(true);
+                  setRenderEdit(true);
+                }}
+              >
+                + Create User
+              </button>
+            </div>
+          )}
         </div>
         <div className={styles.body}>
           <div>
@@ -149,21 +162,7 @@ export default function ManageUsers() {
               ))}
             </ul>
           </div>
-          {!renderEdit && (
-            <div className={styles.createButtonDiv}>
-              <p className={styles.selectUserEdit}>Create new user </p>
-              <button
-                className={styles.createButton}
-                onClick={() => {
-                  console.log("clicked");
-                  setIsNewUser(true);
-                  setRenderEdit(true);
-                }}
-              >
-                create
-              </button>
-            </div>
-          )}
+
           {renderEdit && (
             <EditUserForm
               user={selectedUser}
