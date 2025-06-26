@@ -7,12 +7,16 @@ export default function MaintenanceForm({
   handleSubmit,
   message,
   fileReset,
+  onClose,
 }) {
   return (
-    <section className={styles.newRequests}>
-      <h2>Make New Maintenance Request</h2>
-      <div className={styles.requestForm}>
-        <div className={styles.info}>
+    <div className={styles.modalOverlay} onClick={onClose}>
+      <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+        <button className={styles.closeButton} onClick={onClose}>
+          &times;
+        </button>
+        <h2>Submit New Maintenance Request</h2>
+        <div className={styles.userInfo}>
           <p>
             <span>Name:</span> {`${user?.first_name} ${user?.last_name}`}
           </p>
@@ -25,44 +29,57 @@ export default function MaintenanceForm({
         </div>
 
         <form onSubmit={handleSubmit}>
-          <label>
-            <span>Issue: </span>
-            <textarea
-              className={styles.textBox}
-              value={formData.information}
-              type="text"
-              name="information"
-              onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  [e.target.name]: e.target.value,
-                })
-              }
-              required
-              placeholder="Please describe the issue..."
-              rows={4}
-            />
-          </label>
-          <label>
-            <span>Photos: </span>
-            <input
-              type="file"
-              name="maintenance_photos"
-              multiple
-              ref={fileReset}
-              onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  files: Array.from(e.target.files),
-                })
-              }
-            />
-          </label>
-          <button type="submit">Submit Request</button>
+          <div className={styles.formGroup}>
+            <label>
+              <span>Issue: </span>
+              <textarea
+                value={formData.information}
+                type="text"
+                name="information"
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    [e.target.name]: e.target.value,
+                  })
+                }
+                required
+                placeholder="Please describe the issue..."
+                rows={4}
+              />
+            </label>
+          </div>
+          <div className={styles.formGroup}>
+            <label>
+              <span>Photos: </span>
+              <input
+                type="file"
+                name="maintenance_photos"
+                multiple
+                ref={fileReset}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    files: Array.from(e.target.files),
+                  })
+                }
+              />
+            </label>
+          </div>
+          <div className={styles.modalActions}>
+            <button
+              type="button"
+              className={styles.secondaryButton}
+              onClick={onClose}
+            >
+              Cancel
+            </button>
+            <button type="submit" className={styles.primaryButton}>
+              Submit Request
+            </button>
+          </div>
         </form>
-
         {message && <p>{message}</p>}
       </div>
-    </section>
+    </div>
   );
 }

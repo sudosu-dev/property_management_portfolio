@@ -1,10 +1,7 @@
 import styles from "./ManageMaintenance.module.css";
-import { API } from "../../api/ApiContext";
 
 export default function ManageRequestList({
   requests,
-  showAll,
-  setShowAll,
   setSelectedRequest,
   filter,
 }) {
@@ -30,7 +27,7 @@ export default function ManageRequestList({
       <h2>Requests</h2>
 
       {filteredRequests.length === 0 ? (
-        <p>No maintenance requests found.</p>
+        <p>No requests found.</p>
       ) : (
         <>
           {filteredRequests.map((req) => (
@@ -38,13 +35,13 @@ export default function ManageRequestList({
               <div className={styles.cardHeader}>
                 <div className={styles.userInfo}>
                   <p>
-                    <strong>Unit: </strong> {req.unit_number}
+                    <span>Unit: </span> {req.unit_number}
                   </p>
                   <p>
-                    <strong>Issue: </strong> {req.information}
+                    <span>Issue: </span> {req.information}
                   </p>
                   <p>
-                    <strong>Request Date: </strong>
+                    <span>Request Date: </span>
                     {new Date(req.created_at).toLocaleString("en-US", {
                       year: "numeric",
                       month: "long",
@@ -55,7 +52,7 @@ export default function ManageRequestList({
                   </p>
                   {req.completed && req.completed_at && (
                     <p>
-                      <strong>Completed On: </strong>
+                      <span>Completed On: </span>
                       {new Date(req.completed_at).toLocaleString("en-US", {
                         year: "numeric",
                         month: "long",

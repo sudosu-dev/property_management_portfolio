@@ -10,13 +10,16 @@ export default function ManageMaintenanceForm({
   onClose,
 }) {
   return (
-    <div className={styles.modalOverlay}>
-      <div className={styles.modalContent}>
+    <div className={styles.modalOverlay} onClick={onClose}>
+      <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+        <button className={styles.closeButton} onClick={onClose}>
+          &times;
+        </button>
         <h2>Submit New Maintenance Request</h2>
         <form onSubmit={handleSubmit}>
           <div className={styles.formGroup}>
             <label>
-              <strong>Unit: </strong>
+              <span>Unit: </span>
               <select
                 value={formData.unit_number}
                 onChange={(e) =>
@@ -39,7 +42,7 @@ export default function ManageMaintenanceForm({
 
           <div className={styles.formGroup}>
             <label>
-              <strong>Issue: </strong>
+              <span>Issue: </span>
               <textarea
                 className={styles.textBox}
                 value={formData.information}
@@ -59,7 +62,7 @@ export default function ManageMaintenanceForm({
           </div>
           <div className={styles.formGroup}>
             <label>
-              <strong>Photos: </strong>
+              <span>Photos: </span>
               <input
                 type="file"
                 name="maintenance_photos"

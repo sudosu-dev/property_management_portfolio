@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import styles from "./Maintenance.module.css";
-import { API } from "../../api/ApiContext";
 
 export default function RequestDetails({
   request,
@@ -51,23 +50,26 @@ export default function RequestDetails({
   };
 
   return (
-    <div className={styles.container} onClick={onClose}>
-      <div className={styles.details} onClick={(e) => e.stopPropagation()}>
+    <div className={styles.modalOverlay} onClick={onClose}>
+      <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
         <button className={styles.closeButton} onClick={onClose}>
           &times;
         </button>
         <h2>Request Details</h2>
+
         {editing ? (
-          <div className={styles.editForm}>
-            <p>
-              <span>Issue: </span>
-              <textarea
-                className={styles.text}
-                value={info}
-                onChange={(e) => setInfo(e.target.value)}
-                rows={2}
-              />
-            </p>
+          <>
+            <div className={styles.formGroup}>
+              <label>
+                <span>Issue: </span>
+                <textarea
+                  value={info}
+                  onChange={(e) => setInfo(e.target.value)}
+                  rows={3}
+                />
+              </label>
+            </div>
+
             <p>
               <span>Request Date: </span>
               {new Date(request.created_at).toLocaleString("en-US", {
@@ -78,12 +80,14 @@ export default function RequestDetails({
                 minute: "2-digit",
               })}
             </p>
+
             <p>
               <span>Current Photos: </span>
             </p>
+
             <div className={styles.photoGrid}>
               {photos.map((photo) => {
-                const url = `${API}/${photo.photo_url.replace(/\\/g, `/`)}`;
+                const url = photo.photo_url;
                 return (
                   <div key={photo.id} className={styles.photoItem}>
                     <img
@@ -101,24 +105,28 @@ export default function RequestDetails({
                 );
               })}
             </div>
-            <p>
-              <span>Add New Photos: </span>
-              <input type="file" multiple onChange={fileChange} />
-            </p>
-            <div className={styles.editButtons}>
+
+            <div className={styles.formGroup}>
+              <label>
+                <span>Add New Photos: </span>
+                <input type="file" multiple onChange={fileChange} />
+              </label>
+            </div>
+
+            <div className={styles.modalActions}>
+              <button className={styles.primaryButton} onClick={handleSave}>
+                Save
+              </button>
               <button
                 className={styles.secondaryButton}
                 onClick={() => setEditing(false)}
               >
                 Cancel Edit
               </button>
-              <button className={styles.primaryButton} onClick={handleSave}>
-                Save
-              </button>
             </div>
-          </div>
+          </>
         ) : (
-          <div className={styles.defaultDetails}>
+          <>
             <p>
               <span>Issue: </span>
               {request.information}
@@ -137,38 +145,56 @@ export default function RequestDetails({
               <span>Status: </span>
               {request.completed ? "Completed" : "Pending"}
             </p>
-            {request.photos && request.photos.length > 0 ? (
-              request.photos.map((photo) => {
-                const url = `${API}/${photo.photo_url.replace(/\\/g, `/`)}`;
-                return (
-                  <img
-                    key={photo.id}
-                    src={url}
-                    alt={`Photo for request ${request.id}`}
-                    className={styles.enlargedPhoto}
-                  />
-                );
-              })
-            ) : (
-              <p>No photos available</p>
+
+            {request.completed && request.completed_at && (
+              <p>
+                <span>Completed On: </span>
+                {new Date(request.completed_at).toLocaleString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                  hour: "numeric",
+                  minute: "2-digit",
+                })}
+              </p>
             )}
-            <div className={styles.detailsButtons}>
+
+            {request?.photos.length > 0 ? (
+              <div className={styles.photoGrid}>
+                {request.photos.map((photo) => {
+                  const url = photo.photo_url;
+                  return (
+                    <img
+                      key={photo.id}
+                      src={url}
+                      alt={`Photo for request ${request.id}`}
+                      className={styles.enlargedPhoto}
+                    />
+                  );
+                })}
+              </div>
+            ) : (
+              <p>
+                <span>Photos: </span>No photos available
+              </p>
+            )}
+            <div className={styles.modalActions}>
               <button
-                className={styles.secondaryButton}
+                className={styles.primaryButton}
                 onClick={() => setEditing(true)}
                 disabled={request.completed}
               >
                 Edit
               </button>
               <button
-                className={styles.primaryButton}
+                className={styles.secondaryButton}
                 onClick={() => onDelete(request.id)}
                 disabled={request.completed}
               >
                 Delete Request
               </button>
             </div>
-          </div>
+          </>
         )}
       </div>
     </div>

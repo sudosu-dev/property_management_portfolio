@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import styles from "./ManageMaintenance.module.css";
-import { API } from "../../api/ApiContext";
 
 export default function ManageRequestDetails({
   request,
@@ -62,12 +61,12 @@ export default function ManageRequestDetails({
         {editing ? (
           <>
             <p>
-              <strong>Unit: </strong>
+              <span>Unit: </span>
               {request.unit_number}
             </p>
             <div className={styles.formGroup}>
               <label>
-                <strong>Issue: </strong>
+                <span>Issue: </span>
                 <textarea
                   value={info}
                   onChange={(e) => setInfo(e.target.value)}
@@ -77,7 +76,7 @@ export default function ManageRequestDetails({
             </div>
 
             <p>
-              <strong>Request Date: </strong>
+              <span>Request Date: </span>
               {new Date(request.created_at).toLocaleString("en-US", {
                 year: "numeric",
                 month: "long",
@@ -88,7 +87,7 @@ export default function ManageRequestDetails({
             </p>
 
             <p>
-              <strong>Current Photos: </strong>
+              <span>Current Photos: </span>
             </p>
 
             <div className={styles.photoGrid}>
@@ -104,7 +103,6 @@ export default function ManageRequestDetails({
                     <button
                       className={styles.removePhotoButton}
                       onClick={() => removePhoto(photo.id)}
-                      aria-label="Remove Photo"
                     >
                       &times;
                     </button>
@@ -115,7 +113,7 @@ export default function ManageRequestDetails({
 
             <div className={styles.formGroup}>
               <label>
-                <strong>Add New Photos: </strong>
+                <span>Add New Photos: </span>
                 <input type="file" multiple onChange={fileChange} />
               </label>
             </div>
@@ -135,15 +133,15 @@ export default function ManageRequestDetails({
         ) : (
           <>
             <p>
-              <strong>Unit: </strong>
+              <span>Unit: </span>
               {request.unit_number}
             </p>
             <p>
-              <strong>Issue: </strong>
+              <span>Issue: </span>
               {request.information}
             </p>
             <p>
-              <strong>Request Date: </strong>
+              <span>Request Date: </span>
               {new Date(request.created_at).toLocaleString("en-US", {
                 year: "numeric",
                 month: "long",
@@ -153,12 +151,12 @@ export default function ManageRequestDetails({
               })}
             </p>
             <p>
-              <strong>Status: </strong>
+              <span>Status: </span>
               {request.completed ? "Completed" : "Pending"}
             </p>
             {request.completed && request.completed_at && (
               <p>
-                <strong>Completed On: </strong>
+                <span>Completed On: </span>
                 {new Date(request.completed_at).toLocaleString("en-US", {
                   year: "numeric",
                   month: "long",
@@ -184,7 +182,9 @@ export default function ManageRequestDetails({
                 })}
               </div>
             ) : (
-              <p>No photos available</p>
+              <p>
+                <span>Photos: </span>No photos available
+              </p>
             )}
             <div className={styles.modalActions}>
               <button

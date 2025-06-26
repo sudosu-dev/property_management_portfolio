@@ -12,14 +12,26 @@ import MaintenanceForm from "./MaintenanceForm";
 import RequestList from "./RequestList";
 import RequestDetails from "./RequestDetails";
 
+const FilterButton = ({ status, label, currentFilter, setFilter }) => (
+  <button
+    className={`${styles.filterButton} ${
+      currentFilter === status ? styles.active : ""
+    }`}
+    onClick={() => setFilter(status)}
+  >
+    {label}
+  </button>
+);
+
 function Maintenance() {
   const { user, token } = useAuth();
   const [fullUser, setFullUser] = useState(null);
   const [formData, setFormData] = useState({ information: "", files: [] });
   const [message, setMessage] = useState("");
   const [requests, setRequests] = useState([]);
-  const [showAll, setShowAll] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRequest, setSelectedRequest] = useState(null);
+  const [filter, setFilter] = useState("");
 
   const fileReset = useRef(null);
 
@@ -63,6 +75,8 @@ function Maintenance() {
       await createRequest(form, token);
 
       setMessage("Maintenance request submitted successfully.");
+      setTimeout(() => setMessage(""), 5000);
+      setIsModalOpen(false);
       setFormData({ information: "", files: [] });
       if (fileReset.current) {
         fileReset.current.value = null;
@@ -80,11 +94,11 @@ function Maintenance() {
       return;
     }
     try {
-      const updatedRequest = await updateRequest(id, updatedData, token);
+      await updateRequest(id, updatedData, token);
       setMessage("Maintenance request updated successfully.");
       setTimeout(() => setMessage(""), 5000);
       await loadRequests();
-      setSelectedRequest(updatedRequest);
+      setSelectedRequest(null);
     } catch (err) {
       console.error("Update error:", err.message);
       setMessage("Failed to update request");
@@ -102,6 +116,7 @@ function Maintenance() {
     try {
       await deleteRequest(id, token);
       setMessage("Maintenance request cancelled successfully.");
+      setTimeout(() => setMessage(""), 5000);
       await loadRequests();
       setSelectedRequest(null);
     } catch (err) {
@@ -110,38 +125,69 @@ function Maintenance() {
     }
   };
 
+  const filteredRequests = requests.filter((req) => {
+    const status = req.completed ? "Completed" : "Pending";
+    const statusMatch = !filter || status === filter;
+    return statusMatch;
+  });
+
   return (
     <>
       <div className={styles.page}>
-        <div className={styles.maintenance}>
+        <header className={styles.header}>
           <h1>Maintenance Requests</h1>
-          <div className={styles.content}>
-            <div className={styles.maintenanceForm}>
-              <MaintenanceForm
-                user={fullUser}
-                formData={formData}
-                setFormData={setFormData}
-                handleSubmit={handleSubmit}
-                message={message}
-              />
-            </div>
-            <div className={styles.requestList}>
-              <RequestList
-                requests={requests}
-                showAll={showAll}
-                setShowAll={setShowAll}
-                setSelectedRequest={setSelectedRequest}
-              />
-            </div>
-          </div>
+        </header>
+        <div className={styles.controls}>
+          <button
+            className={styles.primaryButton}
+            onClick={() => setIsModalOpen(true)}
+          >
+            + Submit Maintenance Request
+          </button>
         </div>
-        {selectedRequest && (
-          <RequestDetails
-            request={selectedRequest}
-            onClose={() => setSelectedRequest(null)}
-          />
-        )}
+
+        <div className={styles.mainContent}>
+          <aside className={styles.filters}>
+            <FilterButton
+              status=""
+              label="All"
+              currentFilter={filter}
+              setFilter={setFilter}
+            />
+            <FilterButton
+              status="Pending"
+              label="Pending"
+              currentFilter={filter}
+              setFilter={setFilter}
+            />
+            <FilterButton
+              status="Completed"
+              label="Completed"
+              currentFilter={filter}
+              setFilter={setFilter}
+            />
+          </aside>
+
+          <main className={styles.maintenanceList}>
+            <RequestList
+              requests={filteredRequests}
+              setSelectedRequest={setSelectedRequest}
+              filter={filter}
+            />
+          </main>
+        </div>
       </div>
+      {isModalOpen && (
+        <MaintenanceForm
+          onClose={() => setIsModalOpen(false)}
+          onSuccess={loadRequests}
+          user={fullUser}
+          formData={formData}
+          setFormData={setFormData}
+          handleSubmit={handleSubmit}
+          message={message}
+        />
+      )}
       {selectedRequest && (
         <RequestDetails
           request={selectedRequest}
