@@ -3,8 +3,10 @@ import { useApi } from "../../api/ApiContext";
 import useQuery from "../../api/useQuery";
 import styles from "./ManageAnnouncements.module.css";
 import AnnouncementModal from "./AnnouncementModal";
+import { useNotifications } from "../../Context/NotificationContext";
 
 export default function ManageAnnouncements() {
+  const { showError } = useNotifications();
   const { request } = useApi();
   const [filter, setFilter] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -45,7 +47,7 @@ export default function ManageAnnouncements() {
       refetchAnnouncements();
     } catch (err) {
       console.error(err);
-      alert(`Failed to ${newStatus} announcement: ${err.message}`);
+      showError(`Failed to ${newStatus} announcement: ${err.message}`);
     }
   };
 
@@ -60,7 +62,7 @@ export default function ManageAnnouncements() {
       refetchAnnouncements();
     } catch (err) {
       console.error(err);
-      alert(`Failed to delete announcement: ${err.message}`);
+      showError(`Failed to delete announcement: ${err.message}`);
     }
   };
 

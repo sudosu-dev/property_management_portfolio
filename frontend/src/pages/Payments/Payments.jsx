@@ -7,6 +7,7 @@ import useQuery from "../../api/useQuery";
 import { useApi } from "../../api/ApiContext";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
+import { useNotifications } from "../../Context/NotificationContext";
 import CheckoutForm from "./CheckoutForm";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
@@ -19,7 +20,7 @@ export default function Payments() {
     loading,
     query: refetchTransactions,
   } = useQuery("/transactions/my-history", "transactions");
-
+  const { showError } = useNotifications();
   const [showCheckout, setShowCheckout] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
@@ -51,7 +52,7 @@ export default function Payments() {
       setClientSecret(secret);
       setShowCheckout(true);
     } catch (error) {
-      alert("Could not initiate payment. Please try again later.");
+      showError("Could not initiate payment. Please try again later.");
     }
   };
 

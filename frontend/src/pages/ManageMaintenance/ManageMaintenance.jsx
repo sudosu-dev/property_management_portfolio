@@ -12,6 +12,10 @@ import styles from "./ManageMaintenance.module.css";
 import ManageMaintenanceForm from "./ManageMaintenanceForm";
 import ManageRequestList from "./ManageRequestList";
 import ManageRequestDetails from "./ManageRequestDetails";
+import {
+  useNotifications,
+  UseNotifications,
+} from "../../Context/NotificationContext";
 
 function addUnitNumberToRequest(request, units) {
   if (!request.unit_number) {
@@ -36,6 +40,7 @@ const FilterButton = ({ status, label, currentFilter, setFilter }) => (
 );
 
 function ManageMaintenance() {
+  const { showError } = useNotifications();
   const { user, token } = useAuth();
   const [formData, setFormData] = useState({
     unit_number: "",
@@ -83,7 +88,7 @@ function ManageMaintenance() {
     e.preventDefault();
 
     if (!user || !token) {
-      alert("You must be logged in to submit a maintenance request.");
+      showError("You must be logged in to submit a maintenance request.");
       return;
     }
     try {
@@ -114,7 +119,7 @@ function ManageMaintenance() {
 
   const handleUpdate = async (id, updatedData) => {
     if (!user || !token) {
-      alert("You must be logged in to submit a request.");
+      showError("You must be logged in to submit a request.");
       return;
     }
     try {
@@ -131,7 +136,7 @@ function ManageMaintenance() {
 
   const handleDelete = async (id) => {
     if (!user || !token) {
-      alert("You must be logged in to delete a request.");
+      showError("You must be logged in to delete a request.");
       return;
     }
     if (!window.confirm("Are you sure you want to cancel this request?")) {
@@ -151,7 +156,7 @@ function ManageMaintenance() {
 
   const handleComplete = async (id) => {
     if (!user || !token) {
-      alert("You must be logged in to submit a request.");
+      showError("You must be logged in to submit a request.");
       return;
     }
     try {

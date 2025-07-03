@@ -11,6 +11,7 @@ import styles from "./Maintenance.module.css";
 import MaintenanceForm from "./MaintenanceForm";
 import RequestList from "./RequestList";
 import RequestDetails from "./RequestDetails";
+import { useNotifications } from "../../Context/NotificationContext";
 
 const FilterButton = ({ status, label, currentFilter, setFilter }) => (
   <button
@@ -24,6 +25,7 @@ const FilterButton = ({ status, label, currentFilter, setFilter }) => (
 );
 
 function Maintenance() {
+  const { showError } = useNotifications();
   const { user, token } = useAuth();
   const [fullUser, setFullUser] = useState(null);
   const [formData, setFormData] = useState({ information: "", files: [] });
@@ -60,7 +62,7 @@ function Maintenance() {
     e.preventDefault();
 
     if (!user || !token) {
-      alert("You must be logged in to submit a maintenance request.");
+      showError("You must be logged in to submit a maintenance request.");
       return;
     }
     try {
@@ -90,7 +92,7 @@ function Maintenance() {
 
   const handleUpdate = async (id, updatedData) => {
     if (!user || !token) {
-      alert("You must be logged in to submit a request.");
+      showError("You must be logged in to submit a request.");
       return;
     }
     try {
@@ -107,7 +109,7 @@ function Maintenance() {
 
   const handleDelete = async (id) => {
     if (!user || !token) {
-      alert("You must be logged in to delete a request.");
+      showError("You must be logged in to delete a request.");
       return;
     }
     if (!window.confirm("Are you sure you want to cancel this request?")) {

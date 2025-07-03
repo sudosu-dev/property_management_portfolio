@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../auth/AuthContext";
 import { API } from "../../api/ApiContext";
 import { useNavigate } from "react-router-dom";
+import { useNotifications } from "../../Context/NotificationContext";
 
 export default function ManagePropertyInfo() {
+  const { showError } = useNotifications();
   const { token, user } = useAuth();
   const [properties, setProperties] = useState([]);
   const [error, setError] = useState(null);
@@ -68,7 +70,7 @@ export default function ManagePropertyInfo() {
 
       setProperties((prev) => prev.filter((p) => p.id !== propertyId));
     } catch (err) {
-      alert("Error deleting property: " + err.message);
+      showError("Error deleting property: " + err.message);
       console.error("Delete error:", err);
     }
   };

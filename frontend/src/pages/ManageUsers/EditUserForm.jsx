@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useUsers } from "../../Context/UsersContext";
 import styles from "./ManageUsers.module.css";
+import { useNotifications } from "../../Context/NotificationContext";
 
 export default function EditUserForm({
   user,
@@ -12,10 +13,10 @@ export default function EditUserForm({
   isNewUser,
 }) {
   const { loading, putUser, getUsers, registerUser } = useUsers();
-
   const [filteredUnits, setFilteredUnits] = useState([]);
   const [selectedProperty, setSelectedProperty] = useState(property?.id || 1);
   const [selectedUnit, setSelectedUnit] = useState(unit?.unit_number);
+  const { showError } = useNotifications();
 
   useEffect(() => {
     if (!selectedProperty || !units) return;
@@ -71,9 +72,9 @@ export default function EditUserForm({
     const email = formData.get("email");
     const unit = unitObj?.id;
 
-    if (password !== confPassword) return alert("Passwords do not match");
+    if (password !== confPassword) return showError("Passwords do not match");
     if (password.length <= 6)
-      return alert("Password must be at least 7 characters");
+      return showError("Password must be at least 7 characters");
 
     const check = window.confirm("Are you sure you want to create this user?");
     if (!check) return;

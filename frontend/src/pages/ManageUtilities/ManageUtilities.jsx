@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useQuery from "../../api/useQuery";
 import { useApi } from "../../api/ApiContext";
+import { useNotifications } from "../../Context/NotificationContext";
 import styles from "./ManageUtilities.module.css";
 
 export default function ManagerUtilities() {
@@ -11,10 +12,9 @@ export default function ManagerUtilities() {
   const { request } = useApi();
   const { data: units, loading: loadingUnits } = useQuery("/units", "units");
   const { data: settings } = useQuery("/settings", "settings");
-
   const [utilityData, setUtilityData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const { showError } = useNotifications();
   const utilityRates = {
     water: settings?.rate_water || 0,
     electric: settings?.rate_electric || 0,
@@ -83,7 +83,7 @@ export default function ManagerUtilities() {
       .filter(Boolean);
 
     if (billsToCreate.length === 0) {
-      alert("Please enter usage data for at least one unit.");
+      showError("Please enter usage data for at least one unit.");
       setIsSubmitting(false);
       return;
     }
@@ -93,9 +93,9 @@ export default function ManagerUtilities() {
         method: "POST",
         body: JSON.stringify(billsToCreate),
       });
-      alert(result.message);
+      showError(result.message);
     } catch (error) {
-      alert(`Failed to create utility bills: ${error.message}`);
+      showError(`Failed to create utility bills: ${error.message}`);
     } finally {
       setIsSubmitting(false);
     }

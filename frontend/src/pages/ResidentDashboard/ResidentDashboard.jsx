@@ -39,7 +39,6 @@ export default function ResidentDashboard() {
         <h1>Welcome back, {user?.first_name || "User"}!</h1>
         <p>Account status: {getAccountStatus()}</p>
       </header>
-
       <div className={styles.grid}>
         <div className={styles.accountBalance}>
           <h2>Account Balance</h2>
