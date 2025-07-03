@@ -3,8 +3,10 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../auth/AuthContext";
 import { API } from "../../api/ApiContext";
 import { useNavigate } from "react-router-dom";
+import { useNotifications } from "../../Context/NotificationContext";
 
 export default function ManageUnits() {
+  const { showError } = useNotifications();
   const { token, user } = useAuth();
   const [units, setUnits] = useState([]);
   const [error, setError] = useState(null);
@@ -66,7 +68,7 @@ export default function ManageUnits() {
 
       setUnits((prev) => prev.filter((p) => p.id !== unitId));
     } catch (err) {
-      alert("Error deleting unit: " + err.message);
+      showError("Error deleting unit: " + err.message);
       console.error("Delete error:", err);
     }
   };
