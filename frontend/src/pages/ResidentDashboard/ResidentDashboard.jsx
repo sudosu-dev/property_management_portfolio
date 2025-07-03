@@ -39,18 +39,23 @@ export default function ResidentDashboard() {
         <h1>Welcome back, {user?.first_name || "User"}!</h1>
         <p>Account status: {getAccountStatus()}</p>
       </header>
+
       <div className={styles.grid}>
         <div className={styles.accountBalance}>
-          <h2>Account Balance</h2>
-          <div className={styles.cardContent}>
-            <p className={styles.balanceAmount}>{formatCurrency(balance)}</p>
-            <p className={styles.balanceSubtext}>
-              This is your current outstanding balance.
-            </p>
+          <div>
+            <h2>Your Current Balance</h2>
+            <div className={styles.cardContent}>
+              <p className={styles.balanceAmount}>{formatCurrency(balance)}</p>
+              <p className={styles.balanceSubtext}>
+                This is your current outstanding balance.
+              </p>
+            </div>
           </div>
-          <Link to="/payments" className={styles.primaryButton}>
-            Make Payment
-          </Link>
+          <div className={styles.cardFooter}>
+            <Link to="/payments" className={styles.primaryButton}>
+              Make Payment
+            </Link>
+          </div>
         </div>
 
         <div className={styles.announcements}>
@@ -99,26 +104,42 @@ export default function ResidentDashboard() {
             <button
               className={styles.actionButton}
               onClick={() => navigate("/payments")}
+              aria-label="Pay Rent - navigate to payments page"
             >
-              <span className={styles.actionIcon}>💳</span> Pay Rent
+              <span className={styles.actionIcon} aria-hidden="true">
+                💳
+              </span>{" "}
+              Pay Rent
             </button>
             <button
               className={styles.actionButton}
               onClick={() => navigate("/maintenance")}
+              aria-label="Submit Request - navigate to maintenance page"
             >
-              <span className={styles.actionIcon}>🛠️</span> Submit Request
+              <span className={styles.actionIcon} aria-hidden="true">
+                🛠️
+              </span>{" "}
+              Submit Request
             </button>
             <button
               className={styles.actionButton}
               onClick={() => navigate("/profile")}
+              aria-label="View Profile - navigate to profile page"
             >
-              <span className={styles.actionIcon}>👤</span> View Profile
+              <span className={styles.actionIcon} aria-hidden="true">
+                👤
+              </span>{" "}
+              View Profile
             </button>
             <button
               className={styles.actionButton}
               onClick={() => navigate("/contact")}
+              aria-label="Contact Manager - navigate to contact page"
             >
-              <span className={styles.actionIcon}>📞</span> Contact Manager
+              <span className={styles.actionIcon} aria-hidden="true">
+                📞
+              </span>{" "}
+              Contact Manager
             </button>
           </div>
         </div>

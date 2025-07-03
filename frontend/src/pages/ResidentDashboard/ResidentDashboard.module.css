@@ -173,10 +173,15 @@
 
 .actionButton:hover {
   background-color: var(--primary-color);
-  color: white;
+  color: var(--color-white);
   border-color: var(--primary-color);
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.actionButton:focus {
+  outline: 3px solid rgba(28, 126, 214, 0.4);
+  outline-offset: 2px;
 }
 
 .actionIcon {
@@ -185,7 +190,7 @@
 
 .primaryButton {
   background-color: var(--primary-color);
-  color: white;
+  color: var(--color-white);
   border: none;
   padding: 1rem 2rem;
   border-radius: 8px;
@@ -205,6 +210,11 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.primaryButton:focus {
+  outline: 3px solid rgba(28, 126, 214, 0.4);
+  outline-offset: 2px;
+}
+
 .cardContent {
   flex: 1;
 }
@@ -214,6 +224,33 @@
   padding-top: 1rem;
 }
 
+/* Loading states */
+.loadingSpinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.spinner {
+  width: 2rem;
+  height: 2rem;
+  border: 3px solid var(--grey-50);
+  border-top: 3px solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Mobile First - ONLY mobile changes below */
 @media (max-width: 1024px) and (min-width: 769px) {
   .dashboard {
     padding: 1.5rem 7%;
@@ -331,5 +368,31 @@
 
   .actionIcon {
     font-size: 1.5rem;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .actionButton,
+  .primaryButton {
+    transition: none;
+  }
+
+  .actionButton:hover,
+  .primaryButton:hover {
+    transform: none;
+  }
+
+  .spinner {
+    animation: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .accountBalance,
+  .announcements,
+  .maintenanceRequests,
+  .quickActions {
+    border: 2px solid;
   }
 }
