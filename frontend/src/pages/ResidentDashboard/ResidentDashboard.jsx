@@ -39,7 +39,6 @@ export default function ResidentDashboard() {
         <h1>Welcome back, {user?.first_name || "User"}!</h1>
         <p>Account status: {getAccountStatus()}</p>
       </header>
-
       <div className={styles.grid}>
         <div className={styles.accountBalance}>
           <div>
@@ -63,13 +62,30 @@ export default function ResidentDashboard() {
           <div className={styles.cardContent}>
             {announcements && announcements.length > 0 ? (
               announcements.slice(0, 3).map((item) => (
-                <div key={item.id} className={styles.announcementItem}>
+                <div
+                  key={item.id}
+                  className={styles.announcementItem}
+                  onClick={() => navigate("/announcements")}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      navigate("/announcements");
+                    }
+                  }}
+                >
                   {item.announcement}
                 </div>
               ))
             ) : (
               <p>No recent announcements.</p>
             )}
+          </div>
+          <div className={styles.cardFooter}>
+            <Link to="/announcements" className={styles.primaryButton}>
+              View All Announcements
+            </Link>
           </div>
         </div>
 
@@ -79,7 +95,19 @@ export default function ResidentDashboard() {
             <div className={styles.cardContent}>
               {maintenanceRequests && maintenanceRequests.length > 0 ? (
                 maintenanceRequests.slice(0, 2).map((req) => (
-                  <div key={req.id} className={styles.maintenanceItem}>
+                  <div
+                    key={req.id}
+                    className={styles.maintenanceItem}
+                    onClick={() => navigate("/maintenance")}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        navigate("/maintenance");
+                      }
+                    }}
+                  >
                     <span className={styles.maintenanceStatus}>
                       {req.completed ? "✅" : "PENDING"}
                     </span>
@@ -104,42 +132,26 @@ export default function ResidentDashboard() {
             <button
               className={styles.actionButton}
               onClick={() => navigate("/payments")}
-              aria-label="Pay Rent - navigate to payments page"
             >
-              <span className={styles.actionIcon} aria-hidden="true">
-                💳
-              </span>{" "}
-              Pay Rent
+              <span className={styles.actionIcon}>💳</span> Pay Rent
             </button>
             <button
               className={styles.actionButton}
               onClick={() => navigate("/maintenance")}
-              aria-label="Submit Request - navigate to maintenance page"
             >
-              <span className={styles.actionIcon} aria-hidden="true">
-                🛠️
-              </span>{" "}
-              Submit Request
+              <span className={styles.actionIcon}>🛠️</span> Submit Request
             </button>
             <button
               className={styles.actionButton}
               onClick={() => navigate("/profile")}
-              aria-label="View Profile - navigate to profile page"
             >
-              <span className={styles.actionIcon} aria-hidden="true">
-                👤
-              </span>{" "}
-              View Profile
+              <span className={styles.actionIcon}>👤</span> View Profile
             </button>
             <button
               className={styles.actionButton}
               onClick={() => navigate("/contact")}
-              aria-label="Contact Manager - navigate to contact page"
             >
-              <span className={styles.actionIcon} aria-hidden="true">
-                📞
-              </span>{" "}
-              Contact Manager
+              <span className={styles.actionIcon}>📞</span> Contact Manager
             </button>
           </div>
         </div>

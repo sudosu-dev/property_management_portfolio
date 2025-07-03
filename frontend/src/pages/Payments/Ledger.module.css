@@ -5,12 +5,68 @@
   min-height: 90vh;
 }
 
+.header {
+  margin-bottom: 2rem;
+}
+
+.header h1 {
+  margin: 0 0 0.5rem 0;
+  font-weight: 600;
+  font-size: 2rem;
+}
+
 .description {
+  color: var(--grey-100);
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.loadingSpinner {
+  margin-bottom: 1rem;
+}
+
+.spinner {
+  width: 3rem;
+  height: 3rem;
+  border: 4px solid var(--grey-50);
+  border-top: 4px solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.errorState {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.errorState h1 {
+  color: #dc2626;
+  margin-bottom: 1rem;
+}
+
+.errorState p {
   color: var(--grey-100);
   margin-bottom: 2rem;
 }
 
-/* Desktop Table - shown by default */
 .desktopView {
   display: block;
 }
@@ -19,40 +75,68 @@
   display: none;
 }
 
-.table {
-  width: 100%;
-  margin-bottom: 1rem;
-  border-collapse: collapse;
+.tableContainer {
   background-color: var(--color-white);
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--grey-50);
+  border-top-width: 10px;
+  border-top-color: var(--secondary-color);
 }
 
-.table td,
-.table th {
-  border: 1px solid var(--color-offwhite);
-  padding: 12px;
-}
-
-.table tr:nth-child(even) {
-  background-color: var(--color-offwhite);
-}
-
-.table tr:hover {
-  background-color: var(--color-white);
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0;
 }
 
 .table th {
-  padding-top: 16px;
-  padding-bottom: 16px;
+  padding: 1rem;
   text-align: left;
-  background-color: var(--secondary-color);
-  color: white;
+  background-color: var(--color-offwhite);
+  color: var(--black-200);
+  font-weight: 600;
+  border-bottom: 2px solid var(--grey-50);
+}
+
+.table td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--grey-50);
+  vertical-align: middle;
+}
+
+.table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.credit {
+  color: #16a34a;
   font-weight: 600;
 }
 
-/* Mobile Cards */
+.debit {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+.emptyState {
+  text-align: center;
+  color: var(--grey-100);
+  font-style: italic;
+  padding: 3rem 1rem;
+}
+
+.cardsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
 .transactionCards {
   display: flex;
   flex-direction: column;
@@ -65,6 +149,7 @@
   padding: 1rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-left: 4px solid var(--primary-color);
+  border: 1px solid var(--grey-50);
 }
 
 .cardHeader {
@@ -88,6 +173,7 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  color: var(--black-200);
 }
 
 .cardDescription {
@@ -103,11 +189,11 @@
 }
 
 .cardAmountCredit {
-  color: #27ae60;
+  color: #16a34a;
 }
 
 .cardAmountDebit {
-  color: #e74c3c;
+  color: #dc2626;
 }
 
 .noTransactions {
@@ -116,6 +202,12 @@
   background-color: var(--color-white);
   border-radius: 8px;
   color: var(--grey-100);
+  border: 1px solid var(--grey-50);
+}
+
+.actions {
+  margin-top: 2rem;
+  text-align: left;
 }
 
 .backButton {
@@ -127,12 +219,17 @@
   color: var(--color-white);
   background-color: var(--primary-color);
   cursor: pointer;
-  margin-top: 2rem;
-  transition: background-color 0.2s;
+  transition: all 0.2s;
 }
 
 .backButton:hover {
   background-color: #1565c0;
+  transform: translateY(-1px);
+}
+
+.backButton:focus {
+  outline: 3px solid rgba(28, 126, 214, 0.4);
+  outline-offset: 2px;
 }
 
 /* Tablet styles */
@@ -141,13 +238,10 @@
     padding: 1.5rem 7%;
   }
 
-  .table {
-    font-size: 15px;
-  }
-
   .table th,
   .table td {
-    padding: 10px;
+    padding: 0.75rem;
+    font-size: 15px;
   }
 }
 
@@ -157,9 +251,13 @@
     padding: 1rem 5%;
   }
 
-  .page h1 {
+  .header h1 {
     font-size: 1.8rem;
     margin-bottom: 0.5rem;
+  }
+
+  .description {
+    font-size: 1rem;
   }
 
   /* Hide table, show cards */
@@ -175,7 +273,6 @@
     width: 100%;
     padding: 1rem;
     font-size: 16px;
-    margin-top: 1.5rem;
   }
 }
 
@@ -185,7 +282,7 @@
     padding: 1rem 3%;
   }
 
-  .page h1 {
+  .header h1 {
     font-size: 1.5rem;
   }
 
@@ -195,5 +292,36 @@
 
   .cardAmount {
     font-size: 1.1rem;
+  }
+
+  .loadingContainer {
+    padding: 2rem 1rem;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .backButton {
+    transition: none;
+  }
+
+  .backButton:hover {
+    transform: none;
+  }
+
+  .spinner {
+    animation: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .tableContainer,
+  .transactionCard,
+  .noTransactions {
+    border: 2px solid;
+  }
+
+  .cardType {
+    border: 1px solid;
   }
 }

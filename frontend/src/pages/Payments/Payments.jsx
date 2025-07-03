@@ -1,5 +1,3 @@
-// frontend/src/pages/Payments/Payments.jsx
-
 import styles from "./Payments.module.css";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -68,64 +66,136 @@ export default function Payments() {
 
   return (
     <div className={styles.page}>
-      <h1>Payments</h1>
-      {isProcessingPayment && (
-        <div className={styles.processingMessage}>
-          Processing your payment, please wait...
-        </div>
-      )}
-      <div className={styles.sectionLayout}>
-        <section className={styles.currentBalance}>
+      <header className={styles.header}>
+        <h1>Payments</h1>
+        {isProcessingPayment && (
+          <div
+            className={styles.processingMessage}
+            role="status"
+            aria-live="polite"
+          >
+            Processing your payment, please wait...
+          </div>
+        )}
+      </header>
+
+      <main className={styles.sectionLayout}>
+        <section
+          className={styles.currentBalance}
+          aria-labelledby="balance-heading"
+        >
           <div>
-            <h2>Your Current Balance</h2>
-            {loading ? <p>Calculating...</p> : <p>{formatCurrency(balance)}</p>}
+            <h2 id="balance-heading">Your Current Balance</h2>
+            {loading ? (
+              <div
+                className={styles.loadingSpinner}
+                role="status"
+                aria-label="Loading balance"
+              >
+                <div className={styles.spinner}></div>
+              </div>
+            ) : (
+              <p
+                className={styles.balanceAmount}
+                aria-label={`Current balance: ${formatCurrency(balance)}`}
+              >
+                {formatCurrency(balance)}
+              </p>
+            )}
           </div>
           <div>
             <button
               onClick={handleMakePayment}
               disabled={balance <= 0 || showCheckout}
+              className={styles.paymentButton}
+              aria-describedby={balance <= 0 ? "no-balance-message" : undefined}
             >
               Make Payment
             </button>
+            {balance <= 0 && (
+              <p id="no-balance-message" className={styles.noBalanceText}>
+                No payment needed - your account is current
+              </p>
+            )}
           </div>
         </section>
-        <section className={styles.accountLedger}>
-          <h2>Account Ledger</h2>
+
+        <section
+          className={styles.accountLedger}
+          aria-labelledby="ledger-heading"
+        >
+          <h2 id="ledger-heading">Account Ledger</h2>
           <p>Need more help understanding your balance?</p>
-          <button onClick={() => navigate("/ledger")} disabled={showCheckout}>
+          <button
+            onClick={() => navigate("/ledger")}
+            disabled={showCheckout}
+            className={styles.ledgerButton}
+          >
             View full account ledger
           </button>
         </section>
-        <section className={styles.pastPayments}>
-          <p>Recent Activity</p>
-          <table className={styles.paymentsTable}>
-            <tbody>
+
+        <section
+          className={styles.pastPayments}
+          aria-labelledby="recent-heading"
+        >
+          <h2 id="recent-heading">Recent Activity</h2>
+          {loading ? (
+            <div
+              className={styles.loadingSpinner}
+              role="status"
+              aria-label="Loading recent activity"
+            >
+              <div className={styles.spinner}></div>
+            </div>
+          ) : (
+            <div className={styles.transactionsContainer}>
               {transactions && transactions.length > 0 ? (
-                transactions.slice(0, 5).map((tx) => (
-                  <tr key={tx.id}>
-                    <div>
-                      <td style={{ color: tx.amount < 0 ? "green" : "red" }}>
-                        ●
-                      </td>
-                      <td>
-                        <p>{tx.description}</p>
-                        <p style={{ fontSize: "0.8em", color: "#666" }}>
-                          {new Date(tx.created_at).toLocaleDateString()}
-                        </p>
-                      </td>
-                    </div>
-                    <td>{formatCurrency(tx.amount)}</td>
-                  </tr>
-                ))
+                <ul className={styles.transactionsList} role="list">
+                  {transactions.slice(0, 5).map((tx) => (
+                    <li key={tx.id} className={styles.transactionItem}>
+                      <div className={styles.transactionInfo}>
+                        <span
+                          className={`${styles.transactionIndicator} ${
+                            tx.amount < 0 ? styles.credit : styles.debit
+                          }`}
+                          aria-hidden="true"
+                        >
+                          ●
+                        </span>
+                        <div className={styles.transactionDetails}>
+                          <p className={styles.transactionDescription}>
+                            {tx.description}
+                          </p>
+                          <time
+                            className={styles.transactionDate}
+                            dateTime={tx.created_at}
+                          >
+                            {new Date(tx.created_at).toLocaleDateString()}
+                          </time>
+                        </div>
+                      </div>
+                      <span
+                        className={`${styles.transactionAmount} ${
+                          tx.amount < 0 ? styles.credit : styles.debit
+                        }`}
+                        aria-label={`${
+                          tx.amount < 0 ? "Credit" : "Charge"
+                        }: ${formatCurrency(Math.abs(tx.amount))}`}
+                      >
+                        {formatCurrency(tx.amount)}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
               ) : (
-                <tr>
-                  <td colSpan="3">No recent activity.</td>
-                </tr>
+                <p className={styles.emptyState}>No recent activity.</p>
               )}
-            </tbody>
-          </table>
+            </div>
+          )}
         </section>
-      </div>
+      </main>
+
       {showCheckout && clientSecret && (
         <Elements options={options} stripe={stripePromise}>
           <CheckoutForm onBack={() => setShowCheckout(false)} />

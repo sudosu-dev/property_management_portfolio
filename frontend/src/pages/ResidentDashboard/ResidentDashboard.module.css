@@ -8,13 +8,13 @@
 .header {
   padding: 0.5rem 0;
   border-radius: 5px;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .header h1 {
   margin: 0 0 0.5rem 0;
   font-weight: 600;
-  font-size: 2rem;
+  font-size: 2.5rem;
 }
 
 .header p {
@@ -27,19 +27,19 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-auto-rows: auto;
-  gap: 2rem;
+  gap: 1rem;
 }
 
 .accountBalance {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 2rem;
+  padding: 1rem;
   border: 1px solid var(--grey-50);
-  border-radius: 8px;
+  border-radius: 5px;
   border-top-width: 10px;
   border-top-color: var(--secondary-color);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 1px 1px 5px var(--grey-50);
   background-color: var(--color-white);
 }
 
@@ -65,12 +65,12 @@
 .announcements {
   display: flex;
   flex-direction: column;
-  padding: 2rem;
+  padding: 1rem;
   border: 1px solid var(--grey-50);
-  border-radius: 8px;
+  border-radius: 5px;
   border-top-width: 10px;
   border-top-color: var(--tertiary-color);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 1px 1px 5px var(--grey-50);
   background-color: var(--color-white);
 }
 
@@ -83,6 +83,19 @@
   padding: 0.75rem 0;
   border-bottom: 1px solid #eee;
   line-height: 1.4;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.announcementItem:hover {
+  background-color: #f8f9fa;
+  transform: translateY(-1px);
+}
+
+.announcementItem:focus {
+  outline: 3px solid rgba(28, 126, 214, 0.4);
+  outline-offset: 2px;
 }
 
 .announcementItem:last-child {
@@ -93,12 +106,12 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 2rem;
+  padding: 1rem;
   border: 1px solid var(--grey-50);
-  border-radius: 8px;
+  border-radius: 5px;
   border-top-width: 10px;
   border-top-color: var(--quaternary-color);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 1px 1px 5px var(--grey-50);
   background-color: var(--color-white);
 }
 
@@ -114,6 +127,19 @@
   padding: 0.75rem 0;
   border-bottom: 1px solid #eee;
   line-height: 1.4;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.maintenanceItem:hover {
+  background-color: #f8f9fa;
+  transform: translateY(-1px);
+}
+
+.maintenanceItem:focus {
+  outline: 3px solid rgba(28, 126, 214, 0.4);
+  outline-offset: 2px;
 }
 
 .maintenanceItem:last-child {
@@ -130,12 +156,12 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 2rem;
+  padding: 1rem;
   border: 1px solid var(--grey-50);
-  border-radius: 8px;
+  border-radius: 5px;
   border-top-width: 10px;
   border-top-color: var(--senary-color);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 1px 1px 5px var(--grey-50);
   background-color: var(--color-white);
 }
 
@@ -156,19 +182,17 @@
   background-color: var(--color-offwhite);
   color: var(--black-200);
   border: 1px solid var(--grey-50);
-  padding: 1.5rem 1rem;
-  border-radius: 8px;
-  font-size: 1rem;
+  padding: 1rem;
+  border-radius: 5px;
+  font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
   text-align: center;
-  min-height: 80px;
 }
 
 .actionButton:hover {
@@ -185,17 +209,17 @@
 }
 
 .actionIcon {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
 }
 
 .primaryButton {
   background-color: var(--primary-color);
   color: var(--color-white);
   border: none;
-  padding: 1rem 2rem;
-  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 600;
   text-decoration: none;
   display: inline-block;
@@ -224,33 +248,7 @@
   padding-top: 1rem;
 }
 
-/* Loading states */
-.loadingSpinner {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem;
-}
-
-.spinner {
-  width: 2rem;
-  height: 2rem;
-  border: 3px solid var(--grey-50);
-  border-top: 3px solid var(--primary-color);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-/* Mobile First - ONLY mobile changes below */
+/* Mobile Responsiveness */
 @media (max-width: 1024px) and (min-width: 769px) {
   .dashboard {
     padding: 1.5rem 7%;
@@ -374,17 +372,17 @@
 /* Accessibility */
 @media (prefers-reduced-motion: reduce) {
   .actionButton,
-  .primaryButton {
+  .primaryButton,
+  .announcementItem,
+  .maintenanceItem {
     transition: none;
   }
 
   .actionButton:hover,
-  .primaryButton:hover {
+  .primaryButton:hover,
+  .announcementItem:hover,
+  .maintenanceItem:hover {
     transform: none;
-  }
-
-  .spinner {
-    animation: none;
   }
 }
 
