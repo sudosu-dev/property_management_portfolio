@@ -15,6 +15,7 @@ router.post(
   async (req, res) => {
     const sig = req.headers["stripe-signature"];
     const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
+
     let event;
 
     try {
@@ -38,13 +39,6 @@ router.use(requireUser);
 router.post("/create-payment", async (req, res) => {
   try {
     const balance = await getUserBalance(req.user.id);
-    //DEBUGGING
-    console.log(
-      "Creating payment intent for user:",
-      req.user.id,
-      "with a calculated balance of:",
-      balance
-    );
 
     if (balance > 0) {
       const paymentIntent = await stripe.paymentIntents.create({
