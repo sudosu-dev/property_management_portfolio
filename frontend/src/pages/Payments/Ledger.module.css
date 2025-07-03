@@ -1,23 +1,38 @@
 .page {
   padding: 2rem 10%;
   margin: 0 auto;
-
   background-color: var(--bg-color);
   min-height: 90vh;
+}
+
+.description {
+  color: var(--grey-100);
+  margin-bottom: 2rem;
+}
+
+/* Desktop Table - shown by default */
+.desktopView {
+  display: block;
+}
+
+.mobileView {
+  display: none;
 }
 
 .table {
   width: 100%;
   margin-bottom: 1rem;
   border-collapse: collapse;
-
   background-color: var(--color-white);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .table td,
 .table th {
   border: 1px solid var(--color-offwhite);
-  padding: 8px;
+  padding: 12px;
 }
 
 .table tr:nth-child(even) {
@@ -29,21 +44,156 @@
 }
 
 .table th {
-  padding-top: 12px;
-  padding-bottom: 12px;
+  padding-top: 16px;
+  padding-bottom: 16px;
   text-align: left;
   background-color: var(--secondary-color);
   color: white;
+  font-weight: 600;
+}
+
+/* Mobile Cards */
+.transactionCards {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.transactionCard {
+  background-color: var(--color-white);
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid var(--primary-color);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.cardDate {
+  font-size: 14px;
+  color: var(--grey-100);
+  font-weight: 500;
+}
+
+.cardType {
+  background-color: var(--color-offwhite);
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.cardDescription {
+  margin-bottom: 1rem;
+  line-height: 1.4;
+  color: var(--black-200);
+}
+
+.cardAmount {
+  font-size: 1.25rem;
+  font-weight: bold;
+  text-align: right;
+}
+
+.cardAmountCredit {
+  color: #27ae60;
+}
+
+.cardAmountDebit {
+  color: #e74c3c;
+}
+
+.noTransactions {
+  text-align: center;
+  padding: 3rem 1rem;
+  background-color: var(--color-white);
+  border-radius: 8px;
+  color: var(--grey-100);
 }
 
 .backButton {
-  padding: 0.5rem 2rem;
+  padding: 0.75rem 2rem;
   border: none;
   border-radius: 5px;
-
   font-size: 16px;
   text-decoration: none;
   color: var(--color-white);
   background-color: var(--primary-color);
   cursor: pointer;
+  margin-top: 2rem;
+  transition: background-color 0.2s;
+}
+
+.backButton:hover {
+  background-color: #1565c0;
+}
+
+/* Tablet styles */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .page {
+    padding: 1.5rem 7%;
+  }
+
+  .table {
+    font-size: 15px;
+  }
+
+  .table th,
+  .table td {
+    padding: 10px;
+  }
+}
+
+/* Mobile styles - switch to cards */
+@media (max-width: 768px) {
+  .page {
+    padding: 1rem 5%;
+  }
+
+  .page h1 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Hide table, show cards */
+  .desktopView {
+    display: none;
+  }
+
+  .mobileView {
+    display: block;
+  }
+
+  .backButton {
+    width: 100%;
+    padding: 1rem;
+    font-size: 16px;
+    margin-top: 1.5rem;
+  }
+}
+
+/* Extra small mobile */
+@media (max-width: 480px) {
+  .page {
+    padding: 1rem 3%;
+  }
+
+  .page h1 {
+    font-size: 1.5rem;
+  }
+
+  .transactionCard {
+    padding: 0.75rem;
+  }
+
+  .cardAmount {
+    font-size: 1.1rem;
+  }
 }

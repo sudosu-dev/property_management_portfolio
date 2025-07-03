@@ -1,7 +1,6 @@
 .dashboard {
   padding: 2rem 10%;
   margin: 0 auto;
-
   background-color: var(--bg-color);
   min-height: 90vh;
 }
@@ -9,38 +8,44 @@
 .header {
   padding: 0.5rem 0;
   border-radius: 5px;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 
 .header h1 {
   margin: 0 0 0.5rem 0;
   font-weight: 600;
+  font-size: 2rem;
 }
 
 .header p {
   margin: 0;
   color: var(--grey-100);
+  font-size: 1.1rem;
 }
 
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-auto-rows: auto;
-  gap: 1rem;
+  gap: 2rem;
 }
 
 .accountBalance {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
-  padding: 1rem;
+  padding: 2rem;
   border: 1px solid var(--grey-50);
-  border-radius: 5px;
+  border-radius: 8px;
   border-top-width: 10px;
   border-top-color: var(--secondary-color);
-  box-shadow: 1px 1px 5px var(--grey-50);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   background-color: var(--color-white);
+}
+
+.accountBalance h2 {
+  margin: 0 0 1rem 0;
+  font-size: 1.5rem;
 }
 
 .balanceAmount {
@@ -48,6 +53,7 @@
   font-weight: bold;
   color: var(--primary-color);
   margin: 1rem 0;
+  line-height: 1;
 }
 
 .balanceSubtext {
@@ -59,24 +65,27 @@
 .announcements {
   display: flex;
   flex-direction: column;
-
-  padding: 1rem;
+  padding: 2rem;
   border: 1px solid var(--grey-50);
-  border-radius: 5px;
+  border-radius: 8px;
   border-top-width: 10px;
   border-top-color: var(--tertiary-color);
-  box-shadow: 1px 1px 5px var(--grey-50);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   background-color: var(--color-white);
 }
 
-.announcementItem,
-.maintenanceItem {
-  padding: 0.75rem 0;
-  border-bottom: 1px solid #eee;
+.announcements h2 {
+  margin: 0 0 1rem 0;
+  font-size: 1.5rem;
 }
 
-.announcementItem:last-child,
-.maintenanceItem:last-child {
+.announcementItem {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #eee;
+  line-height: 1.4;
+}
+
+.announcementItem:last-child {
   border-bottom: none;
 }
 
@@ -84,34 +93,55 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
-  padding: 1rem;
+  padding: 2rem;
   border: 1px solid var(--grey-50);
-  border-radius: 5px;
+  border-radius: 8px;
   border-top-width: 10px;
   border-top-color: var(--quaternary-color);
-  box-shadow: 1px 1px 5px var(--grey-50);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   background-color: var(--color-white);
+}
+
+.maintenanceRequests h2 {
+  margin: 0 0 1rem 0;
+  font-size: 1.5rem;
 }
 
 .maintenanceItem {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #eee;
+  line-height: 1.4;
+}
+
+.maintenanceItem:last-child {
+  border-bottom: none;
+}
+
+.maintenanceStatus {
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: var(--grey-100);
 }
 
 .quickActions {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
-  padding: 1rem;
+  padding: 2rem;
   border: 1px solid var(--grey-50);
-  border-radius: 5px;
+  border-radius: 8px;
   border-top-width: 10px;
   border-top-color: var(--senary-color);
-  box-shadow: 1px 1px 5px var(--grey-50);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   background-color: var(--color-white);
+}
+
+.quickActions h2 {
+  margin: 0 0 1rem 0;
+  font-size: 1.5rem;
 }
 
 .actionsGrid {
@@ -126,39 +156,180 @@
   background-color: var(--color-offwhite);
   color: var(--black-200);
   border: 1px solid var(--grey-50);
-  padding: 1rem;
-  border-radius: 5px;
-  font-size: 0.9rem;
+  padding: 1.5rem 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
   text-align: center;
+  min-height: 80px;
 }
 
 .actionButton:hover {
   background-color: var(--primary-color);
   color: white;
   border-color: var(--primary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .actionIcon {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
 }
 
 .primaryButton {
   background-color: var(--primary-color);
   color: white;
   border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 4px;
+  padding: 1rem 2rem;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 1rem;
+  font-weight: 600;
   text-decoration: none;
   display: inline-block;
   text-align: center;
-  width: max-content;
+  width: fit-content;
+  transition: all 0.2s;
+}
+
+.primaryButton:hover {
+  background-color: #1565c0;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cardContent {
+  flex: 1;
+}
+
+.cardFooter {
+  margin-top: auto;
+  padding-top: 1rem;
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+  .dashboard {
+    padding: 1.5rem 7%;
+  }
+
+  .grid {
+    gap: 1.5rem;
+  }
+
+  .balanceAmount {
+    font-size: 2.5rem;
+  }
+
+  .actionButton {
+    padding: 1.25rem 0.75rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard {
+    padding: 1rem 5%;
+  }
+
+  .header h1 {
+    font-size: 1.8rem;
+  }
+
+  .header p {
+    font-size: 1rem;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .accountBalance,
+  .announcements,
+  .maintenanceRequests,
+  .quickActions {
+    padding: 1.5rem;
+  }
+
+  .accountBalance h2,
+  .announcements h2,
+  .maintenanceRequests h2,
+  .quickActions h2 {
+    font-size: 1.3rem;
+  }
+
+  .balanceAmount {
+    font-size: 2.5rem;
+  }
+
+  .actionsGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .actionButton {
+    padding: 1.5rem;
+    font-size: 1.1rem;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 1rem;
+    min-height: auto;
+  }
+
+  .actionIcon {
+    font-size: 1.75rem;
+  }
+
+  .primaryButton {
+    width: 100%;
+    padding: 1.25rem;
+    font-size: 1.1rem;
+  }
+
+  .announcementItem,
+  .maintenanceItem {
+    padding: 1rem 0;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard {
+    padding: 1rem 3%;
+  }
+
+  .header h1 {
+    font-size: 1.6rem;
+  }
+
+  .grid {
+    gap: 1rem;
+  }
+
+  .accountBalance,
+  .announcements,
+  .maintenanceRequests,
+  .quickActions {
+    padding: 1rem;
+  }
+
+  .balanceAmount {
+    font-size: 2rem;
+  }
+
+  .actionButton {
+    padding: 1.25rem;
+    font-size: 1rem;
+  }
+
+  .actionIcon {
+    font-size: 1.5rem;
+  }
 }

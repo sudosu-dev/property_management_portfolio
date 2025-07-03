@@ -142,3 +142,64 @@
   font-size: 16px;
   cursor: pointer;
 }
+/* Mobile styles */
+@media (max-width: 768px) {
+  .page {
+    padding: 1rem 5%;
+  }
+
+  .sectionLayout {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 1rem;
+  }
+
+  .currentBalance {
+    grid-row: 1;
+    grid-column: 1;
+  }
+
+  .accountLedger {
+    grid-row: 2;
+    grid-column: 1;
+  }
+
+  .pastPayments {
+    grid-row: 3;
+    grid-column: 1;
+  }
+
+  .currentBalance p {
+    font-size: 2.5rem;
+  }
+
+  .currentBalance button,
+  .accountLedger button {
+    width: 100%;
+    padding: 1rem;
+    font-size: 16px;
+  }
+
+  .paymentsTable {
+    font-size: 14px;
+  }
+
+  .paymentsTable td {
+    padding: 0.5rem 0.25rem;
+  }
+}
+
+/* Tablet styles */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .page {
+    padding: 1.5rem 7%;
+  }
+
+  .sectionLayout {
+    gap: 1.5rem;
+  }
+
+  .currentBalance p {
+    font-size: 2.8rem;
+  }
+}

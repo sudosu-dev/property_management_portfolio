@@ -1,9 +1,12 @@
+import { useState } from "react";
 import styles from "./Navbar.module.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 import rentaLogo from "../assets/renta-logo.png";
 
 function ResidentNav({ logout }) {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <div className={styles.Nav}>
       <div className={styles.NavLogo}>
@@ -11,24 +14,58 @@ function ResidentNav({ logout }) {
           <img width={"45px"} src={rentaLogo} alt="logo" />
         </NavLink>
       </div>
-      <div className={styles.NavLinks}>
-        <NavLink to="/dashboard/resident" className={styles.links}>
+
+      {/* Mobile menu button */}
+      <button
+        className={styles.mobileMenuButton}
+        onClick={() => setIsOpen(!isOpen)}
+        aria-label="Toggle menu"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <div
+        className={`${styles.NavLinks} ${isOpen ? styles.NavLinksOpen : ""}`}
+      >
+        <NavLink
+          to="/dashboard/resident"
+          className={styles.links}
+          onClick={() => setIsOpen(false)}
+        >
           <ion-icon name="apps-outline"></ion-icon>
           Dashboard
         </NavLink>
-        <NavLink to="/payments" className={styles.links}>
+        <NavLink
+          to="/payments"
+          className={styles.links}
+          onClick={() => setIsOpen(false)}
+        >
           <ion-icon name="card-outline"></ion-icon>
           Payments
         </NavLink>
-        <NavLink to="/maintenance" className={styles.links}>
+        <NavLink
+          to="/maintenance"
+          className={styles.links}
+          onClick={() => setIsOpen(false)}
+        >
           <ion-icon name="build-outline"></ion-icon>
           Maintenance
         </NavLink>
-        <NavLink to="/announcements" className={styles.links}>
+        <NavLink
+          to="/announcements"
+          className={styles.links}
+          onClick={() => setIsOpen(false)}
+        >
           <ion-icon name="megaphone-outline"></ion-icon>
           Announcements
         </NavLink>
-        <NavLink to="/profile" className={styles.links}>
+        <NavLink
+          to="/profile"
+          className={styles.links}
+          onClick={() => setIsOpen(false)}
+        >
           <ion-icon name="person-outline"></ion-icon>
           Profile
         </NavLink>
@@ -41,6 +78,8 @@ function ResidentNav({ logout }) {
 }
 
 function ManagerNav({ logout }) {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <div className={styles.Nav}>
       <div className={styles.NavLogo}>
@@ -48,36 +87,82 @@ function ManagerNav({ logout }) {
           <img width={"45px"} src={rentaLogo} alt="logo" />
         </NavLink>
       </div>
-      <div className={styles.NavLinks}>
-        <NavLink to="/admin/dashboard" className={styles.links}>
+
+      {/* Mobile menu button */}
+      <button
+        className={styles.mobileMenuButton}
+        onClick={() => setIsOpen(!isOpen)}
+        aria-label="Toggle menu"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <div
+        className={`${styles.NavLinks} ${isOpen ? styles.NavLinksOpen : ""}`}
+      >
+        <NavLink
+          to="/admin/dashboard"
+          className={styles.links}
+          onClick={() => setIsOpen(false)}
+        >
           <ion-icon name="apps-outline"></ion-icon>
           Dashboard
         </NavLink>
-        <NavLink to="/admin/propertyinfo" className={styles.links}>
+        <NavLink
+          to="/admin/propertyinfo"
+          className={styles.links}
+          onClick={() => setIsOpen(false)}
+        >
           <ion-icon name="business-outline"></ion-icon>
           Property Info
         </NavLink>
-        <NavLink to="/admin/units" className={styles.links}>
+        <NavLink
+          to="/admin/units"
+          className={styles.links}
+          onClick={() => setIsOpen(false)}
+        >
           <ion-icon name="bed-outline"></ion-icon>
           Units
         </NavLink>
-        <NavLink to="/admin/manage-users" className={styles.links}>
+        <NavLink
+          to="/admin/manage-users"
+          className={styles.links}
+          onClick={() => setIsOpen(false)}
+        >
           <ion-icon name="people-outline"></ion-icon>
           Manage Users
         </NavLink>
-        <NavLink to="/admin/payments" className={styles.links}>
+        <NavLink
+          to="/admin/payments"
+          className={styles.links}
+          onClick={() => setIsOpen(false)}
+        >
           <ion-icon name="card-outline"></ion-icon>
           Payments
         </NavLink>
-        <NavLink to="/admin/utilities" className={styles.links}>
+        <NavLink
+          to="/admin/utilities"
+          className={styles.links}
+          onClick={() => setIsOpen(false)}
+        >
           <ion-icon name="bulb-outline"></ion-icon>
           Utilities
         </NavLink>
-        <NavLink to="/admin/maintenance" className={styles.links}>
+        <NavLink
+          to="/admin/maintenance"
+          className={styles.links}
+          onClick={() => setIsOpen(false)}
+        >
           <ion-icon name="build-outline"></ion-icon>
           Maintenance
         </NavLink>
-        <NavLink to="/admin/announcements" className={styles.links}>
+        <NavLink
+          to="/admin/announcements"
+          className={styles.links}
+          onClick={() => setIsOpen(false)}
+        >
           <ion-icon name="megaphone-outline"></ion-icon>
           Announcements
         </NavLink>

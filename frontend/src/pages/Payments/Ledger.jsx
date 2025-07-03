@@ -1,5 +1,3 @@
-// frontend/src/pages/Payments/Ledger.jsx
-
 import styles from "./Ledger.module.css";
 import { useNavigate } from "react-router-dom";
 import useQuery from "../../api/useQuery";
@@ -25,8 +23,10 @@ export default function Ledger() {
   return (
     <div className={styles.page}>
       <h1>Account Ledger</h1>
-      <div className={styles.tableContainer}>
-        <p>Showing all account transactions</p>
+      <p className={styles.description}>Showing all account transactions</p>
+
+      {/* Desktop Table */}
+      <div className={styles.desktopView}>
         <table className={styles.table}>
           <thead>
             <tr>
@@ -60,13 +60,46 @@ export default function Ledger() {
             )}
           </tbody>
         </table>
-        <button
-          className={styles.backButton}
-          onClick={() => navigate("/payments")}
-        >
-          Back to Payments
-        </button>
       </div>
+
+      {/* Mobile Cards */}
+      <div className={styles.mobileView}>
+        {transactions && transactions.length > 0 ? (
+          <div className={styles.transactionCards}>
+            {transactions.map((tx) => (
+              <div key={tx.id} className={styles.transactionCard}>
+                <div className={styles.cardHeader}>
+                  <div className={styles.cardDate}>
+                    {new Date(tx.created_at).toLocaleDateString()}
+                  </div>
+                  <div className={styles.cardType}>{tx.type}</div>
+                </div>
+                <div className={styles.cardDescription}>{tx.description}</div>
+                <div
+                  className={`${styles.cardAmount} ${
+                    tx.amount < 0
+                      ? styles.cardAmountCredit
+                      : styles.cardAmountDebit
+                  }`}
+                >
+                  {formatCurrency(tx.amount)}
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className={styles.noTransactions}>
+            <p>No ledger entries found.</p>
+          </div>
+        )}
+      </div>
+
+      <button
+        className={styles.backButton}
+        onClick={() => navigate("/payments")}
+      >
+        Back to Payments
+      </button>
     </div>
   );
 }

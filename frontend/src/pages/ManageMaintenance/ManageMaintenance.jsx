@@ -12,10 +12,7 @@ import styles from "./ManageMaintenance.module.css";
 import ManageMaintenanceForm from "./ManageMaintenanceForm";
 import ManageRequestList from "./ManageRequestList";
 import ManageRequestDetails from "./ManageRequestDetails";
-import {
-  useNotifications,
-  UseNotifications,
-} from "../../Context/NotificationContext";
+import { useNotifications } from "../../Context/NotificationContext";
 
 function addUnitNumberToRequest(request, units) {
   if (!request.unit_number) {
