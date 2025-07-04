@@ -6,7 +6,7 @@ export default function ManageRequestList({
   filter,
 }) {
   const filteredRequests = requests.filter((req) => {
-    if (filter === "All") return true;
+    if (filter === "All" || filter === "") return true;
     if (filter === "Pending") return !req.completed;
     if (filter === "Completed") return req.completed;
     return true;
@@ -18,16 +18,23 @@ export default function ManageRequestList({
       : styles.statusPending;
     const statusLabel = completed ? "Completed" : "Pending";
     return (
-      <span className={`${styles.status} ${statusClass}`}>{statusLabel}</span>
+      <span
+        className={`${styles.status} ${statusClass}`}
+        aria-label={`Status: ${statusLabel}`}
+      >
+        {statusLabel}
+      </span>
     );
   };
 
   return (
     <section className={styles.maintenanceList}>
-      <h2>Requests</h2>
+      <h2>Maintenance Requests</h2>
 
       {filteredRequests.length === 0 ? (
-        <p>No requests found.</p>
+        <div className={styles.emptyState}>
+          <p>No maintenance requests found.</p>
+        </div>
       ) : (
         <>
           {filteredRequests.map((req) => (
@@ -42,24 +49,28 @@ export default function ManageRequestList({
                   </p>
                   <p>
                     <span>Request Date: </span>
-                    {new Date(req.created_at).toLocaleString("en-US", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                      hour: "numeric",
-                      minute: "2-digit",
-                    })}
-                  </p>
-                  {req.completed && req.completed_at && (
-                    <p>
-                      <span>Completed On: </span>
-                      {new Date(req.completed_at).toLocaleString("en-US", {
+                    <time dateTime={req.created_at}>
+                      {new Date(req.created_at).toLocaleString("en-US", {
                         year: "numeric",
                         month: "long",
                         day: "numeric",
                         hour: "numeric",
                         minute: "2-digit",
                       })}
+                    </time>
+                  </p>
+                  {req.completed && req.completed_at && (
+                    <p>
+                      <span>Completed On: </span>
+                      <time dateTime={req.completed_at}>
+                        {new Date(req.completed_at).toLocaleString("en-US", {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                          hour: "numeric",
+                          minute: "2-digit",
+                        })}
+                      </time>
                     </p>
                   )}
                 </div>
@@ -74,7 +85,7 @@ export default function ManageRequestList({
                       <img
                         key={photo.id}
                         src={url}
-                        alt={`Photo for request ${req.id}`}
+                        alt={`Photo for maintenance request ${req.id} in unit ${req.unit_number}`}
                         className={styles.thumbnail}
                       />
                     );
@@ -86,6 +97,7 @@ export default function ManageRequestList({
                 <button
                   className={`${styles.actionButton} ${styles.editButton}`}
                   onClick={() => setSelectedRequest(req)}
+                  aria-label={`View and edit maintenance request for unit ${req.unit_number}`}
                 >
                   View / Edit
                 </button>

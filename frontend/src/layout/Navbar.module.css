@@ -108,6 +108,11 @@
     transform: translateX(100%);
     transition: transform 0.3s ease-in-out;
     backdrop-filter: blur(10px);
+    /* FIX: Add scroll behavior and prevent body scroll */
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    z-index: 1000;
   }
 
   /* Show mobile navigation when open */
@@ -122,6 +127,8 @@
     text-align: center;
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 8px;
+    /* Ensure links don't shrink */
+    flex-shrink: 0;
   }
 
   .logoutButton {
@@ -129,6 +136,8 @@
     font-size: 18px;
     width: 80%;
     margin-top: 1rem;
+    /* Ensure button doesn't shrink */
+    flex-shrink: 0;
   }
 
   ion-icon {

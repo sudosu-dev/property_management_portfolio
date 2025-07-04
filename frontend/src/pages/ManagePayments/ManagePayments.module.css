@@ -1,16 +1,71 @@
+/* --- Main View --- */
 .page {
   background-color: var(--bg-color);
   min-height: 90vh;
 }
 
-.content {
-  padding: 2rem;
-  max-width: 1200px;
+.loadingContainer,
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.loadingSpinner {
+  margin-bottom: 1rem;
+}
+
+.spinner {
+  width: 3rem;
+  height: 3rem;
+  border: 4px solid var(--grey-50);
+  border-top: 4px solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.errorContainer h1 {
+  color: #dc2626;
+  margin-bottom: 1rem;
+}
+
+.errorContainer p {
+  color: var(--grey-100);
+  margin-bottom: 2rem;
+}
+
+.header {
+  padding: 3rem 10% 1rem;
   margin: 0 auto;
 }
 
 .header h1 {
-  margin: 0 0 1rem 0;
+  margin: 0 0 0.5rem 0;
+  font-weight: 600;
+  font-size: 2rem;
+}
+
+.description {
+  color: var(--grey-100);
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.content {
+  padding: 0 10%;
+  margin: 0 auto;
 }
 
 .controls {
@@ -22,10 +77,26 @@
 
 .searchInput {
   padding: 0.75rem;
-  border: 1px solid #ccc;
+  border: 1px solid var(--grey-50);
   border-radius: 4px;
   font-size: 1rem;
   width: 350px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(28, 126, 214, 0.1);
+}
+
+/* Desktop Table View */
+.desktopView {
+  display: block;
+}
+
+.mobileView {
+  display: none;
 }
 
 .tableSection {
@@ -35,6 +106,8 @@
   border-top-color: var(--secondary-color);
   border-radius: 8px;
   overflow: hidden;
+  background-color: var(--color-white);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .table {
@@ -52,6 +125,9 @@
 
 .table th {
   background-color: var(--color-offwhite);
+  color: var(--black-200);
+  font-weight: 600;
+  border-bottom: 2px solid var(--grey-50);
 }
 
 .table td {
@@ -78,19 +154,31 @@
   display: flex;
   gap: 0.5rem;
   justify-content: flex-end;
+  align-items: center;
 }
 
-.actionsCell button {
+.actionButton {
   padding: 0.4rem 0.8rem;
-  border: 1px solid #ccc;
-  background-color: white;
+  border: 1px solid var(--grey-50);
+  background-color: var(--color-white);
   border-radius: 4px;
   cursor: pointer;
   white-space: nowrap;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s;
 }
 
-.actionsCell button:hover {
-  background-color: #f0f0f0;
+.actionButton:hover {
+  background-color: var(--primary-color);
+  color: var(--color-white);
+  border-color: var(--primary-color);
+  transform: translateY(-1px);
+}
+
+.actionButton:focus {
+  outline: 3px solid rgba(28, 126, 214, 0.4);
+  outline-offset: 2px;
 }
 
 .balancePositive {
@@ -105,6 +193,154 @@
 .balanceNegative {
   color: #27ae60;
   font-weight: bold;
+}
+
+.emptyState {
+  text-align: center;
+  color: var(--grey-100);
+  font-style: italic;
+  padding: 3rem 1rem;
+}
+
+/* Mobile Card View */
+.tenantCards {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.tenantCard {
+  background-color: var(--color-white);
+  border: 1px solid var(--grey-50);
+  border-left-width: 8px;
+  border-left-color: var(--secondary-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.tenantCard:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.cardHeader h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--black-200);
+}
+
+.unitBadge {
+  background-color: var(--color-offwhite);
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--grey-100);
+  white-space: nowrap;
+}
+
+.cardContent {
+  margin-bottom: 1.5rem;
+}
+
+.balanceSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: var(--color-offwhite);
+  border-radius: 4px;
+}
+
+.balanceLabel {
+  font-weight: 600;
+  color: var(--black-200);
+  font-size: 1.1rem;
+}
+
+.balanceAmount {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.cardActions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.mobileActionButton {
+  background-color: var(--primary-color);
+  color: var(--color-white);
+  border: none;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+  width: 100%;
+  text-align: center;
+}
+
+.mobileActionButton:hover {
+  background-color: #1565c0;
+  transform: translateY(-1px);
+}
+
+.mobileActionButton:focus {
+  outline: 3px solid rgba(28, 126, 214, 0.4);
+  outline-offset: 2px;
+}
+
+.noTenants {
+  text-align: center;
+  padding: 3rem 1rem;
+  background-color: var(--color-white);
+  border-radius: 8px;
+  color: var(--grey-100);
+  border: 1px solid var(--grey-50);
+}
+
+.noWrap {
+  white-space: nowrap;
+}
+
+/* Primary Button for Error State */
+.primaryButton {
+  background-color: var(--primary-color);
+  color: var(--color-white);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.primaryButton:hover {
+  background-color: #1565c0;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.primaryButton:focus {
+  outline: 3px solid rgba(28, 126, 214, 0.4);
+  outline-offset: 2px;
 }
 
 /* --- MODAL STYLES --- */
@@ -123,7 +359,8 @@
 }
 
 .modalContent {
-  background: white;
+  position: relative;
+  background: var(--color-white);
   padding: 2rem;
   border-radius: 8px;
   width: 100%;
@@ -134,6 +371,46 @@
   border-top: 10px solid var(--secondary-color);
 }
 
+.closeButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--grey-100);
+  transition: color 0.2s;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeButton:hover {
+  color: var(--black-200);
+}
+
+.closeButton:focus {
+  outline: 3px solid rgba(28, 126, 214, 0.4);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.modalContent h2 {
+  margin: 0 0 0.5rem 0;
+  font-weight: 600;
+  color: var(--black-200);
+  padding-right: 2rem;
+}
+
+.modalDescription {
+  color: var(--grey-100);
+  margin: 0 0 1.5rem 0;
+  font-size: 0.95rem;
+}
+
 .formGroup {
   margin-bottom: 1.5rem;
 }
@@ -142,16 +419,58 @@
   display: block;
   font-weight: 500;
   margin-bottom: 0.5rem;
+  color: var(--black-200);
 }
 
-.formGroup select,
-.formGroup textarea {
+.formInput,
+.formSelect,
+.formTextarea {
   font-size: 1rem;
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid #ccc;
+  border: 1px solid var(--grey-50);
   border-radius: 4px;
   box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.formInput:focus,
+.formSelect:focus,
+.formTextarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(28, 126, 214, 0.1);
+}
+
+.formInput:disabled,
+.formSelect:disabled,
+.formTextarea:disabled {
+  background-color: var(--grey-25);
+  color: var(--grey-100);
+  cursor: not-allowed;
+}
+
+.formTextarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.helpText {
+  font-size: 0.8rem;
+  color: var(--grey-100);
+  margin-top: 0.25rem;
+  font-style: italic;
+}
+
+.errorMessage {
+  background-color: #fef2f2;
+  color: #dc2626;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  border: 1px solid #fecaca;
+  font-weight: 500;
+  text-align: center;
 }
 
 .modalActions {
@@ -170,88 +489,207 @@
   cursor: pointer;
   font-size: 1rem;
   font-weight: 500;
-  transition: background-color 0.2s;
+  transition: all 0.2s;
+  min-width: 120px;
 }
 
 .primaryButton {
   composes: modalButton;
   background-color: var(--primary-color);
-  color: white;
+  color: var(--color-white);
 }
-.primaryButton:hover {
+
+.primaryButton:hover:not(:disabled) {
   background-color: #1565c0;
+  transform: translateY(-1px);
 }
+
+.primaryButton:focus {
+  outline: 3px solid rgba(28, 126, 214, 0.4);
+  outline-offset: 2px;
+}
+
 .primaryButton:disabled {
-  background-color: #a5d8ff;
+  background-color: var(--grey-100);
+  color: var(--grey-50);
   cursor: not-allowed;
+  opacity: 0.6;
 }
 
 .secondaryButton {
   composes: modalButton;
-  background-color: #6c757d;
-  color: white;
+  background-color: var(--grey-100);
+  color: var(--color-white);
 }
-.secondaryButton:hover {
-  background-color: #5a6268;
+
+.secondaryButton:hover:not(:disabled) {
+  background-color: #6b7280;
+  transform: translateY(-1px);
 }
+
+.secondaryButton:focus {
+  outline: 3px solid rgba(136, 136, 136, 0.4);
+  outline-offset: 2px;
+}
+
 .secondaryButton:disabled {
-  background-color: #aaa;
+  opacity: 0.6;
   cursor: not-allowed;
 }
 
-.error {
-  color: #c0392b;
-  margin-top: 1rem;
-  text-align: center;
-}
+/* Tablet styles */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .header {
+    padding: 2rem 7% 1rem;
+  }
 
-.noWrap {
-  white-space: nowrap;
-}
-
-/* Mobile */
-@media (max-width: 768px) {
   .content {
-    padding: 1rem;
+    padding: 0 7%;
   }
 
   .searchInput {
-    width: 100%;
-    font-size: 16px;
-  }
-
-  .tableSection {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .table {
-    min-width: 600px;
+    width: 280px;
   }
 
   .table th,
   .table td {
-    padding: 0.5rem;
-    font-size: 14px;
-    white-space: nowrap;
+    padding: 0.75rem;
+    font-size: 15px;
   }
 
-  .actionsCell {
+  .actionButton {
+    padding: 0.35rem 0.7rem;
+    font-size: 13px;
+  }
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .header {
+    padding: 1.5rem 5% 1rem;
+  }
+
+  .header h1 {
+    font-size: 1.8rem;
+  }
+
+  .description {
+    font-size: 1rem;
+  }
+
+  .content {
+    padding: 0 5%;
+  }
+
+  .controls {
     flex-direction: column;
-    gap: 0.25rem;
     align-items: stretch;
+    gap: 1rem;
   }
 
-  .actionsCell button {
-    padding: 0.3rem 0.6rem;
-    font-size: 12px;
+  .searchInput {
+    width: 100%;
+    font-size: 16px; /* Prevents zoom on iOS */
   }
 
-  .tenantColumn {
-    min-width: 120px;
+  /* Switch to mobile card view */
+  .desktopView {
+    display: none;
   }
 
-  .alignRight {
-    text-align: center;
+  .mobileView {
+    display: block;
+  }
+
+  .tenantCard {
+    padding: 1.25rem;
+  }
+
+  .cardHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .modalContent {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+
+  .modalActions {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .modalButton {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 1rem 3% 1rem;
+  }
+
+  .header h1 {
+    font-size: 1.6rem;
+  }
+
+  .content {
+    padding: 0 3%;
+  }
+
+  .tenantCard {
+    padding: 1rem;
+  }
+
+  .modalContent {
+    margin: 0.5rem;
+    padding: 1rem;
+  }
+
+  .formGroup {
+    margin-bottom: 1rem;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .actionButton,
+  .mobileActionButton,
+  .primaryButton,
+  .secondaryButton,
+  .tenantCard {
+    transition: none;
+  }
+
+  .actionButton:hover,
+  .mobileActionButton:hover,
+  .primaryButton:hover,
+  .secondaryButton:hover,
+  .tenantCard:hover {
+    transform: none;
+  }
+
+  .spinner {
+    animation: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .tableSection,
+  .tenantCard,
+  .modalContent,
+  .noTenants {
+    border: 2px solid;
+  }
+
+  .actionButton,
+  .mobileActionButton,
+  .primaryButton,
+  .secondaryButton {
+    border: 2px solid;
   }
 }

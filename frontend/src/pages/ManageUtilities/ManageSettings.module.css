@@ -1,81 +1,322 @@
+/* --- Main View --- */
 .page {
   background-color: var(--bg-color);
   min-height: 90vh;
 }
 
-.content {
-  padding: 2rem;
-  max-width: 800px;
+.loadingContainer,
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.loadingSpinner {
+  margin-bottom: 1rem;
+}
+
+.spinner {
+  width: 3rem;
+  height: 3rem;
+  border: 4px solid var(--grey-50);
+  border-top: 4px solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.errorContainer h1 {
+  color: #dc2626;
+  margin-bottom: 1rem;
+}
+
+.errorContainer p {
+  color: var(--grey-100);
+  margin-bottom: 2rem;
+}
+
+.header {
+  padding: 3rem 10% 1rem;
   margin: 0 auto;
 }
 
 .header h1 {
-  margin: 0 0 1rem 0;
-}
-
-.formContainer {
-  padding: 2rem;
-  border: 1px solid var(--grey-100);
-  border-top-width: 10px;
-  border-top-color: var(--secondary-color);
-}
-
-.formGroup {
-  margin-bottom: 1.5rem;
-}
-
-.formGroup label {
-  display: block;
-  font-weight: 500;
-  margin-bottom: 0.5rem;
-}
-
-.formGroup input {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  font-size: 1rem;
+  margin: 0 0 0.5rem 0;
+  font-weight: 600;
+  font-size: 2rem;
 }
 
 .description {
-  font-size: 0.85rem;
   color: var(--grey-100);
-  margin-top: 0.25rem;
+  margin: 0;
+  font-size: 1.1rem;
 }
 
-.submitContainer {
-  margin-top: 2rem;
-  text-align: right;
+.content {
+  padding: 0 10%;
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+.successMessage {
+  background-color: #d1fae5;
+  color: #065f46;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+  border: 1px solid #a7f3d0;
+}
+
+.formContainer {
+  background-color: var(--color-white);
+  border: 1px solid var(--grey-100);
+  border-top-width: 10px;
+  border-top-color: var(--secondary-color);
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.formContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.formLabel {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--black-200);
+}
+
+.formInput {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--grey-50);
+  border-radius: 4px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.formInput:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(28, 126, 214, 0.1);
+}
+
+.formInput:disabled {
+  background-color: var(--grey-25);
+  color: var(--grey-100);
+  cursor: not-allowed;
+}
+
+.helpText {
+  font-size: 0.8rem;
+  color: var(--grey-100);
+  margin-top: 0.25rem;
+  font-style: italic;
+}
+
+.errorMessage {
+  background-color: #fef2f2;
+  color: #dc2626;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  border: 1px solid #fecaca;
+  font-weight: 500;
+  text-align: center;
+}
+
+.formActions {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: flex-end;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--grey-50);
 }
 
 .primaryButton {
   background-color: var(--primary-color);
-  color: white;
+  color: var(--color-white);
   border: none;
   padding: 0.75rem 1.5rem;
   border-radius: 4px;
   cursor: pointer;
   font-size: 1rem;
-  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s;
+  min-width: 120px;
 }
 
-.message {
-  padding: 1rem;
+.primaryButton:hover:not(:disabled) {
+  background-color: #1565c0;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.primaryButton:focus {
+  outline: 3px solid rgba(28, 126, 214, 0.4);
+  outline-offset: 2px;
+}
+
+.primaryButton:disabled {
+  background-color: var(--grey-100);
+  color: var(--grey-50);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.secondaryButton {
+  background-color: var(--grey-100);
+  color: var(--color-white);
+  border: none;
+  padding: 0.75rem 1.5rem;
   border-radius: 4px;
-  margin-top: 1rem;
-  text-align: center;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  min-width: 120px;
 }
 
-.success {
-  background-color: #d4edda;
-  color: #155724;
-  border: 1px solid #c3e6cb;
+.secondaryButton:hover:not(:disabled) {
+  background-color: #6b7280;
+  transform: translateY(-1px);
 }
 
-.error {
-  background-color: #f8d7da;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
+.secondaryButton:focus {
+  outline: 3px solid rgba(136, 136, 136, 0.4);
+  outline-offset: 2px;
+}
+
+.secondaryButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Tablet styles */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .header {
+    padding: 2rem 7% 1rem;
+  }
+
+  .content {
+    padding: 0 7%;
+  }
+
+  .formContainer {
+    padding: 1.5rem;
+  }
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .header {
+    padding: 1.5rem 5% 1rem;
+  }
+
+  .header h1 {
+    font-size: 1.8rem;
+  }
+
+  .description {
+    font-size: 1rem;
+  }
+
+  .content {
+    padding: 0 5%;
+  }
+
+  .formContainer {
+    padding: 1.5rem;
+  }
+
+  .formContent {
+    gap: 1.25rem;
+  }
+
+  .formActions {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .primaryButton,
+  .secondaryButton {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 1rem 3% 1rem;
+  }
+
+  .header h1 {
+    font-size: 1.6rem;
+  }
+
+  .content {
+    padding: 0 3%;
+  }
+
+  .formContainer {
+    padding: 1rem;
+  }
+
+  .formContent {
+    gap: 1rem;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .primaryButton,
+  .secondaryButton {
+    transition: none;
+  }
+
+  .primaryButton:hover,
+  .secondaryButton:hover {
+    transform: none;
+  }
+
+  .spinner {
+    animation: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .formContainer {
+    border: 2px solid;
+  }
+
+  .primaryButton,
+  .secondaryButton {
+    border: 2px solid;
+  }
 }

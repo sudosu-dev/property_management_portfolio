@@ -7,6 +7,18 @@ import rentaLogo from "../assets/renta-logo.png";
 function ResidentNav({ logout }) {
   const [isOpen, setIsOpen] = useState(false);
 
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen]);
+
   return (
     <div className={styles.Nav}>
       <div className={styles.NavLogo}>

@@ -1,75 +1,380 @@
+/* --- Main View --- */
 .page {
   background-color: var(--bg-color);
   min-height: 90vh;
 }
 
-.content {
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
+.loadingContainer,
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
 }
 
-.header h1 {
-  margin: 0 0 0.25rem 0;
-  font-weight: 600;
+.loadingSpinner {
+  margin-bottom: 1rem;
 }
 
-.header p {
+.spinner {
+  width: 3rem;
+  height: 3rem;
+  border: 4px solid var(--grey-50);
+  border-top: 4px solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.errorContainer h1 {
+  color: #dc2626;
+  margin-bottom: 1rem;
+}
+
+.errorContainer p {
   color: var(--grey-100);
   margin-bottom: 2rem;
 }
 
-.section {
-  padding: 0;
+.header {
+  padding: 3rem 10% 1rem;
+  margin: 0 auto;
+}
+
+.header h1 {
+  margin: 0 0 0.5rem 0;
+  font-weight: 600;
+  font-size: 2rem;
+}
+
+.description {
+  color: var(--grey-100);
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.content {
+  padding: 0 10%;
+  margin: 0 auto;
+}
+
+/* Desktop Table View */
+.desktopView {
+  display: block;
+}
+
+.mobileView {
+  display: none;
+}
+
+.tableContainer {
+  background-color: var(--color-white);
   border: 1px solid var(--grey-100);
   border-top-width: 10px;
   border-top-color: var(--secondary-color);
   border-radius: 8px;
   overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
 }
 
 .table {
   width: 100%;
   border-collapse: collapse;
-}
-
-.table th,
-.table td {
-  padding: 1rem;
-  text-align: left;
-  border-bottom: 1px solid #e0e0e0;
+  margin: 0;
 }
 
 .table th {
+  padding: 1rem;
+  text-align: left;
   background-color: var(--color-offwhite);
+  color: var(--black-200);
+  font-weight: 600;
+  border-bottom: 2px solid var(--grey-50);
 }
 
-.table tbody tr:nth-child(even) {
-  background-color: var(--color-offwhite);
+.table td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--grey-50);
+  vertical-align: middle;
+}
+
+.table tbody tr:hover {
+  background-color: #f8f9fa;
 }
 
 .table tbody tr:last-child td {
   border-bottom: none;
 }
 
+.table tbody tr:nth-child(even) {
+  background-color: var(--color-offwhite);
+}
+
 .amountDebit {
   color: #c0392b;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .amountCredit {
   color: #27ae60;
+  font-weight: 600;
+}
+
+.emptyState {
+  text-align: center;
+  color: var(--grey-100);
+  font-style: italic;
+  padding: 3rem 1rem;
+}
+
+/* Mobile Card View */
+.cardsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.transactionCards {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.transactionCard {
+  background-color: var(--color-white);
+  border: 1px solid var(--grey-50);
+  border-left-width: 8px;
+  border-left-color: var(--secondary-color);
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.transactionCard:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.cardDate {
+  font-size: 14px;
+  color: var(--grey-100);
   font-weight: 500;
 }
 
+.cardType {
+  background-color: var(--color-offwhite);
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--black-200);
+}
+
+.cardDescription {
+  margin-bottom: 1rem;
+  line-height: 1.4;
+  color: var(--black-200);
+}
+
+.cardAmount {
+  font-size: 1.25rem;
+  font-weight: bold;
+  text-align: right;
+}
+
+.cardAmountCredit {
+  color: #27ae60;
+}
+
+.cardAmountDebit {
+  color: #c0392b;
+}
+
+.noTransactions {
+  text-align: center;
+  padding: 3rem 1rem;
+  background-color: var(--color-white);
+  border-radius: 8px;
+  color: var(--grey-100);
+  border: 1px solid var(--grey-50);
+  margin-bottom: 2rem;
+}
+
+.actions {
+  text-align: left;
+}
+
 .backButton {
-  margin-top: 2rem;
   background-color: var(--primary-color);
-  color: white;
+  color: var(--color-white);
   border: none;
   padding: 0.75rem 1.5rem;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 0.9rem;
-  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.backButton:hover {
+  background-color: #1565c0;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.backButton:focus {
+  outline: 3px solid rgba(28, 126, 214, 0.4);
+  outline-offset: 2px;
+}
+
+/* Tablet styles */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .header {
+    padding: 2rem 7% 1rem;
+  }
+
+  .content {
+    padding: 0 7%;
+  }
+
+  .table th,
+  .table td {
+    padding: 0.75rem;
+    font-size: 15px;
+  }
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .header {
+    padding: 1.5rem 5% 1rem;
+  }
+
+  .header h1 {
+    font-size: 1.8rem;
+  }
+
+  .description {
+    font-size: 1rem;
+  }
+
+  .content {
+    padding: 0 5%;
+  }
+
+  /* Switch to mobile card view */
+  .desktopView {
+    display: none;
+  }
+
+  .mobileView {
+    display: block;
+  }
+
+  .transactionCard {
+    padding: 1.25rem;
+  }
+
+  .cardHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .cardAmount {
+    text-align: left;
+    font-size: 1.1rem;
+  }
+
+  .backButton {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+  }
+
+  .actions {
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 1rem 3% 1rem;
+  }
+
+  .header h1 {
+    font-size: 1.6rem;
+  }
+
+  .content {
+    padding: 0 3%;
+  }
+
+  .transactionCard {
+    padding: 1rem;
+  }
+
+  .cardAmount {
+    font-size: 1rem;
+  }
+
+  .loadingContainer,
+  .errorContainer {
+    padding: 2rem 1rem;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .backButton,
+  .transactionCard {
+    transition: none;
+  }
+
+  .backButton:hover,
+  .transactionCard:hover {
+    transform: none;
+  }
+
+  .spinner {
+    animation: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .tableContainer,
+  .transactionCard,
+  .noTransactions {
+    border: 2px solid;
+  }
+
+  .cardType {
+    border: 1px solid;
+  }
+
+  .backButton {
+    border: 2px solid;
+  }
 }

@@ -1,21 +1,82 @@
+/* --- Main View --- */
 .page {
   background-color: var(--bg-color);
   min-height: 90vh;
 }
 
-.content {
-  padding: 2rem;
-  max-width: 1200px;
-  margin: auto;
-  min-height: calc(100vh - 70px);
+.loadingContainer,
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
 }
 
-.header {
+.loadingSpinner {
+  margin-bottom: 1rem;
+}
+
+.spinner {
+  width: 3rem;
+  height: 3rem;
+  border: 4px solid var(--grey-50);
+  border-top: 4px solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.errorContainer h1 {
+  color: #dc2626;
+  margin-bottom: 1rem;
+}
+
+.errorContainer p {
+  color: var(--grey-100);
   margin-bottom: 2rem;
 }
 
+.header {
+  padding: 3rem 10% 1rem;
+  margin: 0 auto;
+}
+
 .header h1 {
-  margin: 0 0 0.25rem 0;
+  margin: 0 0 0.5rem 0;
+  font-weight: 600;
+  font-size: 2rem;
+}
+
+.description {
+  color: var(--grey-100);
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.content {
+  padding: 0 10%;
+  margin: 0 auto;
+}
+
+.successMessage {
+  background-color: #d1fae5;
+  color: #065f46;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+  border: 1px solid #a7f3d0;
 }
 
 .controls {
@@ -24,6 +85,37 @@
   margin-bottom: 2rem;
   padding-bottom: 2rem;
   border-bottom: 1px solid var(--grey-50);
+}
+
+.primaryButton {
+  background-color: var(--primary-color);
+  color: var(--color-white);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  min-width: 120px;
+}
+
+.primaryButton:hover:not(:disabled) {
+  background-color: #1565c0;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.primaryButton:focus {
+  outline: 3px solid rgba(28, 126, 214, 0.4);
+  outline-offset: 2px;
+}
+
+.primaryButton:disabled {
+  background-color: var(--grey-100);
+  color: var(--grey-50);
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 
 .mainContent {
@@ -46,11 +138,22 @@
   text-align: left;
   border-radius: 4px;
   font-weight: 500;
+  transition: all 0.2s;
+}
+
+.filterButton:hover {
+  background-color: var(--color-offwhite);
+  border-color: var(--primary-color);
+}
+
+.filterButton:focus {
+  outline: 3px solid rgba(28, 126, 214, 0.4);
+  outline-offset: 2px;
 }
 
 .filterButton.active {
   background-color: var(--primary-color);
-  color: white;
+  color: var(--color-white);
   border-color: var(--primary-color);
 }
 
@@ -60,24 +163,25 @@
   gap: 1.5rem;
 }
 
-.maintenanceList img {
-  width: 20%;
-  margin-top: 0.5rem;
+.maintenanceList h2 {
+  margin: 0 0 1rem 0;
+  font-weight: 600;
+  font-size: 1.5rem;
 }
 
 .maintenanceCard {
   background-color: var(--color-white);
+  border: 1px solid var(--grey-100);
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  border-top: 10px solid var(--secondary-color);
+  border-top: 10px solid var(--quaternary-color);
   padding: 1.5rem;
+  transition: all 0.2s ease;
 }
 
-.enlargedPhoto {
-  width: 100%;
-  max-height: 300px;
-  object-fit: contain;
-  margin-top: 1rem;
+.maintenanceCard:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
 }
 
 .cardHeader {
@@ -89,13 +193,19 @@
 }
 
 .userInfo {
-  font-size: 18px;
+  flex: 1;
+}
+
+.userInfo p {
+  font-size: 1rem;
   color: #555;
-  line-height: 2;
+  line-height: 1.6;
+  margin: 0.5rem 0;
 }
 
 .userInfo p span {
-  font-weight: 750;
+  font-weight: 600;
+  color: var(--black-200);
 }
 
 .status {
@@ -117,20 +227,65 @@
   color: #065f46;
 }
 
+.photos {
+  margin: 1rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.thumbnail {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid var(--grey-50);
+}
+
 .cardFooter {
   display: flex;
   gap: 1rem;
   justify-content: flex-end;
+  margin-top: 1rem;
 }
 
 .actionButton {
   padding: 0.5rem 1rem;
-  border: none;
+  border: 1px solid var(--grey-50);
   border-radius: 4px;
+  background-color: var(--color-white);
   cursor: pointer;
-  font-weight: bold;
+  transition: all 0.2s;
+  font-weight: 500;
+  font-size: 0.9rem;
 }
 
+.editButton {
+  background-color: var(--primary-color);
+  color: var(--color-white);
+  border-color: var(--primary-color);
+}
+
+.editButton:hover {
+  background-color: #1565c0;
+  transform: translateY(-1px);
+}
+
+.editButton:focus {
+  outline: 3px solid rgba(28, 126, 214, 0.4);
+  outline-offset: 2px;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 3rem 2rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--grey-50);
+  border-radius: 8px;
+  color: var(--grey-100);
+}
+
+/* --- Modal Styles --- */
 .modalOverlay {
   position: fixed;
   top: 0;
@@ -151,28 +306,132 @@
   border-radius: 8px;
   width: 100%;
   max-width: 600px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  border-top: 10px solid var(--secondary-color);
-  max-width: 600px;
-  max-height: 85vh;
+  max-height: 90vh;
   overflow-y: auto;
-  scrollbar-width: none;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  border-top: 10px solid var(--quaternary-color);
 }
 
 .closeButton {
   position: absolute;
-  top: 0;
+  top: 1rem;
   right: 1rem;
-  font-size: 1.5rem;
   background: none;
   border: none;
+  font-size: 1.5rem;
   cursor: pointer;
+  color: var(--grey-100);
+  transition: color 0.2s;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeButton:hover {
+  color: var(--black-200);
+}
+
+.closeButton:focus {
+  outline: 3px solid rgba(28, 126, 214, 0.4);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.modalContent h2 {
+  margin: 0 0 0.5rem 0;
+  font-weight: 600;
+  color: var(--black-200);
+  padding-right: 2rem;
+}
+
+.modalDescription {
+  color: var(--grey-100);
+  margin: 0 0 1.5rem 0;
+  font-size: 0.95rem;
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.formLabel {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--black-200);
+}
+
+.formInput,
+.formSelect,
+.formTextarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--grey-50);
+  border-radius: 4px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.formInput:focus,
+.formSelect:focus,
+.formTextarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(28, 126, 214, 0.1);
+}
+
+.formInput:disabled,
+.formSelect:disabled,
+.formTextarea:disabled {
+  background-color: var(--grey-25);
+  color: var(--grey-100);
+  cursor: not-allowed;
+}
+
+.formTextarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.helpText {
+  font-size: 0.8rem;
+  color: var(--grey-100);
+  margin-top: 0.25rem;
+  font-style: italic;
+}
+
+.requestInfo {
+  margin-bottom: 1.5rem;
+}
+
+.requestInfo p {
+  margin: 0.75rem 0;
+  line-height: 1.4;
+}
+
+.requestInfo span {
+  font-weight: 600;
+  color: var(--black-200);
+}
+
+.photoSection {
+  margin: 1.5rem 0;
+}
+
+.photoSection h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 
 .photoGrid {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 1rem;
+  margin: 1rem 0;
 }
 
 .photoItem {
@@ -180,76 +439,328 @@
   display: inline-block;
 }
 
+.enlargedPhoto {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid var(--grey-50);
+}
+
 .removePhotoButton {
   position: absolute;
   top: 0.25rem;
-  right: 0.1rem;
-  background: none;
+  right: 0.25rem;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
   border: none;
-  font-size: 2rem;
-  color: var(--black-200);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 1.2rem;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
 }
 
-.formGroup {
-  margin-bottom: 1.5rem;
+.removePhotoButton:hover {
+  background: rgba(0, 0, 0, 0.9);
 }
 
-.formGroup label {
-  display: block;
-  font-weight: 500;
-  margin-bottom: 0.5rem;
+.removePhotoButton:focus {
+  outline: 3px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 2px;
 }
 
-.formGroup select,
-.formGroup textarea,
-.formGroup input {
-  font-size: 1rem;
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid var(--grey-50);
+.statusMessage {
+  background-color: #f0f9ff;
+  color: #1e40af;
+  padding: 1rem;
   border-radius: 4px;
-  box-sizing: border-box;
-}
-
-.formGroup label span,
-p span {
-  font-size: 18px;
-  color: #555;
-  line-height: 2;
-  font-weight: 750;
+  margin-bottom: 1rem;
+  border: 1px solid #bfdbfe;
+  font-weight: 500;
+  text-align: center;
 }
 
 .modalActions {
-  margin-top: 2rem;
   display: flex;
   justify-content: flex-end;
   gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--grey-50);
 }
 
-.primaryButton,
 .secondaryButton {
+  background-color: var(--grey-100);
+  color: var(--color-white);
   border: none;
   padding: 0.75rem 1.5rem;
   border-radius: 4px;
   cursor: pointer;
   font-size: 1rem;
   font-weight: 500;
+  transition: all 0.2s;
+  min-width: 120px;
 }
 
-.primaryButton {
-  background-color: var(--primary-color);
-  color: var(--color-white);
+.secondaryButton:hover:not(:disabled) {
+  background-color: #6b7280;
+  transform: translateY(-1px);
 }
 
-.secondaryButton {
-  background-color: var(--grey-100);
-  color: var(--color-white);
+.secondaryButton:focus {
+  outline: 3px solid rgba(136, 136, 136, 0.4);
+  outline-offset: 2px;
 }
 
-.primaryButton:disabled,
 .secondaryButton:disabled {
   opacity: 0.6;
-  color: var(--color-white);
   cursor: not-allowed;
+}
+
+/* Tablet styles */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .header {
+    padding: 2rem 7% 1rem;
+  }
+
+  .content {
+    padding: 0 7%;
+  }
+
+  .mainContent {
+    grid-template-columns: 180px 1fr;
+    gap: 1.5rem;
+  }
+
+  .photoGrid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+
+  .enlargedPhoto {
+    height: 120px;
+  }
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .header {
+    padding: 1.5rem 5% 1rem;
+  }
+
+  .header h1 {
+    font-size: 1.8rem;
+  }
+
+  .description {
+    font-size: 1rem;
+  }
+
+  .content {
+    padding: 0 5%;
+  }
+
+  .controls {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .primaryButton {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+  }
+
+  .mainContent {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .filters {
+    order: 2;
+    flex-direction: row;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+  }
+
+  .filterButton {
+    white-space: nowrap;
+    min-width: fit-content;
+    flex-shrink: 0;
+  }
+
+  .maintenanceList {
+    order: 1;
+  }
+
+  .maintenanceCard {
+    padding: 1.25rem;
+  }
+
+  .cardHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .userInfo {
+    width: 100%;
+  }
+
+  .userInfo p {
+    font-size: 0.95rem;
+  }
+
+  .cardFooter {
+    justify-content: stretch;
+    gap: 1rem;
+  }
+
+  .actionButton {
+    flex: 1;
+    text-align: center;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+  }
+
+  .photos {
+    margin: 1rem 0;
+  }
+
+  .thumbnail {
+    width: 60px;
+    height: 60px;
+  }
+
+  .modalContent {
+    margin: 1rem;
+    padding: 1.5rem;
+    max-height: 90vh;
+  }
+
+  .modalActions {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .primaryButton,
+  .secondaryButton {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+  }
+
+  .photoGrid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 0.75rem;
+  }
+
+  .enlargedPhoto {
+    height: 100px;
+  }
+
+  .requestInfo p {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 1rem 3% 1rem;
+  }
+
+  .header h1 {
+    font-size: 1.6rem;
+  }
+
+  .content {
+    padding: 0 3%;
+  }
+
+  .maintenanceCard {
+    padding: 1rem;
+  }
+
+  .userInfo p {
+    font-size: 0.9rem;
+  }
+
+  .cardFooter {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .actionButton {
+    width: 100%;
+  }
+
+  .modalContent {
+    margin: 0.5rem;
+    padding: 1rem;
+  }
+
+  .formGroup {
+    margin-bottom: 1rem;
+  }
+
+  .photoGrid {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  }
+
+  .enlargedPhoto {
+    height: 80px;
+  }
+
+  .thumbnail {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .primaryButton,
+  .secondaryButton,
+  .actionButton,
+  .filterButton,
+  .maintenanceCard {
+    transition: none;
+  }
+
+  .primaryButton:hover,
+  .secondaryButton:hover,
+  .actionButton:hover,
+  .filterButton:hover,
+  .maintenanceCard:hover {
+    transform: none;
+  }
+
+  .spinner {
+    animation: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .maintenanceCard,
+  .modalContent,
+  .emptyState {
+    border: 2px solid;
+  }
+
+  .status {
+    border: 1px solid;
+  }
+
+  .primaryButton,
+  .secondaryButton,
+  .actionButton,
+  .filterButton {
+    border: 2px solid;
+  }
 }
