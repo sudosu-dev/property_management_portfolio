@@ -136,15 +136,15 @@ function Maintenance() {
   return (
     <>
       <div className={styles.page}>
-        <header className={styles.header}>
-          <h1>Maintenance Requests</h1>
-        </header>
         <div className={styles.controls}>
+          <header className={styles.header}>
+            <h1>Maintenance Requests</h1>
+          </header>
           <button
             className={styles.primaryButton}
             onClick={() => setIsModalOpen(true)}
           >
-            + Submit Maintenance Request
+            + New Request
           </button>
         </div>
 

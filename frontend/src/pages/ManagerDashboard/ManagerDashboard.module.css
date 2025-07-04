@@ -4,6 +4,37 @@
   min-height: 90vh;
 }
 
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.loadingSpinner {
+  margin-bottom: 1rem;
+}
+
+.spinner {
+  width: 3rem;
+  height: 3rem;
+  border: 4px solid var(--grey-50);
+  border-top: 4px solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .header {
   margin-bottom: 2rem;
 }
@@ -32,6 +63,7 @@
   border: 1px solid var(--grey-100);
   border-top-width: 10px;
   border-top-color: var(--secondary-color);
+  border-radius: 8px;
   display: flex;
   flex-direction: column;
 }
@@ -68,6 +100,13 @@
   padding-bottom: 0.75rem;
 }
 
+.tenantList,
+.maintenanceList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
 .listItem {
   display: flex;
   justify-content: space-between;
@@ -75,6 +114,7 @@
   padding: 0.75rem 0;
   border-bottom: 1px solid #eee;
 }
+
 .listItem:last-child {
   border-bottom: none;
 }
@@ -83,6 +123,18 @@
   text-decoration: none;
   color: var(--primary-color);
   font-weight: 500;
+  transition: color 0.2s;
+}
+
+.listItem a:hover {
+  color: #1565c0;
+  text-decoration: underline;
+}
+
+.listItem a:focus {
+  outline: 3px solid rgba(28, 126, 214, 0.4);
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
 .actionsGrid {
@@ -106,14 +158,184 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  text-align: left;
 }
 
 .actionButton:hover {
   background-color: var(--primary-color);
   color: white;
   border-color: var(--primary-color);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.actionButton:focus {
+  outline: 3px solid rgba(28, 126, 214, 0.4);
+  outline-offset: 2px;
 }
 
 .actionIcon {
   font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+/* Tablet styles */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .page {
+    padding: 1.5rem;
+  }
+
+  .kpiRow {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .mainGrid {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .kpiValue {
+    font-size: 2.2rem;
+  }
+
+  .actionButton {
+    padding: 0.875rem;
+    font-size: 0.95rem;
+  }
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .page {
+    padding: 1rem;
+  }
+
+  .header h1 {
+    font-size: 1.8rem;
+  }
+
+  .header p {
+    font-size: 0.95rem;
+  }
+
+  .kpiRow {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .kpiCard {
+    padding: 1.25rem;
+  }
+
+  .kpiValue {
+    font-size: 2rem;
+  }
+
+  .kpiLabel {
+    font-size: 0.9rem;
+  }
+
+  .mainGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .card {
+    padding: 1.25rem;
+  }
+
+  .cardTitle {
+    font-size: 1.1rem;
+  }
+
+  .listItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 1rem 0;
+  }
+
+  .listItem a {
+    align-self: flex-end;
+    font-size: 0.9rem;
+  }
+
+  .actionsGrid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .actionButton {
+    padding: 1.25rem;
+    font-size: 1.1rem;
+    justify-content: flex-start;
+    text-align: left;
+  }
+
+  .actionIcon {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page {
+    padding: 0.75rem;
+  }
+
+  .header h1 {
+    font-size: 1.6rem;
+  }
+
+  .kpiCard {
+    padding: 1rem;
+  }
+
+  .kpiValue {
+    font-size: 1.8rem;
+  }
+
+  .card {
+    padding: 1rem;
+  }
+
+  .listItem {
+    padding: 0.75rem 0;
+  }
+
+  .actionButton {
+    padding: 1rem;
+    font-size: 1rem;
+  }
+
+  .actionIcon {
+    font-size: 1.25rem;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .actionButton {
+    transition: none;
+  }
+
+  .actionButton:hover {
+    transform: none;
+  }
+
+  .spinner {
+    animation: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .card,
+  .kpiCard {
+    border: 2px solid;
+  }
+
+  .actionButton {
+    border: 2px solid;
+  }
 }

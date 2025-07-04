@@ -1,22 +1,92 @@
 .pageContainer {
-  padding: 2rem 20%;
+  padding: 2rem 10%;
   margin: 0 auto;
-
   min-height: 90vh;
-
   background-color: var(--bg-color);
+}
+
+.loadingContainer,
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.loadingSpinner {
+  margin-bottom: 1rem;
+}
+
+.spinner {
+  width: 3rem;
+  height: 3rem;
+  border: 4px solid var(--grey-50);
+  border-top: 4px solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .headerContainer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px solid var(--tertiary-color);
+  border-bottom: 1px solid var(--grey-50);
   margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
 }
 
 .announcementsHeader {
   margin: 0;
+  font-weight: 600;
+  font-size: 2.5rem;
+}
+
+.primaryButton {
+  background-color: var(--primary-color);
+  color: var(--color-white);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.primaryButton:hover {
+  background-color: #1565c0;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.primaryButton:focus {
+  outline: 3px solid rgba(28, 126, 214, 0.4);
+  outline-offset: 2px;
+}
+
+.successMessage {
+  padding: 1rem;
+  background-color: #d1fae5;
+  color: #065f46;
+  border-radius: 8px;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+  border: 1px solid #a7f3d0;
 }
 
 .listContainer {
@@ -24,7 +94,6 @@
   border: 1px solid #e0e0e0;
   border-top: 10px solid var(--tertiary-color);
   border-radius: 8px;
-
   background-color: var(--color-white);
 }
 
@@ -39,6 +108,10 @@
 
 .noAnnouncements {
   font-size: 1.25rem;
+  text-align: center;
+  color: var(--grey-100);
+  font-style: italic;
+  padding: 2rem;
 }
 
 .announcementsCard {
@@ -50,6 +123,12 @@
   border-left-width: 8px;
   border-left-style: solid;
   border-left-color: var(--primary-color);
+  transition: all 0.2s ease;
+}
+
+.announcementsCard:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
 }
 
 .typeMaintenance {
@@ -106,11 +185,13 @@
   z-index: 1000;
 }
 .modalContent {
-  background: white;
+  background: var(--color-white);
   padding: 2rem;
   border-radius: 8px;
   width: 100%;
   max-width: 500px;
+  border-top: 10px solid var(--tertiary-color);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 .formGroup {
   margin-bottom: 1.5rem;
@@ -127,6 +208,12 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+.formGroup textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(28, 126, 214, 0.1);
 }
 .modalActions {
   margin-top: 2rem;
@@ -139,7 +226,6 @@
 }
 
 /* GENERIC BUTTONS */
-.primaryButton,
 .secondaryButton {
   border: none;
   padding: 0.75rem 1.5rem;
@@ -147,23 +233,139 @@
   cursor: pointer;
   font-size: 1rem;
   font-weight: 500;
-}
-.primaryButton {
-  background-color: var(--primary-color);
-  color: var(--color-white);
-}
-.secondaryButton {
   background-color: var(--grey-100);
   color: var(--color-white);
+  transition: all 0.2s;
 }
 
-.successMessage {
-  padding: 1rem;
-  background-color: #d1fae5;
-  color: #065f46;
-  border-radius: 8px;
-  text-align: center;
-  margin-bottom: 1.5rem;
-  font-weight: 500;
-  border: 1px solid #a7f3d0;
+.secondaryButton:hover {
+  background-color: #6b7280;
+  transform: translateY(-1px);
+}
+
+.secondaryButton:focus {
+  outline: 3px solid rgba(136, 136, 136, 0.4);
+  outline-offset: 2px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .pageContainer {
+    padding: 1.5rem 7%;
+  }
+
+  .listContainer {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .pageContainer {
+    padding: 1rem 5%;
+  }
+
+  .announcementsHeader {
+    font-size: 1.8rem;
+  }
+
+  .headerContainer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .primaryButton {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+  }
+
+  .listContainer {
+    padding: 1rem;
+  }
+
+  .announcementsList {
+    gap: 1rem;
+  }
+
+  .announcementsCard {
+    padding: 1rem;
+  }
+
+  .announcementsCardHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .noAnnouncements {
+    font-size: 1.1rem;
+    padding: 1.5rem;
+  }
+
+  .modalContent {
+    margin: 1rem;
+    padding: 1.5rem;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .modalActions {
+    flex-direction: column;
+  }
+
+  .primaryButton,
+  .secondaryButton {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .pageContainer {
+    padding: 1rem 3%;
+  }
+
+  .announcementsHeader {
+    font-size: 1.6rem;
+  }
+
+  .listContainer {
+    padding: 0.75rem;
+  }
+
+  .announcementsCard {
+    padding: 0.75rem;
+  }
+
+  .modalContent {
+    margin: 0.5rem;
+    padding: 1rem;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .primaryButton,
+  .secondaryButton,
+  .announcementsCard {
+    transition: none;
+  }
+
+  .primaryButton:hover,
+  .secondaryButton:hover,
+  .announcementsCard:hover {
+    transform: none;
+  }
+
+  .spinner {
+    animation: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .listContainer,
+  .announcementsCard,
+  .modalContent {
+    border: 2px solid;
+  }
 }

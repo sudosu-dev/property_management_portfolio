@@ -54,7 +54,16 @@ export default function ManagerDashboard() {
   if (isLoading) {
     return (
       <div className={styles.page}>
-        <p>Loading Dashboard Data...</p>
+        <div
+          className={styles.loadingContainer}
+          role="status"
+          aria-label="Loading dashboard data"
+        >
+          <div className={styles.loadingSpinner}>
+            <div className={styles.spinner}></div>
+          </div>
+          <p>Loading Dashboard Data...</p>
+        </div>
       </div>
     );
   }
@@ -69,9 +78,21 @@ export default function ManagerDashboard() {
         </p>
       </header>
 
-      <div className={styles.kpiRow}>
+      <section
+        className={styles.kpiRow}
+        aria-label="Key performance indicators"
+      >
         <div className={styles.kpiCard}>
-          <p className={styles.kpiValue}>
+          <p
+            className={styles.kpiValue}
+            aria-label={`Outstanding balance: ${dashboardStats.outstandingBalance.toLocaleString(
+              "en-US",
+              {
+                style: "currency",
+                currency: "USD",
+              }
+            )}`}
+          >
             {dashboardStats.outstandingBalance.toLocaleString("en-US", {
               style: "currency",
               currency: "USD",
@@ -80,85 +101,131 @@ export default function ManagerDashboard() {
           <p className={styles.kpiLabel}>Outstanding Balance</p>
         </div>
         <div className={styles.kpiCard}>
-          <p className={styles.kpiValue}>
+          <p
+            className={styles.kpiValue}
+            aria-label={`Occupancy rate: ${(
+              dashboardStats.occupancyRate * 100
+            ).toFixed(0)} percent`}
+          >
             {(dashboardStats.occupancyRate * 100).toFixed(0)}%
           </p>
           <p className={styles.kpiLabel}>Occupancy Rate</p>
         </div>
         <div className={styles.kpiCard}>
-          <p className={styles.kpiValue}>{dashboardStats.openTickets}</p>
+          <p
+            className={styles.kpiValue}
+            aria-label={`${dashboardStats.openTickets} open maintenance tickets`}
+          >
+            {dashboardStats.openTickets}
+          </p>
           <p className={styles.kpiLabel}>Open Maintenance Tickets</p>
         </div>
-      </div>
+      </section>
 
-      <div className={styles.mainGrid}>
-        <div className={styles.card}>
-          <h2 className={styles.cardTitle}>Financial Snapshot</h2>
+      <main className={styles.mainGrid}>
+        <section className={styles.card} aria-labelledby="financial-heading">
+          <h2 id="financial-heading" className={styles.cardTitle}>
+            Financial Snapshot
+          </h2>
           <div>
-            <strong>Top Overdue Tenants:</strong>
+            <h3>Top Overdue Tenants:</h3>
             {dashboardStats.topOverdueTenants.length > 0 ? (
-              dashboardStats.topOverdueTenants.map((t) => (
-                <div key={t.user_id} className={styles.listItem}>
-                  <span>
-                    {t.first_name} {t.last_name} (Unit {t.unit_number})
-                  </span>
-                  <Link to={`/admin/ledger/${t.user_id}`}>View Ledger</Link>
-                </div>
-              ))
+              <ul className={styles.tenantList} role="list">
+                {dashboardStats.topOverdueTenants.map((t) => (
+                  <li key={t.user_id} className={styles.listItem}>
+                    <span>
+                      {t.first_name} {t.last_name} (Unit {t.unit_number})
+                    </span>
+                    <Link
+                      to={`/admin/ledger/${t.user_id}`}
+                      aria-label={`View ledger for ${t.first_name} ${t.last_name}`}
+                    >
+                      View Ledger
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             ) : (
               <p>No overdue tenants. Great job!</p>
             )}
           </div>
-        </div>
+        </section>
 
-        <div className={styles.card}>
-          <h2 className={styles.cardTitle}>Maintenance Triage</h2>
+        <section className={styles.card} aria-labelledby="maintenance-heading">
+          <h2 id="maintenance-heading" className={styles.cardTitle}>
+            Maintenance Triage
+          </h2>
           <div>
             {maintenance && maintenance.length > 0 ? (
-              maintenance.slice(0, 3).map((t) => (
-                <div key={t.id} className={styles.listItem}>
-                  <span>
-                    Unit {t.unit_number}: {t.information}
-                  </span>
-                  <Link to="/admin/maintenance">View</Link>
-                </div>
-              ))
+              <ul className={styles.maintenanceList} role="list">
+                {maintenance.slice(0, 3).map((t) => (
+                  <li key={t.id} className={styles.listItem}>
+                    <span>
+                      Unit {t.unit_number}: {t.information}
+                    </span>
+                    <Link
+                      to="/admin/maintenance"
+                      aria-label={`View maintenance request for unit ${t.unit_number}`}
+                    >
+                      View
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             ) : (
               <p>No open maintenance requests.</p>
             )}
           </div>
-        </div>
+        </section>
 
-        <div className={styles.card}>
-          <h2 className={styles.cardTitle}>Quick Actions</h2>
+        <section className={styles.card} aria-labelledby="actions-heading">
+          <h2 id="actions-heading" className={styles.cardTitle}>
+            Quick Actions
+          </h2>
           <div className={styles.actionsGrid}>
             <button
               className={styles.actionButton}
               onClick={() => navigate("/admin/utilities")}
+              aria-label="Navigate to utilities page to enter utility readings"
             >
-              <span className={styles.actionIcon}>💡</span> Enter Utilities
+              <span className={styles.actionIcon} aria-hidden="true">
+                💡
+              </span>
+              <span>Enter Utilities</span>
             </button>
             <button
               className={styles.actionButton}
               onClick={() => navigate("/admin/payments")}
+              aria-label="Navigate to payments page to manage tenant balances"
             >
-              <span className={styles.actionIcon}>💰</span> Manage Balances
+              <span className={styles.actionIcon} aria-hidden="true">
+                💰
+              </span>
+              <span>Manage Balances</span>
             </button>
             <button
               className={styles.actionButton}
               onClick={() => navigate("/admin/announcements")}
+              aria-label="Navigate to announcements page to create new announcement"
             >
-              <span className={styles.actionIcon}>📢</span> New Announcement
+              <span className={styles.actionIcon} aria-hidden="true">
+                📢
+              </span>
+              <span>New Announcement</span>
             </button>
             <button
               className={styles.actionButton}
               onClick={() => navigate("/admin/maintenance")}
+              aria-label="Navigate to maintenance page to view all maintenance requests"
             >
-              <span className={styles.actionIcon}>🛠️</span> All Maintenance
+              <span className={styles.actionIcon} aria-hidden="true">
+                🛠️
+              </span>
+              <span>All Maintenance</span>
             </button>
           </div>
-        </div>
-      </div>
+        </section>
+      </main>
     </div>
   );
 }

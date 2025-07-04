@@ -57,13 +57,20 @@ export default function Announcements() {
   if (loading)
     return (
       <div className={styles.pageContainer}>
-        <p>Loading announcements...</p>
+        <div className={styles.loadingContainer}>
+          <div className={styles.loadingSpinner}>
+            <div className={styles.spinner}></div>
+          </div>
+          <p>Loading announcements...</p>
+        </div>
       </div>
     );
   if (error)
     return (
       <div className={styles.pageContainer}>
-        <p>Error loading announcements: {error}</p>
+        <div className={styles.errorContainer}>
+          <p>Error loading announcements: {error}</p>
+        </div>
       </div>
     );
 
@@ -75,18 +82,25 @@ export default function Announcements() {
           <button
             className={styles.primaryButton}
             onClick={() => setIsModalOpen(true)}
+            aria-label="Suggest a new announcement for review"
           >
             + Suggest a Post
           </button>
         </div>
 
         {successMessage && (
-          <div className={styles.successMessage}>{successMessage}</div>
+          <div
+            className={styles.successMessage}
+            role="alert"
+            aria-live="polite"
+          >
+            {successMessage}
+          </div>
         )}
 
         <div className={styles.listContainer}>
           {announcements && announcements.length > 0 ? (
-            <ul className={styles.announcementsList}>
+            <ul className={styles.announcementsList} role="list">
               {announcements.map((item) => (
                 <AnnouncementsCard key={item.id} announcement={item} />
               ))}
