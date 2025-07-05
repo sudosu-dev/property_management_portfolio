@@ -5,9 +5,7 @@ import NotificationDisplay from "../components/NotificationDisplay";
 export default function Layout() {
   return (
     <>
-      <header>
-        <Navbar />
-      </header>
+      <Navbar />
       <main>
         <Outlet />
       </main>

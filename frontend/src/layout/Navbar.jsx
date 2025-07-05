@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react"; // Fixed: Added useEffect import
 import styles from "./Navbar.module.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
@@ -91,6 +91,18 @@ function ResidentNav({ logout }) {
 
 function ManagerNav({ logout }) {
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen]);
 
   return (
     <div className={styles.Nav}>
@@ -196,8 +208,8 @@ export default function Navbar() {
   };
 
   return (
-    <header>
-      <nav>
+    <header role="banner">
+      <nav role="navigation" aria-label="Main navigation">
         {user?.is_manager ? (
           <ManagerNav logout={handleLogout} />
         ) : (

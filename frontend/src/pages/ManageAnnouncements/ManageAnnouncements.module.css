@@ -1,21 +1,82 @@
+/* --- Main View --- */
 .page {
   background-color: var(--bg-color);
   min-height: 90vh;
 }
 
-.content {
-  padding: 2rem;
-  max-width: 1200px;
-  margin: auto;
-  min-height: calc(100vh - 70px);
+.loadingContainer,
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
 }
 
-.header {
+.loadingSpinner {
+  margin-bottom: 1rem;
+}
+
+.spinner {
+  width: 3rem;
+  height: 3rem;
+  border: 4px solid var(--grey-50);
+  border-top: 4px solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.errorContainer h1 {
+  color: #dc2626;
+  margin-bottom: 1rem;
+}
+
+.errorContainer p {
+  color: var(--grey-100);
   margin-bottom: 2rem;
 }
 
+.header {
+  padding: 3rem 10% 1rem;
+  margin: 0 auto;
+}
+
 .header h1 {
-  margin: 0 0 0.25rem 0;
+  margin: 0 0 0.5rem 0;
+  font-weight: 600;
+  font-size: 2rem;
+}
+
+.description {
+  color: var(--grey-100);
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.content {
+  padding: 0 10%;
+  margin: 0 auto;
+}
+
+.successMessage {
+  background-color: #d1fae5;
+  color: #065f46;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+  border: 1px solid #a7f3d0;
 }
 
 .controls {
@@ -23,7 +84,38 @@
   justify-content: flex-end;
   margin-bottom: 2rem;
   padding-bottom: 2rem;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid var(--grey-50);
+}
+
+.primaryButton {
+  background-color: var(--primary-color);
+  color: var(--color-white);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  min-width: 120px;
+}
+
+.primaryButton:hover:not(:disabled) {
+  background-color: #1565c0;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.primaryButton:focus {
+  outline: 3px solid rgba(28, 126, 214, 0.4);
+  outline-offset: 2px;
+}
+
+.primaryButton:disabled {
+  background-color: var(--grey-100);
+  color: var(--grey-50);
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 
 .mainContent {
@@ -40,18 +132,38 @@
 
 .filterButton {
   padding: 0.75rem;
-  border: 1px solid #ccc;
-  background-color: #fff;
+  border: 1px solid var(--grey-50);
+  background-color: var(--color-white);
   cursor: pointer;
   text-align: left;
   border-radius: 4px;
   font-weight: 500;
+  transition: all 0.2s;
+}
+
+.filterButton:hover {
+  background-color: var(--color-offwhite);
+  border-color: var(--primary-color);
+}
+
+.filterButton:focus {
+  outline: 3px solid rgba(28, 126, 214, 0.4);
+  outline-offset: 2px;
 }
 
 .filterButton.active {
   background-color: var(--primary-color);
-  color: white;
+  color: var(--color-white);
   border-color: var(--primary-color);
+}
+
+/* Desktop Table View */
+.desktopView {
+  display: block;
+}
+
+.mobileView {
+  display: none;
 }
 
 .announcementsList {
@@ -61,11 +173,18 @@
 }
 
 .announcementCard {
-  background-color: #fff;
+  background-color: var(--color-white);
+  border: 1px solid var(--grey-100);
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  border-top: 10px solid var(--secondary-color);
+  border-top: 10px solid var(--tertiary-color);
   padding: 1.5rem;
+  transition: all 0.2s ease;
+}
+
+.announcementCard:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
 }
 
 .cardHeader {
@@ -77,12 +196,13 @@
 }
 
 .authorInfo {
-  font-size: 0.9rem;
-  color: #555;
-  line-height: 1.4;
+  flex: 1;
 }
 
 .authorInfo p {
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.4;
   margin: 0;
 }
 
@@ -114,6 +234,7 @@
   margin-bottom: 1.5rem;
   white-space: pre-wrap;
   word-break: break-word;
+  line-height: 1.6;
 }
 
 .cardFooter {
@@ -124,32 +245,202 @@
 
 .actionButton {
   padding: 0.5rem 1rem;
-  border: none;
+  border: 1px solid var(--grey-50);
   border-radius: 4px;
+  background-color: var(--color-white);
   cursor: pointer;
-  font-weight: bold;
+  transition: all 0.2s;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.editButton:hover {
+  background-color: var(--primary-color);
+  color: var(--color-white);
+  border-color: var(--primary-color);
+}
+
+.editButton:focus {
+  outline: 3px solid rgba(28, 126, 214, 0.4);
+  outline-offset: 2px;
 }
 
 .approveButton {
-  composes: actionButton;
-  background-color: #a7f3d0;
-  color: #047857;
+  background-color: #d1fae5;
+  color: #065f46;
+  border-color: #a7f3d0;
+}
+
+.approveButton:hover {
+  background-color: #059669;
+  color: var(--color-white);
+  border-color: #059669;
+}
+
+.approveButton:focus {
+  outline: 3px solid rgba(5, 150, 105, 0.4);
+  outline-offset: 2px;
 }
 
 .rejectButton {
-  composes: actionButton;
-  background-color: #fecaca;
+  background-color: #fee2e2;
   color: #991b1b;
+  border-color: #fecaca;
 }
 
-.editButton,
-.deleteButton {
-  composes: actionButton;
-  background-color: #e5e7eb;
-  color: #374151;
+.rejectButton:hover {
+  background-color: #dc2626;
+  color: var(--color-white);
+  border-color: #dc2626;
 }
 
-/* --- MODAL --- */
+.rejectButton:focus {
+  outline: 3px solid rgba(220, 38, 38, 0.4);
+  outline-offset: 2px;
+}
+
+.deleteButton:hover {
+  background-color: #dc2626;
+  color: var(--color-white);
+  border-color: #dc2626;
+}
+
+.deleteButton:focus {
+  outline: 3px solid rgba(220, 38, 38, 0.4);
+  outline-offset: 2px;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 3rem 2rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--grey-50);
+  border-radius: 8px;
+  color: var(--grey-100);
+}
+
+.noAnnouncements {
+  text-align: center;
+  padding: 3rem 2rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--grey-50);
+  border-radius: 8px;
+  color: var(--grey-100);
+}
+
+/* Mobile Card View */
+.mobileAnnouncementsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.mobileAnnouncementCard {
+  background-color: var(--color-white);
+  border: 1px solid var(--grey-50);
+  border-left-width: 8px;
+  border-left-color: var(--tertiary-color);
+  border-radius: 8px;
+  padding: 1.25rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.mobileAnnouncementCard:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+.mobileCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.mobileAuthorInfo h3 {
+  margin: 0 0 0.25rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--black-200);
+}
+
+.mobileDate {
+  font-size: 0.8rem;
+  color: var(--grey-100);
+  font-weight: 500;
+}
+
+.mobileCardContent {
+  margin-bottom: 1.5rem;
+}
+
+.mobileAnnouncementText {
+  margin: 0;
+  line-height: 1.6;
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+.mobileCardActions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.mobileActionButton {
+  background-color: var(--primary-color);
+  color: var(--color-white);
+  border: none;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+  width: 100%;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.mobileActionButton:hover {
+  background-color: #1565c0;
+  transform: translateY(-1px);
+}
+
+.mobileActionButton:focus {
+  outline: 3px solid rgba(28, 126, 214, 0.4);
+  outline-offset: 2px;
+}
+
+.mobileActionButton.approveButton {
+  background-color: #059669;
+}
+
+.mobileActionButton.approveButton:hover {
+  background-color: #047857;
+}
+
+.mobileActionButton.rejectButton {
+  background-color: #dc2626;
+}
+
+.mobileActionButton.rejectButton:hover {
+  background-color: #b91c1c;
+}
+
+.mobileActionButton.deleteButton {
+  background-color: #dc2626;
+}
+
+.mobileActionButton.deleteButton:hover {
+  background-color: #b91c1c;
+}
+
+/* --- Modal Styles --- */
 .modalOverlay {
   position: fixed;
   top: 0;
@@ -164,72 +455,367 @@
 }
 
 .modalContent {
-  background: white;
+  position: relative;
+  background: var(--color-white);
   padding: 2rem;
   border-radius: 8px;
   width: 100%;
   max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  border-top: 10px solid var(--secondary-color);
+  border-top: 10px solid var(--tertiary-color);
+}
+
+.closeButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--grey-100);
+  transition: color 0.2s;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeButton:hover {
+  color: var(--black-200);
+}
+
+.closeButton:focus {
+  outline: 3px solid rgba(28, 126, 214, 0.4);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.modalContent h2 {
+  margin: 0 0 0.5rem 0;
+  font-weight: 600;
+  color: var(--black-200);
+  padding-right: 2rem;
+}
+
+.modalDescription {
+  color: var(--grey-100);
+  margin: 0 0 1.5rem 0;
+  font-size: 0.95rem;
 }
 
 .formGroup {
   margin-bottom: 1.5rem;
 }
 
-.formGroup label {
+.formLabel {
   display: block;
   font-weight: 500;
   margin-bottom: 0.5rem;
+  color: var(--black-200);
 }
 
-.formGroup select,
-.formGroup textarea,
-.formGroup input {
-  font-size: 1rem;
+.formSelect,
+.formInput,
+.formTextarea {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid #ccc;
+  border: 1px solid var(--grey-50);
   border-radius: 4px;
+  font-size: 1rem;
   box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.formGroup small {
+.formSelect:focus,
+.formInput:focus,
+.formTextarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(28, 126, 214, 0.1);
+}
+
+.formSelect:disabled,
+.formInput:disabled,
+.formTextarea:disabled {
+  background-color: var(--grey-25);
+  color: var(--grey-100);
+  cursor: not-allowed;
+}
+
+.formTextarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.helpText {
   font-size: 0.8rem;
-  color: #666;
+  color: var(--grey-100);
   margin-top: 0.25rem;
-  display: block;
+  font-style: italic;
+}
+
+.errorMessage {
+  background-color: #fef2f2;
+  color: #dc2626;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  border: 1px solid #fecaca;
+  font-weight: 500;
+  text-align: center;
 }
 
 .modalActions {
-  margin-top: 2rem;
   display: flex;
   justify-content: flex-end;
   gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--grey-50);
 }
 
-.modalButton {
+.secondaryButton {
+  background-color: var(--grey-100);
+  color: var(--color-white);
   border: none;
   padding: 0.75rem 1.5rem;
   border-radius: 4px;
   cursor: pointer;
   font-size: 1rem;
   font-weight: 500;
-  transition: background-color 0.2s;
+  transition: all 0.2s;
+  min-width: 120px;
 }
 
-.primaryButton {
-  composes: modalButton;
-  background-color: var(--primary-color);
-  color: white;
+.secondaryButton:hover:not(:disabled) {
+  background-color: #6b7280;
+  transform: translateY(-1px);
 }
-.primaryButton:disabled {
-  background-color: #a5d8ff;
+
+.secondaryButton:focus {
+  outline: 3px solid rgba(136, 136, 136, 0.4);
+  outline-offset: 2px;
+}
+
+.secondaryButton:disabled {
+  opacity: 0.6;
   cursor: not-allowed;
 }
 
-.secondaryButton {
-  composes: modalButton;
-  background-color: #6c757d;
-  color: white;
+/* Tablet styles */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .header {
+    padding: 2rem 7% 1rem;
+  }
+
+  .content {
+    padding: 0 7%;
+  }
+
+  .mainContent {
+    grid-template-columns: 180px 1fr;
+    gap: 1.5rem;
+  }
+
+  .announcementCard {
+    padding: 1.25rem;
+  }
+
+  .modalContent {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .header {
+    padding: 1.5rem 5% 1rem;
+  }
+
+  .header h1 {
+    font-size: 1.8rem;
+  }
+
+  .description {
+    font-size: 1rem;
+  }
+
+  .content {
+    padding: 0 5%;
+  }
+
+  .controls {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .primaryButton {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+  }
+
+  .mainContent {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .filters {
+    order: 2;
+    flex-direction: row;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+  }
+
+  .filterButton {
+    white-space: nowrap;
+    min-width: fit-content;
+    flex-shrink: 0;
+  }
+
+  .announcementsList {
+    order: 1;
+  }
+
+  /* Switch to mobile card view */
+  .desktopView {
+    display: none;
+  }
+
+  .mobileView {
+    display: block;
+  }
+
+  .mobileAnnouncementCard {
+    padding: 1rem;
+  }
+
+  .mobileCardHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .mobileCardActions {
+    gap: 1rem;
+  }
+
+  .mobileActionButton {
+    padding: 1rem;
+    font-size: 1rem;
+  }
+
+  .modalContent {
+    margin: 1rem;
+    padding: 1.5rem;
+    max-height: 90vh;
+  }
+
+  .modalActions {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .primaryButton,
+  .secondaryButton {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 1rem 3% 1rem;
+  }
+
+  .header h1 {
+    font-size: 1.6rem;
+  }
+
+  .content {
+    padding: 0 3%;
+  }
+
+  .announcementCard {
+    padding: 1rem;
+  }
+
+  .mobileAnnouncementCard {
+    padding: 0.75rem;
+  }
+
+  .mobileCardActions {
+    gap: 0.75rem;
+  }
+
+  .modalContent {
+    margin: 0.5rem;
+    padding: 1rem;
+  }
+
+  .formGroup {
+    margin-bottom: 1rem;
+  }
+
+  .emptyState,
+  .noAnnouncements {
+    padding: 2rem 1rem;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .primaryButton,
+  .secondaryButton,
+  .actionButton,
+  .mobileActionButton,
+  .filterButton,
+  .announcementCard,
+  .mobileAnnouncementCard {
+    transition: none;
+  }
+
+  .primaryButton:hover,
+  .secondaryButton:hover,
+  .actionButton:hover,
+  .mobileActionButton:hover,
+  .filterButton:hover,
+  .announcementCard:hover,
+  .mobileAnnouncementCard:hover {
+    transform: none;
+  }
+
+  .spinner {
+    animation: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .announcementCard,
+  .mobileAnnouncementCard,
+  .modalContent,
+  .emptyState,
+  .noAnnouncements {
+    border: 2px solid;
+  }
+
+  .status {
+    border: 1px solid;
+  }
+
+  .primaryButton,
+  .secondaryButton,
+  .actionButton,
+  .mobileActionButton,
+  .filterButton {
+    border: 2px solid;
+  }
 }

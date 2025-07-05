@@ -1,3 +1,13 @@
+/* Apply sticky to the header element */
+header[role="banner"] {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 .Nav {
   display: flex;
   flex-direction: row;
@@ -7,7 +17,9 @@
   height: 10vh;
   background-color: rgb(43, 50, 59, 1);
   background-image: linear-gradient(rgb(43, 50, 59, 1), rgb(43, 50, 59, 1));
-  position: relative;
+  transition: box-shadow 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .NavLogo img {
@@ -108,11 +120,10 @@
     transform: translateX(100%);
     transition: transform 0.3s ease-in-out;
     backdrop-filter: blur(10px);
-    /* FIX: Add scroll behavior and prevent body scroll */
     overflow-y: auto;
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
-    z-index: 1000;
+    z-index: 999;
   }
 
   /* Show mobile navigation when open */
@@ -127,7 +138,6 @@
     text-align: center;
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 8px;
-    /* Ensure links don't shrink */
     flex-shrink: 0;
   }
 
@@ -136,7 +146,6 @@
     font-size: 18px;
     width: 80%;
     margin-top: 1rem;
-    /* Ensure button doesn't shrink */
     flex-shrink: 0;
   }
 
@@ -163,5 +172,51 @@
   .logoutButton {
     padding: 0.4rem 1.5rem;
     font-size: 14px;
+  }
+}
+
+/* Enhanced focus states for accessibility */
+.links:focus,
+.logoutButton:focus,
+.mobileMenuButton:focus {
+  outline: 3px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 2px;
+}
+
+/* Smooth scrolling enhancement for sticky nav */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  .Nav {
+    transition: none;
+  }
+
+  .links,
+  .logoutButton,
+  .mobileMenuButton span {
+    transition: none;
+  }
+
+  .NavLinks {
+    transition: none;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* High contrast mode support */
+@media (forced-colors: active) {
+  .Nav {
+    border-bottom: 2px solid;
+  }
+
+  .links,
+  .logoutButton {
+    border: 2px solid;
   }
 }
