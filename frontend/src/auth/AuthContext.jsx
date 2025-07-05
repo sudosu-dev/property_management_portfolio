@@ -28,12 +28,18 @@ export function AuthProvider({ children }) {
   }, [user]);
 
   const register = async (credentials) => {
+    console.log("AuthContext register called with:", credentials); // debug remove
+
     const response = await fetch(API + "/users/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials),
     });
+    console.log("Response status:", response.status); // debug log
+
     const result = await response.json();
+    console.log("Response body:", result); // debug log
+
     if (!response.ok) throw Error(result.error || "Registration Failed.");
     setToken(result.token);
     setUser(result.user);

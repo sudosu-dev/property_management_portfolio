@@ -13,8 +13,10 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
 
   const onLogin = async (formData) => {
+    console.log("onLogin called!"); // debug remove
     const username = formData.get("username");
     const password = formData.get("password");
+    console.log("Form data:", { username, password }); // debug remove
 
     setIsLoading(true);
 

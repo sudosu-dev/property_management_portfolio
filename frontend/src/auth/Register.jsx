@@ -13,17 +13,26 @@ export default function Register() {
   const [isLoading, setIsLoading] = useState(false);
 
   const onRegister = async (formData) => {
+    console.log("onRegister called!"); // debug remove
     const username = formData.get("username");
     const password = formData.get("password");
     const firstName = formData.get("firstName");
     const lastName = formData.get("lastName");
     const email = formData.get("email");
     const unit = formData.get("unit");
-
+    const dataToSend = {
+      username,
+      password,
+      firstName,
+      lastName,
+      email,
+      unit: unit === "" ? null : parseInt(unit, 10),
+    };
+    console.log("Data being sent to backend:", dataToSend); // debug remove
     setIsLoading(true);
 
     try {
-      await register({ username, password, firstName, lastName, email, unit });
+      await register(dataToSend);
 
       addNotification(
         "Account created successfully! Welcome aboard!",
