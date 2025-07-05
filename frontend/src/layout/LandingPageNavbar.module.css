@@ -1,14 +1,28 @@
+header[role="banner"] {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 .Nav {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-
   padding: 0 10%;
   height: 10vh;
-
   background-color: var(--bg-color);
+  position: relative;
 }
+
+.NavLogo img {
+  height: 45px;
+  width: auto;
+}
+
 .NavLinks {
   display: flex;
   flex-direction: row;
@@ -16,37 +30,234 @@
   align-items: center;
   gap: 2rem;
 }
+
 .links {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 0.25rem;
-
   font-size: 16px;
   text-decoration: none;
   color: var(--black-200);
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.2s;
 }
+
+.links:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.links:focus {
+  outline: 3px solid rgba(28, 126, 214, 0.4);
+  outline-offset: 2px;
+}
+
 .loginButton {
   padding: 0.5rem 2rem;
   border-radius: 5px;
-
   font-size: 16px;
   text-decoration: none;
   color: var(--color-white);
   background-color: var(--primary-color);
   cursor: pointer;
+  transition: all 0.2s;
 }
+
+.loginButton:hover {
+  background-color: #1565c0;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.loginButton:focus {
+  outline: 3px solid rgba(28, 126, 214, 0.4);
+  outline-offset: 2px;
+}
+
 .logoutButton {
   padding: 0.5rem 2rem;
   border: 1px solid var(--grey-100);
   border-radius: 5px;
-
   font-size: 16px;
   text-decoration: none;
   color: var(--color-white);
   background-color: var(--black-200);
   cursor: pointer;
+  transition: all 0.2s;
 }
+
+.logoutButton:hover {
+  background-color: #374151;
+  transform: translateY(-1px);
+}
+
+.logoutButton:focus {
+  outline: 3px solid rgba(55, 65, 81, 0.4);
+  outline-offset: 2px;
+}
+
+.mobileMenuButton {
+  display: none;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 30px;
+  height: 30px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 10;
+}
+
+.mobileMenuButton span {
+  width: 30px;
+  height: 3px;
+  background: var(--black-200);
+  border-radius: 10px;
+  transition: all 0.3s linear;
+  position: relative;
+  transform-origin: 1px;
+}
+
+.mobileMenuButton:focus {
+  outline: 3px solid rgba(28, 126, 214, 0.4);
+  outline-offset: 2px;
+}
+
 ion-icon {
   font-size: 24px;
+}
+
+@media (max-width: 768px) {
+  .Nav {
+    padding: 0 5%;
+  }
+
+  .mobileMenuButton {
+    display: flex;
+  }
+
+  .NavLinks {
+    position: fixed;
+    top: 10vh;
+    right: 0;
+    height: 90vh;
+    width: 100%;
+    background-color: rgba(247, 243, 243, 0.98);
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 2rem;
+    gap: 1.5rem;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+    backdrop-filter: blur(10px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    z-index: 999;
+  }
+
+  .NavLinksOpen {
+    transform: translateX(0);
+  }
+
+  .links {
+    font-size: 18px;
+    padding: 1rem 2rem;
+    width: 80%;
+    text-align: center;
+    border: 1px solid var(--grey-50);
+    border-radius: 8px;
+    flex-shrink: 0;
+    background-color: var(--color-white);
+  }
+
+  .loginButton {
+    padding: 1rem 2rem;
+    font-size: 18px;
+    width: 80%;
+    margin-top: 1rem;
+    flex-shrink: 0;
+    text-align: center;
+  }
+
+  .logoutButton {
+    padding: 1rem 2rem;
+    font-size: 18px;
+    width: 80%;
+    margin-top: 1rem;
+    flex-shrink: 0;
+  }
+
+  ion-icon {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+  .Nav {
+    padding: 0 7%;
+  }
+
+  .NavLinks {
+    gap: 1.5rem;
+  }
+
+  .links {
+    font-size: 14px;
+    gap: 0.2rem;
+  }
+
+  .loginButton,
+  .logoutButton {
+    padding: 0.4rem 1.5rem;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .Nav {
+    padding: 0 3%;
+  }
+
+  .links,
+  .loginButton,
+  .logoutButton {
+    width: 90%;
+    padding: 1.25rem;
+    font-size: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .links,
+  .loginButton,
+  .logoutButton,
+  .mobileMenuButton span {
+    transition: none;
+  }
+
+  .NavLinks {
+    transition: none;
+  }
+
+  .loginButton:hover,
+  .logoutButton:hover {
+    transform: none;
+  }
+}
+
+@media (forced-colors: active) {
+  header[role="banner"] {
+    border-bottom: 2px solid;
+  }
+
+  .links,
+  .loginButton,
+  .logoutButton,
+  .mobileMenuButton {
+    border: 2px solid;
+  }
 }

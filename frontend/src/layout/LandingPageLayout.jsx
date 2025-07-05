@@ -1,13 +1,10 @@
 import { Outlet } from "react-router";
-
 import LandingPageNavbar from "./LandingPageNav";
 
 export default function LandingPageLayout() {
   return (
     <>
-      <header>
-        <LandingPageNavbar />
-      </header>
+      <LandingPageNavbar />
       <main>
         <Outlet />
       </main>

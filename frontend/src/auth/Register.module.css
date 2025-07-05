@@ -1,55 +1,321 @@
-.register {
+/* Page Structure - Following Style Guide */
+.page {
+  background-color: var(--bg-color);
+  min-height: 90vh;
   display: flex;
-  justify-content: center;
   align-items: center;
-  height: 100vh;
+  justify-content: center;
+  padding: 2rem 0;
 }
 
-.registerForm {
-  display: flex;
-  flex-direction: column;
-  padding: 2rem 5rem;
-  border-radius: 1rem;
-  gap: 1rem;
-  min-width: 350px;
-  background-color: var(--color-offwhite);
-}
-
-.registerForm h1 {
-  margin-bottom: 1rem;
-}
-
-.registerForm form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.registerForm input {
-  padding: 0.25rem;
-  border: 1px solid var(--grey-100);
-  border-radius: 0.2rem;
-  width: 100%
-}
-
-.registerForm button {
-  padding: 0.5rem;
-  border-radius: 0.5rem;
+.content {
+  padding: 2rem;
+  max-width: 700px;
   width: 100%;
+  margin: 0 auto;
 }
 
-.registerForm button:hover {
+/* Header Structure - Following Style Guide */
+.header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.header h1 {
+  margin: 0 0 0.5rem 0;
+  font-weight: 600;
+  font-size: 2rem;
+  color: var(--black-200);
+}
+
+.header p {
+  color: var(--grey-100);
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+/* Form Container - Card Pattern from Style Guide */
+.formContainer {
+  background-color: var(--color-white);
+  border: 1px solid var(--grey-100);
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.formContainer:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+/* Form Structure - Following Style Guide */
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.formLabel {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--black-200);
+  font-size: 1rem;
+}
+
+.optional {
+  font-weight: 400;
+  color: var(--grey-100);
+  font-size: 0.9rem;
+}
+
+.formInput {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--grey-50);
+  border-radius: 4px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background-color: var(--color-white);
+}
+
+.formInput:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(28, 126, 214, 0.1);
+}
+
+.formInput:invalid:not(:focus) {
+  border-color: #dc2626;
+}
+
+/* Form Actions - Following Style Guide */
+.formActions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--grey-50);
+}
+
+/* Primary Button - Following Style Guide */
+.primaryButton {
   background-color: var(--primary-color);
   color: var(--color-white);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  min-width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
-.registerForm a {
-  margin-top: 0.5rem;
+.primaryButton:hover:not(:disabled) {
+  background-color: #1565c0;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.primaryButton:focus {
+  outline: 3px solid rgba(28, 126, 214, 0.4);
+  outline-offset: 2px;
+}
+
+.primaryButton:disabled {
+  background-color: var(--grey-100);
+  color: var(--grey-50);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Loading Spinner */
+.spinner {
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Link Container */
+.linkContainer {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--grey-50);
+  text-align: center;
+}
+
+.loginLink {
   color: var(--primary-color);
-  font-weight: 540;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: all 0.2s;
+  display: inline-block;
+}
+
+.loginLink:hover {
+  text-decoration: underline;
+  background-color: rgba(28, 126, 214, 0.1);
+}
+
+.loginLink:focus {
+  outline: 3px solid rgba(28, 126, 214, 0.4);
+  outline-offset: 2px;
   text-decoration: none;
 }
 
-.registerForm a:hover {
-  text-decoration: underline;
+/* Screen Reader Only Content */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Responsive Design - Following Style Guide Breakpoints */
+
+/* Tablet: 1024px down to 769px */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .content {
+    padding: 1.5rem;
+    max-width: none;
+  }
+
+  .formContainer {
+    padding: 1.75rem;
+  }
+}
+
+/* Mobile: 768px and below */
+@media (max-width: 768px) {
+  .page {
+    padding: 1rem 0;
+    min-height: 90vh;
+  }
+
+  .content {
+    padding: 1rem;
+  }
+
+  .header h1 {
+    font-size: 1.8rem;
+  }
+
+  .header p {
+    font-size: 1rem;
+  }
+
+  .formContainer {
+    padding: 1.5rem;
+  }
+
+  .formRow {
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin-bottom: 0;
+  }
+
+  .formInput {
+    padding: 1rem;
+    font-size: 1.1rem;
+  }
+
+  .formLabel {
+    font-size: 1.1rem;
+  }
+
+  .primaryButton {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+  }
+
+  .loginLink {
+    font-size: 1.1rem;
+    padding: 0.75rem;
+  }
+}
+
+/* Small Mobile: 480px and below */
+@media (max-width: 480px) {
+  .content {
+    padding: 1rem 3%;
+  }
+
+  .header h1 {
+    font-size: 1.6rem;
+  }
+
+  .formContainer {
+    padding: 1.25rem;
+  }
+
+  .formInput {
+    padding: 0.875rem;
+  }
+
+  .primaryButton {
+    padding: 0.875rem;
+  }
+}
+
+/* Accessibility: Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .formContainer,
+  .primaryButton,
+  .loginLink,
+  .formInput {
+    transition: none;
+  }
+
+  .formContainer:hover,
+  .primaryButton:hover {
+    transform: none;
+  }
+
+  .spinner {
+    animation: none;
+  }
+}
+
+/* High Contrast Mode */
+@media (forced-colors: active) {
+  .formContainer,
+  .primaryButton,
+  .formInput {
+    border: 2px solid;
+  }
 }

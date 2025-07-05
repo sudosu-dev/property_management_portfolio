@@ -1,77 +1,128 @@
 import styles from "./About.module.css";
 import modernHome from "../../assets/modern-home.jpg";
-// import { useNavigate } from "react-router";
 
 export default function About() {
-  // const navigate = useNavigate();
-
   return (
-    <>
-      <section className={styles.welcome}>
-        <div className={styles.welcomeText}>
-          <h1>About Project Rent</h1>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
-            voluptas et aperiam, quo qui in vitae repellat eos temporibus.
-          </p>
-        </div>
-        <img
-          className={styles.modernHome}
-          src={modernHome}
-          alt="Image of a home"
-        />
-      </section>
-      <section className={styles.description}>
-        <p>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eum ullam,
-          modi id enim consequuntur eligendi suscipit consectetur recusandae!
-          Consequuntur laboriosam corporis sequi quos, harum provident
-          exercitationem ullam assumenda odit numquam!
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum et
-          exercitationem odio odit architecto provident facilis maxime magnam,
-          reprehenderit atque facere molestias totam nihil quaerat, eum esse
-          aliquam aut quo?
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis labore
-          laboriosam provident rerum nesciunt dolorum ex quod ab perspiciatis
-          voluptatibus similique, neque quia est cumque ducimus facere explicabo
-          doloribus beatae?
-        </p>
-      </section>
-      <section className={styles.features}>
-        <h2>Features</h2>
-        <div className={styles.featuresCards}>
-          <div className={styles.featuresCard}>
-            <img src="https://placehold.co/250x200" alt="Placeholder Image" />
-            <h3>Feature 1</h3>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam
-              quas laudantium hic quaerat corporis sint minima.
-            </p>
+    <div className={styles.page}>
+      <div className={styles.content}>
+        {/* Hero Section */}
+        <section className={styles.heroSection} aria-labelledby="about-heading">
+          <div className={styles.heroContent}>
+            <div className={styles.heroText}>
+              <h1 id="about-heading">About Project Rent</h1>
+              <p>
+                Simplifying property management and enhancing resident
+                experience through innovative technology and community-focused
+                solutions.
+              </p>
+            </div>
+            <div className={styles.heroImage}>
+              <img
+                src={modernHome}
+                alt="Modern residential building showcasing quality living spaces"
+              />
+            </div>
           </div>
+        </section>
 
-          <div className={styles.featuresCard}>
-            <img src="https://placehold.co/250x200" alt="Placeholder Image" />
-            <h3>Feature 2</h3>
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eum
-              quisquam eius quam repellendus.
-            </p>
+        {/* Description Section */}
+        <section
+          className={styles.descriptionSection}
+          aria-labelledby="mission-heading"
+        >
+          <div className={styles.descriptionContent}>
+            <h2 id="mission-heading" className={styles.sectionTitle}>
+              Our Mission
+            </h2>
+            <div className={styles.descriptionText}>
+              <p>
+                At Project Rent, we believe that property management should be
+                seamless, transparent, and community-driven. Our platform
+                bridges the gap between property managers and residents,
+                creating an ecosystem where communication flows freely and
+                efficiently.
+              </p>
+              <p>
+                We've designed our system to eliminate the traditional pain
+                points of property management - from maintenance requests that
+                disappear into the void to payment processes that feel outdated
+                and cumbersome. Our technology-first approach ensures that every
+                interaction is smooth, secure, and satisfying.
+              </p>
+              <p>
+                Whether you're a resident looking for a hassle-free living
+                experience or a property manager seeking to streamline
+                operations, Project Rent provides the tools and community
+                support you need to thrive in today's rental market.
+              </p>
+            </div>
           </div>
+        </section>
 
-          <div className={styles.featuresCard}>
-            <img src="https://placehold.co/250x200" alt="Placeholder Image" />
-            <h3>Feature 3</h3>
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eum
-              quisquam eius quam repellendus, recusandae nemo eos.
-            </p>
+        {/* Features Section */}
+        <section
+          className={styles.featuresSection}
+          aria-labelledby="features-heading"
+        >
+          <div className={styles.featuresContent}>
+            <h2 id="features-heading" className={styles.sectionTitle}>
+              Platform Features
+            </h2>
+            <div className={styles.featuresGrid}>
+              <article className={styles.featureCard}>
+                <div className={styles.featureImage}>
+                  <img
+                    src="https://placehold.co/300x200/1976d2/ffffff?text=Payment+Management"
+                    alt="Digital payment interface showing secure transaction processing"
+                  />
+                </div>
+                <div className={styles.featureContent}>
+                  <h3>Secure Payment Processing</h3>
+                  <p>
+                    Make rent and utility payments online with bank-level
+                    security. Set up automatic payments, view payment history,
+                    and receive instant confirmations for peace of mind.
+                  </p>
+                </div>
+              </article>
+
+              <article className={styles.featureCard}>
+                <div className={styles.featureImage}>
+                  <img
+                    src="https://placehold.co/300x200/04aa6d/ffffff?text=Maintenance+Requests"
+                    alt="Mobile interface showing maintenance request submission with photo upload"
+                  />
+                </div>
+                <div className={styles.featureContent}>
+                  <h3>Smart Maintenance Requests</h3>
+                  <p>
+                    Submit maintenance requests instantly with photo attachments
+                    and detailed descriptions. Track progress in real-time and
+                    communicate directly with maintenance teams.
+                  </p>
+                </div>
+              </article>
+
+              <article className={styles.featureCard}>
+                <div className={styles.featureImage}>
+                  <img
+                    src="https://placehold.co/300x200/8b5cf6/ffffff?text=Community+Hub"
+                    alt="Community bulletin board showing announcements and neighbor connections"
+                  />
+                </div>
+                <div className={styles.featureContent}>
+                  <h3>Community Engagement</h3>
+                  <p>
+                    Stay connected with your community through announcements,
+                    events, and neighbor networking. Build relationships and
+                    create a welcoming living environment for everyone.
+                  </p>
+                </div>
+              </article>
+            </div>
           </div>
-        </div>
-      </section>
-    </>
+        </section>
+      </div>
+    </div>
   );
 }
