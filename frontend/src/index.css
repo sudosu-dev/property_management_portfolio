@@ -29,6 +29,17 @@
   font-weight: normal;
   font-style: normal;
 }
+
+html {
+  scrollbar-gutter: stable;
+}
+
+@supports not (scrollbar-gutter: stable) {
+  html {
+    overflow-y: scroll;
+  }
+}
+
 h1,
 h2 {
   font-family: "Slabo 27px", serif;
