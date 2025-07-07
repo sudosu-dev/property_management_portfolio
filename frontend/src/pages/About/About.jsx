@@ -9,7 +9,7 @@ export default function About() {
         <section className={styles.heroSection} aria-labelledby="about-heading">
           <div className={styles.heroContent}>
             <div className={styles.heroText}>
-              <h1 id="about-heading">About Project Rent</h1>
+              <h1 id="about-heading">About Project Renta</h1>
               <p>
                 Simplifying property management and enhancing resident
                 experience through innovative technology and community-focused
@@ -36,7 +36,7 @@ export default function About() {
             </h2>
             <div className={styles.descriptionText}>
               <p>
-                At Project Rent, we believe that property management should be
+                At Project Renta, we believe that property management should be
                 seamless, transparent, and community-driven. Our platform
                 bridges the gap between property managers and residents,
                 creating an ecosystem where communication flows freely and
@@ -52,7 +52,7 @@ export default function About() {
               <p>
                 Whether you're a resident looking for a hassle-free living
                 experience or a property manager seeking to streamline
-                operations, Project Rent provides the tools and community
+                operations, Project Renta provides the tools and community
                 support you need to thrive in today's rental market.
               </p>
             </div>

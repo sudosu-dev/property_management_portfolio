@@ -25,7 +25,7 @@ export default function LandingPage() {
       </div>
       <div className={styles.features}>
         <div className={styles.featuresText}>
-          <h2>Why you'll love Project Rent</h2>
+          <h2>Why you'll love Project Renta</h2>
           <div className={styles.featuresCards}>
             <div className={styles.featuresCard}>
               <h3>Seamless transactions</h3>
