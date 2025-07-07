@@ -2,6 +2,12 @@
 
 Renta is a comprehensive web application built with the PERN stack (PostgreSQL, Express, React, Node.js) designed to streamline operations for property managers and enhance the living experience for residents. It provides a dual-interface portal for managing properties, tenants, payments, and maintenance, while offering residents a seamless way to pay rent, submit requests, and stay connected with their community.
 
+## Project Background
+
+> **Note:** This project began as a group capstone at Fullstack Academy. I contributed heavily to the original team effort, building out key features on both the frontend and backend. My work included the resident and manager dashboards, Stripe payment integration, and the file upload system using Multer and Cloudinary.  
+>  
+> After graduation, I created this solo repo to refactor the codebase, make the app mobile responsive, improve accessibility, and polish the user experience for professional portfolio use.
+
 **Live Demo:** [**https://cozy-melba-1a313f.netlify.app/**](https://cozy-melba-1a313f.netlify.app/)
 
 <!-- prettier-ignore-start -->
